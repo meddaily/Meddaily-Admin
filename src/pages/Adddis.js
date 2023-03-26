@@ -1,8 +1,11 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import toastr from "toastr";
 import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
 import { useState } from "react";
+import config from "../appConfig";
+import axios from "axios";
+
 export default function Adddis() {
   const [distributor, setDistributor] = useState({
     firstName: "",
@@ -20,60 +23,85 @@ export default function Adddis() {
     distributorCode:"",
     distributorType:""
   });
-  console.log(distributor)
 
   let name ,value;
   function handle(e) {
-   
     name = e.target.name;
     value = e.target.value;
     setDistributor({ ...distributor, [name]: value });
   }
 
-    // //data send in backend by using async function postData
-    // const postData = async (e) => {
-    //   e.preventDefault();
-  
-    //   //object destructing
-    //   const {
-    //     firstName,
-    //     lastName,
-    //     email,
-    //     gender,
-    //     phone,
-    //     age,
-    //     password,
-    //     cpassword,
-    //   } = user;
-  
-    //   const res = await fetch("/register", {
-    //     method: "POST",
-    //     headers: {
-    //       "Content-type": "application/json",
-    //     },
-    //     body: JSON.stringify({
-    //       firstName,
-    //       lastName,
-    //       email,
-    //       gender,
-    //       phone,
-    //       age,
-    //       password,
-    //       cpassword,
-    //     }),
-    //   });
-  
-    //   const data = await res.json();
-  
-    //   if (res.status === 422 || !data) {
-    //     window.alert("Invalid Registration");
-    //     console.log("Invalid Registration");
-    //   } else {
-    //     window.alert("Registration Successfully");
-    //     console.log("Registration Successfully");
-    //     history.push("/login");
-    //   }
-    // };
+    //data send in backend by using async function postData
+    const postData = async (e) => {
+      e.preventDefault();
+      const {
+        firstName,
+        lastName,
+        phoneNumber,
+        email,
+        pinCode,
+        city,
+        area,
+        state,
+        businessName,
+        companyName,
+        password,
+        confirmPassword,
+        distributorCode,
+        distributorType
+      } = distributor;
+
+      const reqBody = {
+        "firstName": firstName,
+        "lastName": lastName,
+        "phoneNumber": phoneNumber,
+        "email": email,
+        "pinCode": pinCode,
+        "city": city,
+        "area": area,
+        "state": state,
+        "businessName": businessName,
+        "companyName": companyName,
+        "password": password,
+        "confirmPassword": confirmPassword,
+        "distributorCode": distributorCode,
+        "distributorType": distributorType
+      }
+      const axiosConfig = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+      };
+
+      await axios
+      .post(`${config.backendURL}/users/distributor-register`, reqBody, axiosConfig)
+      .then((res) => {
+        debugger
+        if (res.status === 200) {
+          toastr.success(res.data.message);
+          setDistributor({
+            firstName: "",
+            lastName: "",
+            phoneNumber: "",
+            email: "",
+            pinCode:"",
+            city:"",
+            area:"",
+            state:"",
+            businessName:"",
+            companyName:"",
+            password: "",
+            confirmPassword: "",
+            distributorCode:"",
+            distributorType:""
+          })
+        }
+      })
+      .catch((err) => {
+        toastr.error(err.response.data.message);
+        console.log(err);
+      });
+    };
   return (
     <>
       <div className="layout-wrapper layout-content-navbar">
@@ -99,8 +127,6 @@ export default function Adddis() {
                     <div className="card-body">
                       <form
                         id="formAccountSettings"
-                        method="POST"
-                        onsubmit="return false"
                       >
                         <div className="row">
                           <div className="mb-3 col-md-6">
@@ -395,9 +421,7 @@ export default function Adddis() {
                         </div>
                         <div className="mt-2">
                           <button
-                            type="submit"
-                            value="Register"
-                            //  onClick={postData}
+                            onClick={event => postData(event)}
                             className="btn btn-primary me-2"
                           >
                             Save

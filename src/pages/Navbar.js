@@ -1,11 +1,18 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import Ham from "../Ham/Ham";
 
 
 
 export default function Navbar() {
 
+  const history = useHistory();
+
+  const onLogout = () => {
+    localStorage.removeItem("authToken");
+    history.push("/login");
+    window.location.reload();
+  }
   return (
     <>
       <nav
@@ -114,10 +121,10 @@ export default function Navbar() {
                   <div className="dropdown-divider"></div>
                 </li>
                 <li>
-                  <Link className="dropdown-item" to="/login">
+                  <div style={{ cursor: 'pointer' }} onClick={onLogout} className="dropdown-item">
                     <i className="bx bx-power-off me-2"></i>
                     <span className="align-middle">Log Out</span>
-                  </Link>
+                  </div>
                 </li>
               </ul>
             </li>

@@ -1,7 +1,52 @@
-import React from "react";
-import { Link } from "react-router-dom";
-export default function Login() {
+import React, { useState } from "react";
+import axios from "axios";
+import toastr from "toastr";
+import { Link, useHistory } from "react-router-dom";
+import config from '../appConfig';
 
+export default function Login() {
+  let history = useHistory();
+
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [password, setpassword] = useState('');
+
+  const handleChangePhone = (e) => {
+    setPhoneNumber(e.target.value);
+  }
+  const handleChangePassword = (e) => {
+    setpassword(e.target.value);
+  }
+
+  async function login() {
+    if (phoneNumber === "") {
+      return toastr.warning("Please enter credentials")
+    }
+    if (phoneNumber === "") {
+      return toastr.warning("Please enter credentials")
+    }
+    const reqBody = {
+      "phoneNumber": phoneNumber,
+      "password": password
+    }
+    const axiosConfig = {
+      headers: {
+          'Content-Type': 'application/json'
+      }
+    };
+    await axios
+      .post(`${config.backendURL}/users/retailer-login`, reqBody, axiosConfig)
+      .then((res) => {
+        if (res.status === 200) {
+          localStorage.setItem("authToken", res.data.data.token);
+          history.push("/");
+          window.location.reload();
+        }
+      })
+      .catch((err) => {
+        toastr.error(err.response.data.message);
+        console.log(err);
+      });
+  }
 
   return (
     <>
@@ -16,11 +61,9 @@ export default function Login() {
                   </Link>
                 </div>
 
-                <form
+                <div
                   id="formAuthentication"
                   className="mb-3"
-                  action="index.html"
-                  method="POST"
                 >
                   <div className="mb-3">
                     <label for="email" className="form-label float-start">
@@ -32,7 +75,8 @@ export default function Login() {
                       id="email"
                       name="email-username"
                       placeholder="Enter your email or username"
-                      autofocus
+                      onChange={handleChangePhone}
+                      autoFocus
                     />
                   </div>
                   <div className="mb-3 form-password-toggle">
@@ -48,6 +92,7 @@ export default function Login() {
                         className="form-control"
                         name="password"
                         placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
+                        onChange={handleChangePassword}
                         aria-describedby="password"
                       />
                       <span className="input-group-text cursor-pointer">
@@ -72,11 +117,12 @@ export default function Login() {
                     <button
                       className="btn btn-primary d-grid w-100"
                       type="submit"
+                      onClick={login}
                     >
                       Sign in
                     </button>
                   </div>
-                </form>
+                </div>
               </div>
             </div>
           </div>

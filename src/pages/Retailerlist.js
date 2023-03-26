@@ -1,8 +1,35 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import toastr from "toastr";
 import { Link } from "react-router-dom";
 import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
+import config from "../appConfig";
+import { Button } from "react-bootstrap";
+
+
 export default function Retailerlist() {
+  const authToken = localStorage.getItem("authToken");
+
+  const [retailerList, setRetailerList] = useState([]);
+
+  useEffect(() => {
+    getAllRetailers();
+  }, [authToken]);
+
+  async function getAllRetailers() {
+    await axios
+      .get(`${config.backendURL}/users/get-retailers`)
+      .then((res) => {
+        if (res.status === 200) {
+          setRetailerList(res.data.data);
+        }
+      })
+      .catch((err) => {
+        toastr.error(err.response.data.message);
+        console.log(err);
+      });
+  };
   return (
     <>
       <div className="layout-wrapper layout-content-navbar">
@@ -29,28 +56,32 @@ export default function Retailerlist() {
                           </tr>
                         </thead>
                         <tbody className="table-border-bottom-0">
-                          <tr>
-                            <td>
-                              <i className="fab fa-angular fa-lg text-danger me-3"></i>{" "}
-                              <strong>Prabhahar</strong>
-                            </td>
-                            <td>Medi</td>
-                            <td>
-                              28, balaji street, barani nagar,vannar pettai.
-                            </td>
-                            <td>6380774800</td>
-                            <td>
-                              <div className="dropdown">
-                                <Link
-                                  className="dropdown-item"
-                                  to="/retailerdetails"
-                                >
-                                  {" "}
-                                  View Full Details
-                                </Link>
-                              </div>
-                            </td>
-                          </tr>
+                          {
+                            retailerList && retailerList.length > 0 && retailerList.map((ret, k) => [
+                              <tr key={k.toString()}>
+                                <td>
+                                  <i className="fab fa-angular fa-lg text-danger me-3"></i>{" "}
+                                  <strong>{ret.OwnerName || 'NA'}</strong>
+                                </td>
+                                <td>{ret.OwnerName || 'NA'}</td>
+                                <td>
+                                {`${ret.address || ''}, ${ret.area || ''}, ${ret.city || ''}` || 'NA'}
+                                </td>
+                                <td>{ret.phoneNumber || 'NA'}</td>
+                                <td>
+                                  <div className="dropdown">
+                                    <Link
+                                      className="dropdown-item"
+                                      to="/retailerdetails"
+                                    >
+                                      {" "}
+                                      View Full Details
+                                    </Link>
+                                  </div>
+                                </td>
+                              </tr>
+                            ])
+                          }
                         </tbody>
                       </table>
                     </div>

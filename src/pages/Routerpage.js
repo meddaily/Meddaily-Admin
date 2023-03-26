@@ -7,7 +7,6 @@ import Distributordetails from "./Distributordetails";
 import Distributordetailsr from "./Distributordetailsr";
 import Distributorlist from "./Distributorlist";
 import Distributorrequest from "./Distributorrequest";
-import Login from "./Login";
 import Retailerdetails from "./Retailerdetails";
 import Retailerdetailsr from "./Retailerdetailsr";
 import Retailerlist from "./Retailerlist";
@@ -37,7 +36,6 @@ export default function Routerpage() {
           <Route path="/distributordetailsr" component={Distributordetailsr} />
           <Route path="/distributorlist" component={Distributorlist} />
           <Route path="/distributorrequest" component={Distributorrequest} />
-          <Route path="/login" component={Login} />
           <Route path="/retailerdetails" component={Retailerdetails} />
           <Route path="/retailerdetailsr" component={Retailerdetailsr} />
           <Route path="/retailerlist" component={Retailerlist} />

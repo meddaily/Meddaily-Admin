@@ -1,9 +1,11 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import toastr from "toastr";
+import axios from "axios";
 import Sidebar from "./Sidebar";
-import { useHistory } from "react-router-dom";
 import Navbar from "./Navbar";
 import { useState } from "react";
+import config from "../appConfig";
+
 export default function Addret() {
   const [retailer, setRetailer] = useState({
     typeOfBusiness: "",
@@ -24,7 +26,7 @@ export default function Addret() {
     addDrugLicenceImage: "",
     addGstNumber: "",
     addGstImage: "",
-    panNumber: "",
+    panNumber: ""
   });
   console.log(retailer);
 
@@ -35,10 +37,90 @@ export default function Addret() {
     setRetailer({ ...retailer, [name]: value });
   }
 
-  let history = useHistory();
-  function handleclick() {
-    history.push("/");
-  }
+      //data send in backend by using async function postData
+      const postData = async (e) => {
+        e.preventDefault();
+        const {
+          typeOfBusiness,
+          businessName,
+          ownerName,
+          businessAddress,
+          pinCode,
+          city,
+          area,
+          state,
+          phoneNumber,
+          password,
+          confirmPassword,
+          email,
+          pharmacistName,
+          pharmacistPhoneNumber,
+          addDrugLicenceNumber,
+          addGstNumber,
+          addGstImage,
+          panNumber
+        } = retailer;
+  
+        const reqBody = {
+          "typeOfBusiness": typeOfBusiness,
+          "businessName": businessName,
+          "ownerName": ownerName,
+          "businessAddress": businessAddress,
+          "pinCode": pinCode,
+          "city": city,
+          "area": area,
+          "state": state,
+          "phoneNumber": phoneNumber,
+          "password": password,
+          "confirmPassword": confirmPassword,
+          "email": email,
+          "pharmacistName": pharmacistName,
+          "pharmacistPhoneNumber": pharmacistPhoneNumber,
+          "addDrugLicenceNumber": addDrugLicenceNumber,
+          "addGstNumber": addGstNumber,
+          "addGstImage": addGstImage,
+          "panNumber": panNumber
+        }
+        const axiosConfig = {
+          headers: {
+              'Content-Type': 'application/json'
+          }
+        };
+  
+        await axios
+        .post(`${config.backendURL}/users/retailer-register`, reqBody, axiosConfig)
+        .then((res) => {
+          debugger
+          if (res.status === 200) {
+            toastr.success(res.data.message);
+            setRetailer({
+              typeOfBusiness: "",
+              businessName: "",
+              ownerName: "",
+              businessAddress: "",
+              pinCode: "",
+              city: "",
+              area: "",
+              state: "",
+              phoneNumber: "",
+              password: "",
+              confirmPassword: "",
+              email: "",
+              pharmacistName: "",
+              pharmacistPhoneNumber: "",
+              addDrugLicenceNumber: "",
+              addDrugLicenceImage: "",
+              addGstNumber: "",
+              addGstImage: "",
+              panNumber: ""
+            })
+          }
+        })
+        .catch((err) => {
+          toastr.error(err.response.data.message);
+          console.log(err);
+        });
+      };
   return (
     <>
       <div className="layout-wrapper layout-content-navbar">
@@ -59,8 +141,6 @@ export default function Addret() {
                     <div className="card-body">
                       <form
                         id="formAccountSettings"
-                        method="POST"
-                        onsubmit="return false"
                       >
                         <div className="row">
                           <div className="mb-3 col-md-6">
@@ -458,7 +538,7 @@ export default function Addret() {
                         </div>
                         <div className="mt-2">
                           <button
-                            type="submit"
+                            onClick={event => postData(event)}
                             className="btn btn-primary me-2"
                           >
                             Save
