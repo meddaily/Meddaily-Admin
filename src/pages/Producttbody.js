@@ -23,7 +23,7 @@ export default function producttbody(props) {
                         Action
                       </button>
                       <ul className="dropdown-menu">
-                        <li><Link className="dropdown-item" to="javascript:void(0);">Delete</Link></li>
+                        <li><Link id={props.key} onClick={event => props.deleteProduct(event, props.productId)} className="dropdown-item">Delete</Link></li>
                         <li><Link className="dropdown-item" to="javascript:void(0);">Disable</Link></li>
                         <li><Link className="dropdown-item" to="/updateproduct">Edit</Link></li>
                       </ul>

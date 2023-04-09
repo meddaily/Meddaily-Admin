@@ -1,22 +1,72 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import toastr from "toastr";
 import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
 import Orderdata from "./Orderdata";
 import Ordertbody from "./Ordertbody";
+import config from "../appConfig";
+
 export default function Ordertable() {
-  const order = Orderdata.map((item) => {
+  const authToken = localStorage.getItem("authToken");
+
+  const [orderList, setOrderList] = useState([]);
+
+  useEffect(() => {
+    getAllOrders();
+  }, [authToken]);
+
+  async function getAllOrders() {
+    await axios
+      .get(`${config.backendURL}/orders/all-orders`)
+      .then((res) => {
+        if (res.status === 200) {
+          setOrderList(res.data.data);
+        }
+      })
+      .catch((err) => {
+        toastr.error(err.response.data.message);
+        console.log(err);
+      });
+  };
+
+  async function deleteOrder(event, orderId) {
+    event.preventDefault();
+    console.log(orderId);
+    await axios
+      .delete(`${config.backendURL}/orders/delete-order`, {
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        data: {
+          "orderId": orderId
+        }
+      })
+      .then((res) => {
+        if (res.status === 200) {
+          toastr.success(res.data.message);
+          getAllOrders();
+        }
+      })
+      .catch((err) => {
+        toastr.error(err.response.data.message);
+        console.log(err);
+      });
+  };
+
+  const order = orderList && orderList.length > 0 && orderList.map((item) => {
     return (
       <Ordertbody
-        id={item.id}
-        rname={item.rname}
-        dname={item.dname}
-        price={item.totalprice}
+        id={item.orderId}
+        orderId={item.orderId}
+        userType={item.userType}
+        userId={item.userId}
+        price={item.totalPrice}
         details={"View Full details"}
+        deleteOrder={deleteOrder}
       />
     );
   });
-
   return (
     <>
       <div className="layout-wrapper layout-content-navbar">

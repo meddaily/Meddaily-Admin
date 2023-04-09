@@ -1,14 +1,16 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import axios from "axios";
+import toastr from "toastr";
 import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
 import { useState } from "react";
+import config from "../appConfig";
 
 export default function Addproduct() {
   const [product, setProduct] = useState({
-    productName: "",
-    mnfName: "",
-    medType: "",
+    productTitle: "",
+    distributorName: "",
+    productType: "",
     discription: "",
     taxes: "",
   });
@@ -19,7 +21,60 @@ export default function Addproduct() {
     name = e.target.name;
     value = e.target.value;
     setProduct({ ...product, [name]: value });
-  }
+  };
+  //data send in backend by using async function postData
+  const postData = async (e) => {
+    e.preventDefault();
+    const {
+      productTitle,
+      distributorName,
+      productType,
+      discription,
+      taxes
+    } = product;
+    if (productTitle === '') {
+      return toastr.warning('Product name cannot be empty !');
+    }
+    if (distributorName === '') {
+      return toastr.warning('Manufacturer name cannot be empty !');
+    }
+    if (productType === '') {
+      return toastr.warning('Meidicine type cannot be empty !');
+    }
+
+    const reqBody = {
+      "productTitle": productTitle,
+      "distributorName": distributorName,
+      "productType": productType,
+      "discription": discription,
+      "taxes": taxes
+    };
+    const axiosConfig = {
+      headers: {
+          'Content-Type': 'application/json'
+      }
+    };
+
+    await axios
+    .post(`${config.backendURL}/products/add-product`, reqBody, axiosConfig)
+    .then((res) => {
+      debugger
+      if (res.status === 200) {
+        toastr.success(res.data.message);
+        setProduct({
+          productTitle: "",
+          distributorName: "",
+          productType: "",
+          discription: "",
+          taxes:""
+        })
+      }
+    })
+    .catch((err) => {
+      toastr.error(err.response.data.message);
+      console.log(err);
+    });
+  };
   return (
     <>
       <div className="layout-wrapper layout-content-navbar">
@@ -44,8 +99,6 @@ export default function Addproduct() {
                     <div className="card-body">
                       <form
                         id="formAccountSettings"
-                        method="POST"
-                        onsubmit="return false"
                       >
                         <div className="row">
                           <div className="mb-3 col-md-6">
@@ -58,9 +111,9 @@ export default function Addproduct() {
                             <input
                               className="form-control"
                               type="text"
-                              name="productName"
+                              name="productTitle"
                               id="productName"
-                              value={product.productName}
+                              value={product.productTitle}
                               onChange={handle}
                               placeholder={"Enter product name"}
                             />
@@ -76,9 +129,9 @@ export default function Addproduct() {
                             <input
                               className="form-control"
                               type="text"
-                              name="mnfName"
+                              name="distributorName"
                               id="mnfName"
-                              value={product.mnfName}
+                              value={product.distributorName}
                               onChange={handle}
                               placeholder={"Enter mnf name"}
                             />
@@ -93,8 +146,8 @@ export default function Addproduct() {
                             </label>
                             <select
                               id="medType"
-                              name="medType"
-                              value={product.medType}
+                              name="productType"
+                              value={product.productType}
                               onChange={handle}
                               className="select2 form-select"
                               // onChange={handle}
@@ -144,7 +197,7 @@ export default function Addproduct() {
                         </div>
                         <div className="mt-2">
                           <button
-                            type="submit"
+                            onClick={event => postData(event)}
                             className="btn btn-primary me-2"
                           >
                             Add

@@ -1,23 +1,72 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import toastr from "toastr";
 import Navbar from './Navbar'
 import Sidebar from './Sidebar'
 import productdata from './productdata'
 import Producttbody from './Producttbody'
-export default function Producttable() {
+import config from '../appConfig';
 
-const product = productdata.map((item) => {
+export default function Producttable() {
+  const authToken = localStorage.getItem("authToken");
+
+  const [productList, setProductList] = useState([]);
+
+  useEffect(() => {
+    getAllProducts();
+  }, [authToken]);
+
+  async function getAllProducts() {
+    await axios
+      .get(`${config.backendURL}/products/get-all-products`)
+      .then((res) => {
+        if (res.status === 200) {
+          setProductList(res.data.data);
+        }
+      })
+      .catch((err) => {
+        toastr.error(err.response.data.message);
+        console.log(err);
+      });
+  };
+
+  async function deleteProduct(event, productId) {
+    event.preventDefault();
+    console.log(productId);
+    await axios
+      .delete(`${config.backendURL}/products/delete-product`, {
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        data: {
+          "productId": productId
+        }
+      })
+      .then((res) => {
+        if (res.status === 200) {
+          toastr.success(res.data.message);
+          getAllProducts();
+        }
+      })
+      .catch((err) => {
+        toastr.error(err.response.data.message);
+        console.log(err);
+      });
+  };
+
+const product = productList && productList.length > 0 && productList.map((item) => {
   return (
     <Producttbody
-      key={item.id}
-      productname={item.productname}
-      mnfname={item.mnfname}
-      medicinetype={item.medicinetype}
+      key={item._id}
+      deleteProduct={deleteProduct}
+      productId={item.productId}
+      productname={item.productTitle}
+      mnfname={item.distributorName}
+      medicinetype={item.productType}
       delete={"Action"}
     />
   );
 }); 
-
   
   return (
     <>

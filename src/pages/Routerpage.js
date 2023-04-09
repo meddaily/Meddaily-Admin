@@ -17,6 +17,8 @@ import Producttable from "./Producttable";
 import Addproduct from "./Addproduct";
 import Addbul from "./Addbul";
 import Ordertable from "./Ordertable";
+import OrderDetails from "./OrderDetails";
+import UpdateOrder from "./UpdateOrder";
 import Navbar from "./Navbar";
 import Updateproduct from "./Updateporduct";
 import Offers from "./Offers";
@@ -46,12 +48,13 @@ export default function Routerpage() {
           <Route path="/addproduct" component={Addproduct} />
           <Route path="/addbul" component={Addbul} />
           <Route path="/ordertable" component={Ordertable} />
+          <Route path="/orderdetails/:id" component={OrderDetails} />
+          <Route path="/updateorder/:id" component={UpdateOrder} />
           <Route path="/navbar" component={Navbar} />
           <Route path="/updateproduct" component={Updateproduct} />
           <Route path="/offer" component={Offers} />
           <Route path="/returntable" component={Returntable} />
           <Route path="/payouttable" component={Payouttable} />
-         
         </Switch>
       </Router>
     </>

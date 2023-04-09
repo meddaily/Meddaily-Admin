@@ -118,10 +118,28 @@ export default function Sidebar() {
 
         {/* Orgders */}
         <li className="menu-item ">
-          <Link to="/ordertable" className="menu-link">
-            <i className="menu-icon tf-icons bx bx-box"></i>
-            <div data-i18n="Analytics">Orders</div>
-          </Link>
+        <Dropdown>
+            <Dropdown.Toggle
+              variant="success"
+              className="menu-link menu-toggle"
+            >
+              <i className="menu-icon tf-icons bx bx-box"></i>
+              <div data-i18n="Analytics">Orders</div>
+            </Dropdown.Toggle>
+
+            <Dropdown.Menu>
+              <li className="menu-item active">
+                <Link to="/ordertable" className="menu-link">
+                  <div data-i18n="Without menu">View Orders</div>
+                </Link>
+              </li>
+              <li className="menu-item">
+                <Link to="/addorder" className="menu-link">
+                  <div data-i18n="Without navbar">Add new Order</div>
+                </Link>
+              </li>
+            </Dropdown.Menu>
+          </Dropdown>
         </li>
 
         {/* Settings */}
