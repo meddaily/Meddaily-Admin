@@ -7,25 +7,25 @@ import config from '../appConfig';
 export default function Login() {
   let history = useHistory();
 
-  const [phoneNumber, setPhoneNumber] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setpassword] = useState('');
 
-  const handleChangePhone = (e) => {
-    setPhoneNumber(e.target.value);
+  const handleChangeEmail = (e) => {
+    setEmail(e.target.value);
   }
   const handleChangePassword = (e) => {
     setpassword(e.target.value);
   }
 
   async function login() {
-    if (phoneNumber === "") {
+    if (email === "") {
       return toastr.warning("Please enter credentials")
     }
-    if (phoneNumber === "") {
+    if (email === "") {
       return toastr.warning("Please enter credentials")
     }
     const reqBody = {
-      "phoneNumber": phoneNumber,
+      "email": email,
       "password": password
     }
     const axiosConfig = {
@@ -34,7 +34,7 @@ export default function Login() {
       }
     };
     await axios
-      .post(`${config.backendURL}/users/retailer-login`, reqBody, axiosConfig)
+      .post(`${config.backendURL}/users/admin-login`, reqBody, axiosConfig)
       .then((res) => {
         if (res.status === 200) {
           localStorage.setItem("authToken", res.data.data.token);
@@ -73,9 +73,9 @@ export default function Login() {
                       type="text"
                       className="form-control"
                       id="email"
-                      name="email-username"
+                      name="email"
                       placeholder="Enter your email or username"
-                      onChange={handleChangePhone}
+                      onChange={handleChangeEmail}
                       autoFocus
                     />
                   </div>
