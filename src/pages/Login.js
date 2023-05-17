@@ -30,32 +30,39 @@ export default function Login() {
     }
     const axiosConfig = {
       headers: {
-          'Content-Type': 'application/json'
+        'Content-Type': 'application/json'
       }
     };
     await axios
-      .post(`${config.backendURL}/users/admin-login`, reqBody, axiosConfig)
+      .post(`${config.backendURL}/login`, reqBody, axiosConfig)
       .then((res) => {
+        console.log("res", res.data);
         if (res.status === 200) {
-          localStorage.setItem("authToken", res.data.data.token);
-          history.push("/");
-          window.location.reload();
+          if (res.data.status != 'fail') {
+            localStorage.setItem("authToken", res.data.token);
+            history.push("/");
+            window.location.reload();
+          } else {
+            toastr.error(res.data.message);
+            setEmail();
+            setpassword();
+          }
         }
       })
       .catch((err) => {
-        toastr.error(err.response.data.message);
+        toastr.error(err);
         console.log(err);
       });
   }
 
   return (
     <>
-      <div class="container-xxl" style={{width:"45rem"}}>
+      <div className="container-xxl" style={{ width: "45rem" }}>
         <div className="authentication-wrapper authentication-basic container-p-y" >
           <div className="authentication-inner">
             <div className="card">
               <div className="card-body">
-                <div className="app-brand justify-content-center" style={{padding:"1rem .5rem"}}>
+                <div className="app-brand justify-content-center" style={{ padding: "1rem .5rem" }}>
                   <Link to="index.html" className="app-brand-link gap-2">
                     <img src="../assets/img/logo.png" alt="user" />
                   </Link>
