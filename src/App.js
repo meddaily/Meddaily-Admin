@@ -10,10 +10,8 @@ import { useEffect, useState } from 'react';
 function App() {
   let history = useHistory();
 
-  const [ isLoggedIn, setIsLoggedIn ]  = useState(false);
-  useEffect(() => {
-    checkAuth();
-  })
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
   const checkAuth = () => {
     const authToken = localStorage.getItem("authToken");
     if (authToken) {
@@ -23,22 +21,27 @@ function App() {
       history.push('/login')
     }
   }
+
+  useEffect(() => {
+    checkAuth();
+  })
+
   return (
     <>
-   
-    <div className="App">
-    {
-      isLoggedIn && <Routerpage />
-    }
-    {
-      !isLoggedIn && <AuthRoute />
-    }
-{/* <Ham/> */}
-    
 
-    </div>
+      <div className="App">
+        {
+          isLoggedIn && <Routerpage />
+        }
+        {
+          !isLoggedIn && <AuthRoute />
+        }
+        {/* <Ham/> */}
+
+
+      </div>
     </>
-    
+
   );
 }
 
