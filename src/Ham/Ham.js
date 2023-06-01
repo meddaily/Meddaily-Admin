@@ -44,7 +44,7 @@ function Ham() {
             <aside className=" menu-vertical menu bg-menu-theme h-100 d-block position-absolute left-0 start-0 position-absolute">
               <div className="app-brand demo">
                 <Link to="/" className="app-brand-link">
-                  <img src="../assets/img/logo1.png" alt="logo" />
+                  <img src="../assets/img/logo2.png" alt="logo" style={{height:"70px",width:"150px"}} />
                 </Link>
               </div>
 
@@ -66,7 +66,7 @@ function Ham() {
                       className="menu-link menu-toggle"
                     >
                       <i className="menu-icon tf-icons bx bx-box"></i>
-                      <div data-i18n="Layouts">vendor Management</div>
+                      <div data-i18n="Layouts">Distributor Management</div>
                     </Dropdown.Toggle>
 
                     <Dropdown.Menu>

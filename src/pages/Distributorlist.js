@@ -4,8 +4,8 @@ import toastr from "toastr";
 import { Link } from "react-router-dom";
 import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
-import Distributordata from "./Distributordata";
-import config from "../appConfig";
+// import Distributordata from "./Distributordata";
+// import config from "../appConfig";
 
 export default function Distributorlist() {
   const authToken = localStorage.getItem("authToken");
@@ -18,17 +18,17 @@ export default function Distributorlist() {
 
   async function getAllDistributors() {
     await axios
-      .get(`${config.backendURL}/users/get-distributors`)
+      .get(`http://13.235.8.138:81/distributor_list`)
       .then((res) => {
         if (res.status === 200) {
-          setDistributorList(res.data.data);
+          setDistributorList(res?.data?.data);
         }
       })
       .catch((err) => {
-        toastr.error(err.response.data.message);
+        toastr.error(err?.response?.data?.message);
         console.log(err);
       });
-  };
+  }
   return (
     <>
       <div className="layout-wrapper layout-content-navbar">
@@ -57,32 +57,41 @@ export default function Distributorlist() {
                           </tr>
                         </thead>
                         <tbody className="table-border-bottom-0">
-                          {
-                            distributorList && distributorList.length > 0 && distributorList.map((dist, k) => [
-                              <tr key={k.toString()}>
+                          {distributorList &&
+                            distributorList.length > 0 &&
+                            distributorList.map((dist, k) => [
+                              <tr key={k}>
                                 <td>
                                   <i className="fab fa-angular fa-lg text-danger me-3"></i>{" "}
-                                  <strong>{`${dist.firstName || ''} ${dist.lastName}`}</strong>
+                                  <strong>{`${dist.firstname || ""} ${
+                                    dist.lastname
+                                  }`}</strong>
                                 </td>
-                                <td>{dist.distributorCode || 'NA'}</td>
+                                <td>{dist.distributorCode || "NA"}</td>
                                 <td>
-                                {`${dist.area || ''}, ${dist.city || ''}, ${dist.state || ''}, ${dist.pinCode || ''}` || 'NA'}
+                                  {`${dist.area || ""}, ${dist.city || ""}
+                                   ${
+                                    dist.state || ""
+                                  } ${dist.pinCode || ""}` || "NA"}
                                 </td>
-                                <td>{dist.phoneNumber || 'NA'}</td>
+                                <td>{Number(dist.phonenumber) || "NA"}</td>
                                 <td>
                                   <div className="dropdown">
                                     <Link
                                       className="dropdown-item"
-                                      to="/distributordetails"
+                                      // to="/distributordetails"
+                                      to={{
+                                        pathname: "/distributordetails",
+                                        state: { id: dist._id },
+                                      }}
                                     >
                                       {" "}
                                       View Full Details
                                     </Link>
                                   </div>
                                 </td>
-                              </tr>
-                            ])
-                          }
+                              </tr>,
+                            ])}
                         </tbody>
                       </table>
                     </div>

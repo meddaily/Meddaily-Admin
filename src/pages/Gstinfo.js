@@ -1,13 +1,73 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import { useHistory } from "react-router-dom";
 import Navbar from "./Navbar";
+import axios from "axios";
 export default function Distributordetails() {
+  const [formData, setFormData] = useState({
+    gstno: "",
+    gstimg: "",
+    bankname: "",
+    benificiaryname: "",
+    accountno: "",
+    ifsccode: "",
+    upiid: "",
+  });
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value,
+    }));
+  };
+
   let history = useHistory();
-  function handleclick() {
-    history.push("#");
-  }
+  // function handleclick() {
+  //   // history.push("#");
+  //   const handleAppandAdd = async () => {
+  //     const reqBody = {
+  //        "gstNo":"",
+  //           };
+  //     const axiosConfig = {
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //     };
+  //     try {
+  //       const res = axios.post(
+  //         "http://13.235.8.138:81/distributor_approve",
+  //         reqBody,
+  //         axiosConfig
+  //       );
+  //       console.log(res);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
+  //   handleAppandAdd();
+  // }
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const axiosConfig = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+
+    try {
+      const res = await axios.post(
+        "http://13.235.8.138:81/distributor_approve",
+        formData,
+        axiosConfig
+      );
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
       <div className="layout-wrapper layout-content-navbar">
@@ -47,6 +107,8 @@ export default function Distributordetails() {
                               id="gst"
                               name="gst"
                               placeholder="12123323423"
+                              value={formData.gstno}
+                              onChange={handleInputChange}
                             />
                           </div>
                           <div className="mb-3 col-md-6">
@@ -62,6 +124,8 @@ export default function Distributordetails() {
                               id="gst"
                               name="gst"
                               placeholder="view/img.jpg"
+                              value={formData.gstimg}
+                              onChange={handleInputChange}
                             />
                           </div>
                         </div>
@@ -94,7 +158,9 @@ export default function Distributordetails() {
                               type="text"
                               id="gst"
                               name="gst"
-                              placeholder="view/img.jpg"
+                              placeholder="Bank Name"
+                              value={formData.bankname}
+                              onChange={handleInputChange}
                             />
                           </div>
                           <div className="mb-3 col-md-6">
@@ -109,7 +175,9 @@ export default function Distributordetails() {
                               type="text"
                               id="gst"
                               name="gst"
-                              placeholder="12123323423"
+                              placeholder="Benificiary Name"
+                              value={formData.benificiaryname}
+                              onChange={handleInputChange}
                             />
                           </div>
                           <div className="mb-3 col-md-6">
@@ -124,7 +192,9 @@ export default function Distributordetails() {
                               type="text"
                               id="gst"
                               name="gst"
-                              placeholder="view/img.jpg"
+                              placeholder="123456789"
+                              value={formData.accountno}
+                              onChange={handleInputChange}
                             />
                           </div>
                           <div className="mb-3 col-md-6">
@@ -140,6 +210,8 @@ export default function Distributordetails() {
                               id="gst"
                               name="gst"
                               placeholder="12123323423"
+                              value={formData.ifsccode}
+                              onChange={handleInputChange}
                             />
                           </div>
                           <div className="mb-3 col-md-6">
@@ -154,7 +226,9 @@ export default function Distributordetails() {
                               type="text"
                               id="gst"
                               name="gst"
-                              placeholder="view/img.jpg"
+                              placeholder="12345678"
+                              value={formData.upiid}
+                              onChange={handleInputChange}
                             />
                           </div>
                         </div>
@@ -169,7 +243,8 @@ export default function Distributordetails() {
                             backgroundColor: "Darkblue",
                             border: "Darkblue",
                           }}
-                          onClick={handleclick}
+                          // onClick={handleclick}
+                          onClick={handleSubmit}
                         >
                           Approve and add
                         </button>

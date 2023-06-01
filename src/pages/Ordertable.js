@@ -13,22 +13,32 @@ export default function Ordertable() {
   const [orderList, setOrderList] = useState([]);
 
   useEffect(() => {
-    getAllOrders();
+    // getAllOrders();
+    handleOrders();
   }, [authToken]);
 
-  async function getAllOrders() {
-    await axios
-      .get(`${config.backendURL}/orders/all-orders`)
-      .then((res) => {
-        if (res.status === 200) {
-          setOrderList(res.data.data);
-        }
-      })
-      .catch((err) => {
-        toastr.error(err.response.data.message);
-        console.log(err);
-      });
+  const handleOrders = async () => {
+    try {
+      const response = await axios.get("http://13.235.8.138:81/all_order");
+      setOrderList(response?.data?.message);
+    } catch (error) {
+      console.error(error);
+    }
   };
+
+  // async function getAllOrders() {
+  //   await axios
+  //     .get(`http://13.235.8.138:81/all_order`)
+  //     .then((res) => {
+  //       if (res.status === 200) {
+  //         setOrderList(res.data.data);
+  //       }
+  //     })
+  //     .catch((err) => {
+  //       toastr.error(err.response.data.message);
+  //       console.log(err);
+  //     });
+  // };
 
   async function deleteOrder(event, orderId) {
     event.preventDefault();
@@ -36,37 +46,41 @@ export default function Ordertable() {
     await axios
       .delete(`${config.backendURL}/orders/delete-order`, {
         headers: {
-          'Content-Type': 'application/json'
+          "Content-Type": "application/json",
         },
         data: {
-          "orderId": orderId
-        }
+          orderId: orderId,
+        },
       })
       .then((res) => {
         if (res.status === 200) {
           toastr.success(res.data.message);
-          getAllOrders();
+          // getAllOrders();
+          handleOrders();
         }
       })
       .catch((err) => {
         toastr.error(err.response.data.message);
         console.log(err);
       });
-  };
+  }
 
-  const order = orderList && orderList.length > 0 && orderList.map((item) => {
-    return (
-      <Ordertbody
-        id={item.orderId}
-        orderId={item.orderId}
-        userType={item.userType}
-        userId={item.userId}
-        price={item.totalPrice}
-        details={"View Full details"}
-        deleteOrder={deleteOrder}
-      />
-    );
-  });
+  const order =
+    orderList &&
+    orderList.length > 0 &&
+    orderList.map((item) => {
+      return (
+        <Ordertbody
+          id={item._id}
+          orderId={item.order_id}
+          userType={item.userType}
+          userId={item.userId}
+          price={item.price}
+          details={"View Full details"}
+          deleteOrder={deleteOrder}
+        />
+      );
+    });
   return (
     <>
       <div className="layout-wrapper layout-content-navbar">

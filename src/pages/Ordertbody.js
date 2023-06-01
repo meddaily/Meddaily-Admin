@@ -7,10 +7,10 @@ export default function Ordertbody(props) {
       <tbody className="table-border-bottom-0">
         <tr>
           <td>
-            <i className="fab fa-angular fa-lg text-danger me-3"></i> {props.id}
+            <i className="fab fa-angular fa-lg text-danger me-3"></i> {props.orderId}
           </td>
-          <td>{props.userType}</td>
-          <td>{props.userId}</td>
+          <td>{props.userType?props.userType:"NA"}</td>
+          <td>{props.userId?props.userId:"NA"}</td>
           <td>{props.price}</td>
           <td style={{padding:".625rem 5.25rem"}} >  
             <div className="card-header d-flex justify-content-between align-items-center">

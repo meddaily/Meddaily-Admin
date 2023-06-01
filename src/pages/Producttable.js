@@ -3,9 +3,9 @@ import axios from "axios";
 import toastr from "toastr";
 import Navbar from './Navbar'
 import Sidebar from './Sidebar'
-import productdata from './productdata'
+// import productdata from './productdata'
 import Producttbody from './Producttbody'
-import config from '../appConfig';
+// import config from '../appConfig';
 
 export default function Producttable() {
   const authToken = localStorage.getItem("authToken");
@@ -18,7 +18,7 @@ export default function Producttable() {
 
   async function getAllProducts() {
     await axios
-      .get(`${config.backendURL}/products/get-all-products`)
+      .get(`http://13.235.8.138:81/getproduct`)
       .then((res) => {
         if (res.status === 200) {
           setProductList(res.data.data);
@@ -29,12 +29,10 @@ export default function Producttable() {
         console.log(err);
       });
   };
-
-  async function deleteProduct(event, productId) {
-    event.preventDefault();
+  async function deleteProduct(productId) {
     console.log(productId);
     await axios
-      .delete(`${config.backendURL}/products/delete-product`, {
+      .delete(`http://13.235.8.138:81/deleteproduct/${productId}`, {
         headers: {
           'Content-Type': 'application/json'
         },
@@ -44,7 +42,7 @@ export default function Producttable() {
       })
       .then((res) => {
         if (res.status === 200) {
-          toastr.success(res.data.message);
+          toastr.success(res?.data?.message);
           getAllProducts();
         }
       })
@@ -58,11 +56,13 @@ const product = productList && productList.length > 0 && productList.map((item) 
   return (
     <Producttbody
       key={item._id}
-      deleteProduct={deleteProduct}
+      deleteProduct={()=>deleteProduct(item._id)}
       productId={item.productId}
-      productname={item.productTitle}
-      mnfname={item.distributorName}
-      medicinetype={item.productType}
+      // productname={item.productTitle}
+      productname={item.title}
+      // mnfname={item.distributorName}
+      mnfname={item.sub_title}
+      medicinetype={item.productType?item.productType:"N/A"}
       delete={"Action"}
     />
   );
@@ -117,10 +117,10 @@ const product = productList && productList.length > 0 && productList.map((item) 
                   <table className="table">
                     <thead>
                       <tr>
-                        <th style={{padding:".625rem 5.25rem"}} > Product Name</th>
-                        <th style={{padding:".625rem 5.25rem"}} >Mnf Name</th>
-                        <th style={{padding:".625rem 5.25rem"}} >Medicine Type</th>
-                        <th style={{padding:".625rem 5.25rem"}} >Action</th>
+                        <th style={{padding:".625rem 1.25rem"}} >Product Name</th>
+                        <th style={{padding:".625rem 1.25rem"}} >Mnf Name</th>
+                        <th style={{padding:".625rem 1.25rem"}} >Medicine Type</th>
+                        <th style={{padding:".625rem 1.25rem"}} >Action</th>
                       </tr>
                     </thead>
                     {product}

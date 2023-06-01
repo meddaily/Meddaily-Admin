@@ -9,7 +9,7 @@ export default function Sidebar() {
     >
       <div className="app-brand demo">
         <Link to="/" className="app-brand-link">
-          <img src="../assets/img/logo1.png" alt="logo" />
+          <img src="../assets/img/logo2.png" alt="logo" style={{height:"90px",width:"175px"}} />
         </Link>
       </div>
 
@@ -31,7 +31,7 @@ export default function Sidebar() {
               className="menu-link menu-toggle"
             >
               <i className="menu-icon tf-icons bx bx-box"></i>
-              <div data-i18n="Layouts">vendor Management</div>
+              <div data-i18n="Layouts" style={{fontSize:"14px"}}>Distributor Management</div>
             </Dropdown.Toggle>
 
             <Dropdown.Menu>

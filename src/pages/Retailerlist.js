@@ -4,8 +4,8 @@ import toastr from "toastr";
 import { Link } from "react-router-dom";
 import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
-import config from "../appConfig";
-import { Button } from "react-bootstrap";
+// import config from "../appConfig";
+// import { Button } from "react-bootstrap";
 
 
 export default function Retailerlist() {
@@ -19,10 +19,11 @@ export default function Retailerlist() {
 
   async function getAllRetailers() {
     await axios
-      .get(`${config.backendURL}/users/get-retailers`)
+      .get(`http://13.235.8.138:81/retailer_list`)
       .then((res) => {
         if (res.status === 200) {
           setRetailerList(res.data.data);
+          console.log(res.data.data._id)
         }
       })
       .catch((err) => {
@@ -61,18 +62,22 @@ export default function Retailerlist() {
                               <tr key={k.toString()}>
                                 <td>
                                   <i className="fab fa-angular fa-lg text-danger me-3"></i>{" "}
-                                  <strong>{ret.OwnerName || 'NA'}</strong>
+                                  <strong>{ret.ownername || 'NA'}</strong>
                                 </td>
-                                <td>{ret.OwnerName || 'NA'}</td>
+                                <td>{ret.businessname || 'NA'}</td>
                                 <td>
                                 {`${ret.address || ''}, ${ret.area || ''}, ${ret.city || ''}` || 'NA'}
                                 </td>
-                                <td>{ret.phoneNumber || 'NA'}</td>
+                                <td>{ret.phonenumber || 'NA'}</td>
                                 <td>
                                   <div className="dropdown">
                                     <Link
                                       className="dropdown-item"
-                                      to="/retailerdetails"
+                                      // to="/retailerdetails"
+                                      to={{
+                                        pathname: "/retailerdetails",
+                                        state: { id: ret._id },
+                                      }}
                                     >
                                       {" "}
                                       View Full Details

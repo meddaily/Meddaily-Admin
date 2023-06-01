@@ -1,9 +1,63 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
+import axios from "axios";
 export default function Distributordetails() {
+  const defaultFormData = {
+    firstname: "",
+    lastname: "",
+    phonenumber: "",
+    email: "",
+    city: "",
+    area: "",
+    distributorcode: "",
+    distributortype: "",
+    pincode: "",
+  };
+  const [formData, setFormData] = useState(defaultFormData);
+  const [order, setOrder] = useState("");
+  const location = useLocation();
+  const { id } = location.state;
+  useEffect(() => {
+    handleViewDetails();
+    handleOrders();
+  }, []);
+
+  const handleViewDetails = async (e) => {
+    try {
+      const response = await axios.post(
+        "http://13.235.8.138:81/distributor_detail",
+        { ...formData, id: id }
+      );
+      setFormData(response?.data?.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleOrders = async () => {
+    try {
+      const response = await axios.get("http://13.235.8.138:81/all_order");
+      setOrder(response?.data?.message);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  const {
+    firstname,
+    lastname,
+    phonenumber,
+    email,
+    city,
+    area,
+    distributorcode,
+    distributortype,
+    pincode,
+  } = formData;
+
   return (
     <>
       <div className="layout-wrapper layout-content-navbar">
@@ -11,8 +65,7 @@ export default function Distributordetails() {
           <Sidebar />
 
           <div className="layout-page">
-           
-            <Navbar/>
+            <Navbar />
 
             <div className="content-wrapper">
               <div className="container-xxl flex-grow-1 container-p-y">
@@ -45,7 +98,13 @@ export default function Distributordetails() {
                               type="text"
                               id="firstName"
                               name="firstName"
-                              value="John"
+                              value={firstname}
+                              onChange={(e) =>
+                                setFormData({
+                                  ...formData,
+                                  firstname: e.target.value,
+                                })
+                              }
                               autofocus
                             />
                           </div>
@@ -61,7 +120,13 @@ export default function Distributordetails() {
                               type="text"
                               name="lastName"
                               id="lastName"
-                              value="Doe"
+                              value={lastname}
+                              onChange={(e) =>
+                                setFormData({
+                                  ...formData,
+                                  lastname: e.target.value,
+                                })
+                              }
                             />
                           </div>
                           <div className="mb-3 col-md-6">
@@ -78,6 +143,13 @@ export default function Distributordetails() {
                                 id="phoneNumber"
                                 name="phoneNumber"
                                 className="form-control"
+                                value={Number(phonenumber)}
+                                onChange={(e) =>
+                                  setFormData({
+                                    ...formData,
+                                    phonenumber: e.target.value,
+                                  })
+                                }
                                 placeholder="202 555 0111"
                               />
                             </div>
@@ -94,7 +166,13 @@ export default function Distributordetails() {
                               type="text"
                               id="email"
                               name="email"
-                              value="john.doe@example.com"
+                              value={email}
+                              onChange={(e) =>
+                                setFormData({
+                                  ...formData,
+                                  email: e.target.value,
+                                })
+                              }
                               placeholder="john.doe@example.com"
                             />
                           </div>
@@ -111,6 +189,12 @@ export default function Distributordetails() {
                               id="organization"
                               name="organization"
                               value="ThemeSelection"
+                              onChange={(e) =>
+                                setFormData({
+                                  ...formData,
+                                  firstname: e.target.value,
+                                })
+                              }
                             />
                           </div>
                           <div className="mb-3 col-md-6">
@@ -125,6 +209,13 @@ export default function Distributordetails() {
                               className="form-control"
                               id="zipCode"
                               name="zipCode"
+                              value={pincode}
+                              onChange={(e) =>
+                                setFormData({
+                                  ...formData,
+                                  pincode: e.target.value,
+                                })
+                              }
                               placeholder="231465"
                               maxlength="6"
                             />
@@ -141,6 +232,13 @@ export default function Distributordetails() {
                               className="form-control"
                               id="City"
                               name="City"
+                              value={city}
+                              onChange={(e) =>
+                                setFormData({
+                                  ...formData,
+                                  city: e.target.value,
+                                })
+                              }
                               placeholder="City"
                             />
                           </div>
@@ -155,6 +253,13 @@ export default function Distributordetails() {
                               className="form-control"
                               type="text"
                               id="Area"
+                              value={area}
+                              onChange={(e) =>
+                                setFormData({
+                                  ...formData,
+                                  area: e.target.value,
+                                })
+                              }
                               name="Area"
                               placeholder="Area"
                             />
@@ -171,7 +276,7 @@ export default function Distributordetails() {
                               id="country"
                               className="select2 form-select"
                             >
-                              <option value="">Select</option>
+                              <option value="">{distributorcode}</option>
                               <option value="Australia">Australia</option>
                               <option value="Bangladesh">Bangladesh</option>
                               <option value="Belarus">Belarus</option>
@@ -215,7 +320,7 @@ export default function Distributordetails() {
                               id="language"
                               className="select2 form-select"
                             >
-                              <option value="">Select </option>
+                              <option value="">{distributortype}</option>
                               <option value="en">English</option>
                               <option value="fr">French</option>
                               <option value="de">German</option>
@@ -301,23 +406,29 @@ export default function Distributordetails() {
                         Filter
                       </button>
                       <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="javascript:void(0);">Filter By Week</a></li>
-                        <li><a class="dropdown-item" href="javascript:void(0);">Filter By Month</a></li>
-                        <li><a class="dropdown-item" href="javascript:void(0);">Custom Filter</a></li>
+                        <li>
+                          <a class="dropdown-item" href="javascript:void(0);">
+                            Filter By Week
+                          </a>
+                        </li>
+                        <li>
+                          <a class="dropdown-item" href="javascript:void(0);">
+                            Filter By Month
+                          </a>
+                        </li>
+                        <li>
+                          <a class="dropdown-item" href="javascript:void(0);">
+                            Custom Filter
+                          </a>
+                        </li>
                       </ul>
                     </div>
                   </div>
 
-
-
-
                   {/* Total payment */}
 
-                 
                   <div className="card">
-                    <h5 className="card-header float-start">
-                     Payment Details
-                    </h5>
+                    <h5 className="card-header float-start">Payment Details</h5>
                     <div className="table-responsive text-nowrap">
                       <table className="table">
                         <thead>
@@ -325,87 +436,77 @@ export default function Distributordetails() {
                             <th>Order ID</th>
                             <th>Retailer name</th>
                             <th>Total Amount </th>
-                          
+
                             <th>Details</th>
                           </tr>
                         </thead>
                         <tbody className="table-border-bottom-0">
-                          <tr>
-                            <td>
-                              <i className="fab fa-angular fa-lg text-danger me-3"></i>{" "}
-                              <strong>Prabhahar</strong>
-                            </td>
-                            <td>Medi</td>
-                            <td>
-                              28, balaji street, barani nagar,vannar pettai.
-                            </td>
-                    
-                            <td>
-                              <div className="dropdown">
-                                <Link
-                                  className="dropdown-item"
-                                  to="/distributordetails"
-                                >
-                                  {" "}
-                                  View Full Details
-                                </Link>
-                              </div>
-                            </td>
-                          </tr>
+                          {order &&
+                            order.length > 0 &&
+                            order.map((val, i) => {
+                              const {
+                                _id,
+                                order_id,
+                                retailer_id,
+                                price,
+                                products,
+                              } = val;
+                              return (
+                                <tr key={_id}>
+                                  <td>{order_id}</td>
+                                  <td>{retailer_id}</td>
+                                  <td>{price}</td>
+                                  <td>
+                                    {/* Render the details or link */}
+                                    <div className="dropdown">
+                                      <Link
+                                        className="dropdown-item"
+                                        to="/distributordetails"
+                                      >
+                                        View Full Details
+                                      </Link>
+                                    </div>
+                                  </td>
+                                </tr>
+                              );
+                            })}
                         </tbody>
-                        <tbody className="table-border-bottom-0">
-                          <tr>
-                            <td>
-                              <i className="fab fa-angular fa-lg text-danger me-3"></i>{" "}
-                              <strong>Prabhahar</strong>
-                            </td>
-                            <td>Medi</td>
-                            <td>
-                              28, balaji street, barani nagar,vannar pettai.
-                            </td>
-                    
-                            <td>
-                              <div className="dropdown">
-                                <Link
-                                  className="dropdown-item"
-                                  to="/distributordetails"
-                                >
-                                  {" "}
-                                  View Full Details
-                                </Link>
-                              </div>
-                            </td>
-                          </tr>
-                        </tbody>
-                        <tbody className="table-border-bottom-0">
-                          <tr>
-                            <td>
-                              <i className="fab fa-angular fa-lg text-danger me-3"></i>{" "}
-                              <strong>Prabhahar</strong>
-                            </td>
-                            <td>Medi</td>
-                            <td>
-                              28, balaji street, barani nagar,vannar pettai.
-                            </td>
-                    
-                            <td>
-                              <div className="dropdown">
-                                <Link
-                                  className="dropdown-item"
-                                  to="/distributordetails"
-                                >
-                                  {" "}
-                                  View Full Details
-                                </Link>
-                              </div>
-                            </td>
-                          </tr>
-                        </tbody>
+
+                        {/* <tbody className="table-border-bottom-0">
+                          {order &&
+                            order.length > 0 &&
+                            order.map((val, i) => {
+                              const [order_id] = val;
+                              console.log("order_id: ", order_id);
+                              return (
+                                <tr>
+                                  <td>
+                                    <i className="fab fa-angular fa-lg text-danger me-3"></i>{" "}
+                                    <strong>Prabhahar</strong>
+                                  </td>
+                                  <td>Medi</td>
+                                  <td>
+                                    28, balaji street, barani nagar,vannar
+                                    pettai.
+                                  </td>
+
+                                  <td>
+                                    <div className="dropdown">
+                                      <Link
+                                        className="dropdown-item"
+                                        to="/distributordetails"
+                                      >
+                                        {" "}
+                                        View Full Details
+                                      </Link>
+                                    </div>
+                                  </td>
+                                </tr>
+                              );
+                            })}
+                        </tbody> */}
                       </table>
                     </div>
-                 
-                    
-
                   </div>
                 </div>
                 <div className="content-backdrop fade"></div>

@@ -4,12 +4,12 @@ import toastr from "toastr";
 import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
 import { useState } from "react";
-import config from "../appConfig";
+// import config from "../appConfig";
 
 export default function Addproduct() {
   const [product, setProduct] = useState({
-    productTitle: "",
-    distributorName: "",
+    title: "",
+    sub_title: "",
     productType: "",
     discription: "",
     taxes: "",
@@ -56,7 +56,7 @@ export default function Addproduct() {
     };
 
     await axios
-    .post(`${config.backendURL}/products/add-product`, reqBody, axiosConfig)
+    .post(`http://13.235.8.138:81/addProduct`, reqBody, axiosConfig)
     .then((res) => {
       debugger
       if (res.status === 200) {

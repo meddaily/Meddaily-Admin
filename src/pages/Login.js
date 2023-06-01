@@ -2,69 +2,73 @@ import React, { useState } from "react";
 import axios from "axios";
 import toastr from "toastr";
 import { Link, useHistory } from "react-router-dom";
-import config from '../appConfig';
+// import config from "../appConfig";
 
 export default function Login() {
   let history = useHistory();
 
-  const [email, setEmail] = useState('');
-  const [password, setpassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setpassword] = useState("");
 
   const handleChangeEmail = (e) => {
     setEmail(e.target.value);
-  }
+  };
   const handleChangePassword = (e) => {
     setpassword(e.target.value);
-  }
+  };
 
   async function login() {
     if (email === "") {
-      return toastr.warning("Please enter credentials")
+      return toastr.warning("Please enter credentials");
     }
     if (email === "") {
-      return toastr.warning("Please enter credentials")
+      return toastr.warning("Please enter credentials");
     }
     const reqBody = {
-      "email": email,
-      "password": password
-    }
+      email: email,
+      password: password,
+    };
     const axiosConfig = {
       headers: {
-          'Content-Type': 'application/json'
-      }
+        "Content-Type": "application/json",
+      },
     };
     await axios
-      .post(`${config.backendURL}/users/admin-login`, reqBody, axiosConfig)
+      .post(`http://13.235.8.138:81/login`, reqBody, axiosConfig)
       .then((res) => {
         if (res.status === 200) {
-          localStorage.setItem("authToken", res.data.data.token);
+          localStorage.setItem("authToken", res?.data?.data?.token);
           history.push("/");
           window.location.reload();
         }
       })
       .catch((err) => {
-        toastr.error(err.response.data.message);
+        toastr.error(err?.response?.data?.message);
         console.log(err);
       });
   }
 
   return (
     <>
-      <div class="container-xxl" style={{width:"45rem"}}>
-        <div className="authentication-wrapper authentication-basic container-p-y" >
+      <div class="container-xxl" style={{ width: "45rem" }}>
+        <div className="authentication-wrapper authentication-basic container-p-y">
           <div className="authentication-inner">
             <div className="card">
               <div className="card-body">
-                <div className="app-brand justify-content-center" style={{padding:"1rem .5rem"}}>
+                <div
+                  className="app-brand justify-content-center"
+                  style={{ padding: "1rem .5rem" }}
+                >
                   <Link to="index.html" className="app-brand-link gap-2">
-                    <img src="../assets/img/logo.png" alt="user" />
+                    <img
+                      src="../assets/img/logo2.png"
+                      alt="user"
+                      style={{ height: "120px", width: "300px" }}
+                    />
                   </Link>
                 </div>
 
-                <div
-                  id="formAuthentication"
-                  className="mb-3"
-                >
+                <div id="formAuthentication" className="mb-3">
                   <div className="mb-3">
                     <label for="email" className="form-label float-start">
                       Email or Username
@@ -115,9 +119,10 @@ export default function Login() {
                   </div>
                   <div className="mb-3">
                     <button
-                      className="btn btn-primary d-grid w-100"
+                      className="btn d-grid w-100"
                       type="submit"
                       onClick={login}
+                      style={{ background: "#6eafab", color: "white" }}
                     >
                       Sign in
                     </button>

@@ -3,7 +3,7 @@ import toastr from "toastr";
 import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
 import { useState } from "react";
-import config from "../appConfig";
+// import config from "../appConfig";
 import axios from "axios";
 
 export default function Adddis() {
@@ -12,71 +12,116 @@ export default function Adddis() {
     lastName: "",
     phoneNumber: "",
     email: "",
-    pinCode:"",
-    city:"",
-    area:"",
-    state:"",
-    businessName:"",
-    companyName:"",
+    pinCode: "",
+    city: "",
+    area: "",
+    state: "",
+    businessName: "",
+    companyName: "",
     password: "",
     confirmPassword: "",
-    distributorCode:"",
-    distributorType:""
+    distributorCode: "",
+    distributorType: "",
   });
 
-  let name ,value;
+  let name, value;
   function handle(e) {
     name = e.target.name;
     value = e.target.value;
     setDistributor({ ...distributor, [name]: value });
   }
 
-    //data send in backend by using async function postData
-    const postData = async (e) => {
-      e.preventDefault();
-      const {
-        firstName,
-        lastName,
-        phoneNumber,
-        email,
-        pinCode,
-        city,
-        area,
-        state,
-        businessName,
-        companyName,
-        password,
-        confirmPassword,
-        distributorCode,
-        distributorType
-      } = distributor;
+  //data send in backend by using async function postData
+  const postData = async (e) => {
+    e.preventDefault();
+    const {
+      firstName,
+      lastName,
+      phoneNumber,
+      email,
+      pinCode,
+      city,
+      area,
+      state,
+      businessName,
+      companyName,
+      password,
+      confirmPassword,
+      distributorCode,
+      distributorType,
+    } = distributor;
+    if (firstName === "") {
+      return toastr.warning("firstname cannot be empty !");
+    }
+    if (lastName === "") {
+      return toastr.warning("lastname cannot be empty !");
+    }
+    if (phoneNumber === "") {
+      return toastr.warning("phonenumber cannot be empty !");
+    }
+    if (email === "") {
+      return toastr.warning("email cannot be empty !");
+    }
+    if (city === "") {
+      return toastr.warning("city cannot be empty !");
+    }
+    if (area === "") {
+      return toastr.warning("area cannot be empty !");
+    }
+    if (pinCode === "") {
+      return toastr.warning("pincode cannot be empty !");
+    }
+    if (state === "") {
+      return toastr.warning("state cannot be empty !");
+    }
+    if (businessName === "") {
+      return toastr.warning("businessname cannot be empty !");
+    }
+    if (companyName === "") {
+      return toastr.warning("company cannot be empty !");
+    }
+    if (password === "") {
+      return toastr.warning("password cannot be empty !");
+    }
+    if (confirmPassword === "") {
+      return toastr.warning("confirmpassword cannot be empty !");
+    }
+    if (password !== confirmPassword) {
+      return toastr.warning("Password and Confirm Password must match!");
+    }
+    if (distributorCode === "") {
+      return toastr.warning("distributorcode cannot be empty !");
+    }
+    if (distributorType === "") {
+      return toastr.warning("distributortype  cannot be empty !");
+    }
 
-      const reqBody = {
-        "firstName": firstName,
-        "lastName": lastName,
-        "phoneNumber": phoneNumber,
-        "email": email,
-        "pinCode": pinCode,
-        "city": city,
-        "area": area,
-        "state": state,
-        "businessName": businessName,
-        "companyName": companyName,
-        "password": password,
-        "confirmPassword": confirmPassword,
-        "distributorCode": distributorCode,
-        "distributorType": distributorType
-      }
-      const axiosConfig = {
-        headers: {
-            'Content-Type': 'application/json'
-        }
-      };
+    const reqBody = {
+      firstName: firstName,
+      lastName: lastName,
+      phoneNumber: phoneNumber,
+      email: email,
+      pinCode: pinCode,
+      city: city,
+      area: area,
+      state: state,
+      businessName: businessName,
+      companyName: companyName,
+      password: password,
+      confirmPassword: confirmPassword,
+      distributorCode: distributorCode,
+      distributorType: distributorType,
+    };
+    const axiosConfig = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
 
-      await axios
-      .post(`${config.backendURL}/users/distributor-register`, reqBody, axiosConfig)
+    await axios
+      .post(`http://13.235.8.138:81/distributor_register`, reqBody, axiosConfig)
       .then((res) => {
-        debugger
+        debugger;
         if (res.status === 200) {
           toastr.success(res.data.message);
           setDistributor({
@@ -84,24 +129,24 @@ export default function Adddis() {
             lastName: "",
             phoneNumber: "",
             email: "",
-            pinCode:"",
-            city:"",
-            area:"",
-            state:"",
-            businessName:"",
-            companyName:"",
+            pinCode: "",
+            city: "",
+            area: "",
+            state: "",
+            businessName: "",
+            companyName: "",
             password: "",
             confirmPassword: "",
-            distributorCode:"",
-            distributorType:""
-          })
+            distributorCode: "",
+            distributorType: "",
+          });
         }
       })
       .catch((err) => {
         toastr.error(err.response.data.message);
         console.log(err);
       });
-    };
+  };
   return (
     <>
       <div className="layout-wrapper layout-content-navbar">
@@ -125,9 +170,7 @@ export default function Adddis() {
                     <hr className="my-0" />
 
                     <div className="card-body">
-                      <form
-                        id="formAccountSettings"
-                      >
+                      <form id="formAccountSettings">
                         <div className="row">
                           <div className="mb-3 col-md-6">
                             <label
@@ -180,7 +223,6 @@ export default function Adddis() {
                                 placeholder="202 555 0111"
                                 value={distributor.phoneNumber}
                                 onChange={handle}
-
                               />
                             </div>
                           </div>
@@ -201,7 +243,7 @@ export default function Adddis() {
                               onChange={handle}
                             />
                           </div>
-                        
+
                           <div className="mb-3 col-md-6">
                             <label
                               for="pinCode"
@@ -309,7 +351,7 @@ export default function Adddis() {
                               <option value="West Bengal">West Bengal</option>
                             </select>
                           </div>
-                            <div className="mb-3 col-md-6">
+                          <div className="mb-3 col-md-6">
                             <label
                               for="businessName"
                               className="form-label float-start"
@@ -326,7 +368,7 @@ export default function Adddis() {
                               placeholder="Enter business name"
                             />
                           </div>
-                            <div className="mb-3 col-md-6">
+                          <div className="mb-3 col-md-6">
                             <label
                               for="companyName"
                               className="form-label float-start"
@@ -344,7 +386,6 @@ export default function Adddis() {
                             />
                           </div>
 
-                        
                           <div className="mb-3 col-md-6">
                             <label
                               for="password"
@@ -384,8 +425,7 @@ export default function Adddis() {
                               for="distributorCode"
                               className="form-label float-start"
                             >
-                             Distributor Code
-                              
+                              Distributor Code
                             </label>
                             <input
                               className="form-control"
@@ -397,13 +437,13 @@ export default function Adddis() {
                               onChange={handle}
                             />
                           </div>
-                        
+
                           <div className="mb-3 col-md-6">
                             <label
                               for="distributorType"
                               className="form-label float-start"
                             >
-                             Distributor Type
+                              Distributor Type
                             </label>
                             <select
                               id="distributorType"
@@ -412,16 +452,21 @@ export default function Adddis() {
                               onChange={handle}
                             >
                               <option value="">Select </option>
-                              <option  value="Generic Distributor">Generic Distributor</option>
-                              <option  value="OTC Distributor">OTC Distributor</option>
-                              <option  value="Branded Distributor">Branded Distributor</option>
-                             
+                              <option value="Generic Distributor">
+                                Generic Distributor
+                              </option>
+                              <option value="OTC Distributor">
+                                OTC Distributor
+                              </option>
+                              <option value="Branded Distributor">
+                                Branded Distributor
+                              </option>
                             </select>
                           </div>
                         </div>
                         <div className="mt-2">
                           <button
-                            onClick={event => postData(event)}
+                            onClick={(event) => postData(event)}
                             className="btn btn-primary me-2"
                           >
                             Save

@@ -1,8 +1,23 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
+import axios from "axios";
 export default function Retailerrequest() {
+  const [retailerReq, setRetailerReq] = useState([]);
+  useEffect(() => {
+    handleRetailerReq();
+  }, []);
+  const handleRetailerReq = async () => {
+    try {
+      const response = await axios.get(
+        "http://13.235.8.138:81/retailer_request"
+      );
+      setRetailerReq(response?.data?.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <>
       <div className="layout-wrapper layout-content-navbar">
@@ -29,28 +44,45 @@ export default function Retailerrequest() {
                           </tr>
                         </thead>
                         <tbody className="table-border-bottom-0">
-                          <tr>
-                            <td>
-                              <i className="fab fa-angular fa-lg text-danger me-3"></i>{" "}
-                              <strong>Prabhahar</strong>
-                            </td>
-                            <td>Medi</td>
-                            <td>
-                              28, balaji street, barani nagar,vannar pettai.
-                            </td>
-                            <td>6380774800</td>
-                            <td>
-                              <div className="dropdown">
-                                <Link
-                                  className="dropdown-item"
-                                  to="/retailerdetailsr"
-                                >
-                                  {" "}
-                                  View Full Details
-                                </Link>
-                              </div>
-                            </td>
-                          </tr>
+                          {retailerReq &&
+                            retailerReq.length > 0 &&
+                            retailerReq.map((val, i) => {
+                              const {
+                                _id,
+                                businessname,
+                                ownername,
+                                city,
+                                area,
+                                phonenumber,
+                              } = val;
+
+                              return (
+                                <tr>
+                                  <td>
+                                    <i className="fab fa-angular fa-lg text-danger me-3"></i>{" "}
+                                    <strong>{ownername}</strong>
+                                  </td>
+                                  <td>{businessname}</td>
+                                  <td>{`${area || ""},${city || ""}`}</td>
+                                  <td>{phonenumber}</td>
+                                  <td>
+                                    <div className="dropdown">
+                                      <Link
+                                        className="dropdown-item"
+                                        // to="/retailerdetailsr"
+                                        to={{
+                                          pathname: "/retailerdetailsr",
+                                          state: { id: _id },
+                                        }}
+                                      >
+                                        {" "}
+                                        View Full Details
+                                      </Link>
+                                    </div>
+                                  </td>
+                                </tr>
+                              );
+                            })}
                         </tbody>
                       </table>
                     </div>

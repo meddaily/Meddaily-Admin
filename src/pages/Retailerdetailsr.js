@@ -1,13 +1,67 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import { useHistory } from "react-router-dom";
 import Navbar from "./Navbar";
+import { useState } from "react";
+import { useEffect } from "react";
+import axios from "axios";
 export default function Retailerdetailsr() {
+  const defaultFormData = {
+    ownername: "",
+    businessname: "",
+    businesstype: "",
+    phonenumber: "",
+    email: "",
+    city: "",
+    area: "",
+    licenseno: "",
+    licenseimage: "",
+    pincode: "",
+    gstno: "",
+    gstimg: "",
+    panno: "",
+    panimg: "",
+  };
+  const [formData, setFormData] = useState(defaultFormData);
+  const location = useLocation();
+  const { id } = location.state;
   let history = useHistory();
   function handleclick() {
     history.push("#");
   }
+  useEffect(() => {
+    handleRetailerDetails();
+  }, []);
+
+  const handleRetailerDetails = async (e) => {
+    try {
+      const response = await axios.post(
+        "http://13.235.8.138:81/retailer_detail",
+        { ...formData, id: id }
+      );
+      setFormData(response?.data?.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  const {
+    ownername,
+    businessname,
+    businesstype,
+    phonenumber,
+    email,
+    city,
+    area,
+    licenseno,
+    licenseimage,
+    pincode,
+    gstno,
+    gstimg,
+    panno,
+    panimg,
+  } = formData;
   return (
     <>
       <div className="layout-wrapper layout-content-navbar">
@@ -45,8 +99,7 @@ export default function Retailerdetailsr() {
                               type="text"
                               id="firstName"
                               name="firstName"
-                              value="John"
-                              autofocus
+                              defaultValue={ownername}
                             />
                           </div>
                           <div className="mb-3 col-md-6">
@@ -61,7 +114,7 @@ export default function Retailerdetailsr() {
                               type="text"
                               name="lastName"
                               id="lastName"
-                              value="Doe"
+                              defaultValue={businessname}
                             />
                           </div>
                           <div className="mb-3 col-md-6">
@@ -76,7 +129,7 @@ export default function Retailerdetailsr() {
                               className="form-control"
                               id="organization"
                               name="organization"
-                              value="ThemeSelection"
+                              defaultValue={businesstype}
                             />
                           </div>
                           <div className="mb-3 col-md-6">
@@ -94,6 +147,7 @@ export default function Retailerdetailsr() {
                                 name="phoneNumber"
                                 className="form-control"
                                 placeholder="202 555 0111"
+                                defaultValue={phonenumber}
                               />
                             </div>
                           </div>
@@ -109,7 +163,7 @@ export default function Retailerdetailsr() {
                               type="text"
                               id="email"
                               name="email"
-                              value="john.doe@example.com"
+                              defaultValue={email}
                               placeholder="john.doe@example.com"
                             />
                           </div>
@@ -128,6 +182,7 @@ export default function Retailerdetailsr() {
                               name="zipCode"
                               placeholder="231465"
                               maxlength="6"
+                              defaultValue={pincode}
                             />
                           </div>
                           <div className="mb-3 col-md-6">
@@ -143,6 +198,7 @@ export default function Retailerdetailsr() {
                               id="City"
                               name="City"
                               placeholder="City"
+                              defaultValue={city}
                             />
                           </div>
                           <div className="mb-3 col-md-6">
@@ -158,6 +214,7 @@ export default function Retailerdetailsr() {
                               id="Area"
                               name="Area"
                               placeholder="Area"
+                              defaultValue={area}
                             />
                           </div>
 
@@ -174,6 +231,7 @@ export default function Retailerdetailsr() {
                               id="gst"
                               name="gst"
                               placeholder="12123323423"
+                              defaultValue={licenseno}
                             />
                           </div>
                           <div className="mb-3 col-md-6">
@@ -189,6 +247,7 @@ export default function Retailerdetailsr() {
                               id="gst"
                               name="gst"
                               placeholder="view/img.jpg"
+                              defaultValue={licenseimage}
                             />
                           </div>
                           <div className="mb-3 col-md-6">
@@ -204,6 +263,7 @@ export default function Retailerdetailsr() {
                               id="gst"
                               name="gst"
                               placeholder="12123323423"
+                              defaultValue={gstno}
                             />
                           </div>
                           <div className="mb-3 col-md-6">
@@ -219,6 +279,7 @@ export default function Retailerdetailsr() {
                               id="gst"
                               name="gst"
                               placeholder="view/img.jpg"
+                              defaultValue={gstimg}
                             />
                           </div>
                           <div className="mb-3 col-md-6">
@@ -234,6 +295,7 @@ export default function Retailerdetailsr() {
                               id="gst"
                               name="gst"
                               placeholder="12123323423"
+                              defaultValue={panno}
                             />
                           </div>
                           <div className="mb-3 col-md-6">
@@ -249,6 +311,7 @@ export default function Retailerdetailsr() {
                               id="gst"
                               name="gst"
                               placeholder="view/img.jpg"
+                              defaultValue={panimg}
                             />
                           </div>
                         </div>

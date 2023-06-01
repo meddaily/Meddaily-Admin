@@ -1,14 +1,56 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import { useHistory } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import Navbar from "./Navbar";
+import axios from "axios";
 
 export default function Distributordetailsr() {
+  const defaultFormData = {
+    firstname: "",
+    lastname: "",
+    phonenumber: "",
+    email: "",
+    city: "",
+    area: "",
+    distributorcode: "",
+    distributortype: "",
+    pincode: "",
+  };
+  const [formData, setFormData] = useState(defaultFormData);
+  const location = useLocation();
+  const { id } = location.state;
   let history = useHistory();
   function handleclick() {
     history.push("/gstinfo");
   }
+  useEffect(() => {
+    handleDistDetails();
+  }, []);
+
+  const handleDistDetails = async (e) => {
+    try {
+      const response = await axios.post(
+        "http://13.235.8.138:81/distributor_detail",
+        { ...formData, id: id }
+      );
+      setFormData(response?.data?.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  const {
+    firstname,
+    lastname,
+    phonenumber,
+    email,
+    city,
+    area,
+    distributorcode,
+    distributortype,
+    pincode,
+  } = formData;
   return (
     <>
       <div className="layout-wrapper layout-content-navbar">
@@ -49,7 +91,13 @@ export default function Distributordetailsr() {
                               type="text"
                               id="firstName"
                               name="firstName"
-                              value="John"
+                              value={firstname}
+                              onChange={(e) =>
+                                setFormData({
+                                  ...formData,
+                                  firstname: e.target.value,
+                                })
+                              }
                               autofocus
                             />
                           </div>
@@ -65,7 +113,13 @@ export default function Distributordetailsr() {
                               type="text"
                               name="lastName"
                               id="lastName"
-                              value="Doe"
+                              value={lastname}
+                              onChange={(e) =>
+                                setFormData({
+                                  ...formData,
+                                  lastname: e.target.value,
+                                })
+                              }
                             />
                           </div>
                           <div className="mb-3 col-md-6">
@@ -83,6 +137,13 @@ export default function Distributordetailsr() {
                                 name="phoneNumber"
                                 className="form-control"
                                 placeholder="202 555 0111"
+                                value={phonenumber}
+                                onChange={(e) =>
+                                  setFormData({
+                                    ...formData,
+                                    phonenumber: e.target.value,
+                                  })
+                                }
                               />
                             </div>
                           </div>
@@ -98,7 +159,13 @@ export default function Distributordetailsr() {
                               type="text"
                               id="email"
                               name="email"
-                              value="john.doe@example.com"
+                              value={email}
+                              onChange={(e) =>
+                                setFormData({
+                                  ...formData,
+                                  email: e.target.value,
+                                })
+                              }
                               placeholder="john.doe@example.com"
                             />
                           </div>
@@ -115,6 +182,12 @@ export default function Distributordetailsr() {
                               id="organization"
                               name="organization"
                               value="ThemeSelection"
+                              onChange={(e) =>
+                                setFormData({
+                                  ...formData,
+                                  firstname: e.target.value,
+                                })
+                              }
                             />
                           </div>
                           <div className="mb-3 col-md-6">
@@ -130,6 +203,13 @@ export default function Distributordetailsr() {
                               id="zipCode"
                               name="zipCode"
                               placeholder="231465"
+                              value={pincode}
+                              onChange={(e) =>
+                                setFormData({
+                                  ...formData,
+                                  pincode: e.target.value,
+                                })
+                              }
                               maxlength="6"
                             />
                           </div>
@@ -146,6 +226,13 @@ export default function Distributordetailsr() {
                               id="City"
                               name="City"
                               placeholder="City"
+                              value={city}
+                              onChange={(e) =>
+                                setFormData({
+                                  ...formData,
+                                  city: e.target.value,
+                                })
+                              }
                             />
                           </div>
                           <div className="mb-3 col-md-6">
@@ -161,6 +248,13 @@ export default function Distributordetailsr() {
                               id="Area"
                               name="Area"
                               placeholder="Area"
+                              value={area}
+                              onChange={(e) =>
+                                setFormData({
+                                  ...formData,
+                                  area: e.target.value,
+                                })
+                              }
                             />
                           </div>
 
@@ -175,7 +269,7 @@ export default function Distributordetailsr() {
                               id="country"
                               className="select2 form-select"
                             >
-                              <option value="">Select</option>
+                              <option value="">{distributorcode}</option>
                               <option value="Australia">Australia</option>
                               <option value="Bangladesh">Bangladesh</option>
                               <option value="Belarus">Belarus</option>
@@ -219,7 +313,7 @@ export default function Distributordetailsr() {
                               id="language"
                               className="select2 form-select"
                             >
-                              <option value="">Select </option>
+                              <option value="">{distributortype} </option>
                               <option value="en">English</option>
                               <option value="fr">French</option>
                               <option value="de">German</option>

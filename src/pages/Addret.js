@@ -4,7 +4,7 @@ import axios from "axios";
 import Sidebar from "./Sidebar";
 import Navbar from "./Navbar";
 import { useState } from "react";
-import config from "../appConfig";
+// import config from "../appConfig";
 
 export default function Addret() {
   const [retailer, setRetailer] = useState({
@@ -88,7 +88,7 @@ export default function Addret() {
         };
   
         await axios
-        .post(`${config.backendURL}/users/retailer-register`, reqBody, axiosConfig)
+        .post(`http://13.235.8.138:81/retailer_register`, reqBody, axiosConfig)
         .then((res) => {
           debugger
           if (res.status === 200) {
