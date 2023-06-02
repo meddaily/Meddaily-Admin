@@ -2,8 +2,23 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
+import { useState } from "react";
 
 export default function Updateproduct() {
+  const [productName, setProductName] = useState("");
+  const [mnfType, setMnfType] = useState("");
+  const [medType, setMedType] = useState("");
+  const [description, setDescription] = useState("");
+  const [taxes, setTaxes] = useState("");
+
+  const handleCancel = () => {
+    setProductName("");
+    setMnfType("");
+    setMedType("");
+    setDescription("");
+    setTaxes("");
+  };
+
   return (
     <>
       <div className="layout-wrapper layout-content-navbar">
@@ -29,12 +44,12 @@ export default function Updateproduct() {
                       <form
                         id="formAccountSettings"
                         method="POST"
-                        onsubmit="return false"
+                        onSubmit="return false"
                       >
                         <div className="row">
                           <div className="mb-3 col-md-6">
                             <label
-                              for="firstName"
+                              htmlFor="firstName"
                               className="form-label float-start"
                             >
                               Product Name
@@ -44,45 +59,54 @@ export default function Updateproduct() {
                               type="text"
                               id="firstName"
                               name="firstName"
-                              value="Adderall"
-                              autofocus
+                              placeholder="Product Name"
+                              value={productName}
+                              onChange={(e) => setProductName(e.target.value)}
+                              autoFocus
                             />
                           </div>
                           <div className="mb-3 col-md-6">
                             <label
-                              for="lastName"
+                              htmlFor="lastName"
                               className="form-label float-start"
                             >
-                              Mnf Type
+                              Mnf Name
                             </label>
                             <input
                               className="form-control"
                               type="text"
                               name="lastName"
                               id="lastName"
-                              value="Company"
+                              placeholder="Manufacturer"
+                              value={mnfType}
+                              onChange={(e) => setMnfType(e.target.value)}
                             />
                           </div>
                           <div className="mb-3 col-md-6">
                             <label
                               className="form-label float-start"
-                              for="phoneNumber "
+                              htmlFor="phoneNumber "
                             >
                               Med Type
                             </label>
                             <div className="input-group input-group-merge">
-                              <input
-                                type="text"
-                                id="phoneNumber"
-                                name="phoneNumber"
-                                className="form-control"
-                                placeholder="Genric"
-                              />
+                              <select
+                                id="medType"
+                                name="productType"
+                                value={medType}
+                                onChange={(e) => setMedType(e.target.value)}
+                                className="select2 form-select"
+                              >
+                                <option value="">Select </option>
+                                <option value="OTC">OTC</option>
+                                <option value="Generic">Generic</option>
+                                <option value="Branded">Branded</option>
+                              </select>
                             </div>
                           </div>
                           <div className="mb-3 col-md-6">
                             <label
-                              for="email"
+                              htmlFor="email"
                               className="form-label float-start"
                             >
                               Discription
@@ -92,13 +116,14 @@ export default function Updateproduct() {
                               type="text"
                               id="email"
                               name="email"
-                              value=""
+                              value={description}
+                              onChange={(e) => setDescription(e.target.value)}
                               placeholder="Discription"
                             />
                           </div>
                           <div className="mb-3 col-md-6">
                             <label
-                              for="organization"
+                              htmlFor="organization"
                               className="form-label float-start"
                             >
                               Taxes
@@ -108,7 +133,9 @@ export default function Updateproduct() {
                               className="form-control"
                               id="organization"
                               name="organization"
-                              value="0000"
+                              placeholder="0000"
+                              value={taxes}
+                              onChange={(e) => setTaxes(e.target.value)}
                             />
                           </div>
                         </div>
@@ -122,6 +149,7 @@ export default function Updateproduct() {
                           <button
                             type="reset"
                             className="btn btn-outline-secondary"
+                            onClick={handleCancel}
                           >
                             Cancel
                           </button>

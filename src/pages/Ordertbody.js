@@ -5,7 +5,7 @@ export default function Ordertbody(props) {
   return (
     <>
       <tbody className="table-border-bottom-0">
-        <tr>
+        <tr key={props.id}>
           <td>
             <i className="fab fa-angular fa-lg text-danger me-3"></i> {props.orderId}
           </td>

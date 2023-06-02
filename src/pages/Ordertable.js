@@ -68,10 +68,10 @@ export default function Ordertable() {
   const order =
     orderList &&
     orderList.length > 0 &&
-    orderList.map((item) => {
+    orderList.map((item,i) => {
       return (
         <Ordertbody
-          id={item._id}
+          id={item.i}
           orderId={item.order_id}
           userType={item.userType}
           userId={item.userId}

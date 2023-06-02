@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import toastr from "toastr";
@@ -18,9 +17,8 @@ export default function Returntable() {
 
   async function getAllReturns() {
     await axios
-      .get(`${config.backendURL}/return-order/all-return-orders`)
+      .get(`http://13.235.8.138:81/get_all_return_delivered_order`)
       .then((res) => {
-        debugger
         if (res.status === 200) {
           setReturnList(res.data.data);
         }
@@ -29,7 +27,9 @@ export default function Returntable() {
         toastr.error(err.response.data.message);
         console.log(err);
       });
-  };
+  }
+  const formattedData = [returnList];
+
   return (
     <>
       <div className="layout-wrapper layout-content-navbar">
@@ -56,34 +56,27 @@ export default function Returntable() {
                           </tr>
                         </thead>
                         <tbody className="table-border-bottom-0">
-                          {
-                            returnList && returnList.length > 0 && returnList.map(item => [
+                          {formattedData &&
+                            formattedData.length > 0 &&
+                            formattedData.map((item, i) => (
                               <tr>
                                 <td>
                                   <i className="fab fa-angular fa-lg text-danger me-3"></i>{" "}
-                                {item.orderId || 'NA'}
+                                  {item.order_id || "NA"}
                                 </td>
-                                <td>{item.userType || 'NA'}</td>
-                                <td>
-                                  {item.totalPrice || 0}
-                                </td>
-                                <td>
-                                  {item.quantity || 0}
-                                </td>
+                                <td>{item.name || "NA"}</td>
+                                <td>{item.price || 0}</td>
+                                <td>{item.quantity || 0}</td>
                                 <td>
                                   <div className="dropdown">
-                                    <Link
-                                      className="dropdown-item"
-                                      to="#"
-                                    >
+                                    <Link className="dropdown-item" to="#">
                                       {" "}
                                       View Full Details
                                     </Link>
                                   </div>
                                 </td>
                               </tr>
-                            ])
-                          }
+                            ))}
                         </tbody>
                       </table>
                     </div>

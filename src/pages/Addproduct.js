@@ -7,73 +7,63 @@ import { useState } from "react";
 // import config from "../appConfig";
 
 export default function Addproduct() {
-  const [product, setProduct] = useState({
-    title: "",
-    sub_title: "",
-    productType: "",
-    discription: "",
-    taxes: "",
-  });
-  console.log(product);
+  const [title, setTitle] = useState("");
+  const [sub_title, setSubTitle] = useState("");
+  const [productType, setProductType] = useState("");
+  const [description, setDescription] = useState("");
+  const [taxes, setTaxes] = useState("");
 
-  let name, value;
-  function handle(e) {
-    name = e.target.name;
-    value = e.target.value;
-    setProduct({ ...product, [name]: value });
-  };
-  //data send in backend by using async function postData
   const postData = async (e) => {
     e.preventDefault();
-    const {
-      productTitle,
-      distributorName,
-      productType,
-      discription,
-      taxes
-    } = product;
-    if (productTitle === '') {
-      return toastr.warning('Product name cannot be empty !');
+    if (title === "") {
+      return toastr.warning("Product name cannot be empty !");
     }
-    if (distributorName === '') {
-      return toastr.warning('Manufacturer name cannot be empty !');
+    if (sub_title === "") {
+      return toastr.warning("Manufacturer name cannot be empty !");
     }
-    if (productType === '') {
-      return toastr.warning('Meidicine type cannot be empty !');
+    if (productType === "") {
+      return toastr.warning("Meidicine type cannot be empty !");
     }
 
     const reqBody = {
-      "productTitle": productTitle,
-      "distributorName": distributorName,
-      "productType": productType,
-      "discription": discription,
-      "taxes": taxes
+      title: title,
+      sub_title: sub_title,
+      productType: productType,
+      description: description,
+      taxes: taxes,
     };
     const axiosConfig = {
       headers: {
-          'Content-Type': 'application/json'
-      }
+        "Content-Type": "application/json",
+      },
     };
 
-    await axios
-    .post(`http://13.235.8.138:81/addProduct`, reqBody, axiosConfig)
-    .then((res) => {
-      debugger
-      if (res.status === 200) {
-        toastr.success(res.data.message);
-        setProduct({
-          productTitle: "",
-          distributorName: "",
-          productType: "",
-          discription: "",
-          taxes:""
-        })
+    try {
+      const response = await axios.post(
+        `http://13.235.8.138:81/addProduct`,
+        reqBody,
+        axiosConfig
+      );
+      // debugger;
+      if (response.status === 200) {
+        toastr.success(response.data.message);
+        setTitle("");
+        setSubTitle("");
+        setProductType("");
+        setDescription("");
+        setTaxes("");
       }
-    })
-    .catch((err) => {
+    } catch (err) {
       toastr.error(err.response.data.message);
       console.log(err);
-    });
+    }
+  };
+  const handleCancel = () => {
+    setTitle("");
+    setSubTitle("");
+    setProductType("");
+    setDescription("");
+    setTaxes("");
   };
   return (
     <>
@@ -97,13 +87,11 @@ export default function Addproduct() {
 
                     <hr className="my-0" />
                     <div className="card-body">
-                      <form
-                        id="formAccountSettings"
-                      >
+                      <form id="formAccountSettings">
                         <div className="row">
                           <div className="mb-3 col-md-6">
                             <label
-                              for="businessName"
+                              htmlFor="businessName"
                               className="form-label float-start"
                             >
                               Product Name
@@ -113,15 +101,15 @@ export default function Addproduct() {
                               type="text"
                               name="productTitle"
                               id="productName"
-                              value={product.productTitle}
-                              onChange={handle}
+                              value={title}
+                              onChange={(e) => setTitle(e.target.value)}
                               placeholder={"Enter product name"}
                             />
                           </div>
 
                           <div className="mb-3 col-md-6">
                             <label
-                              for="mnfName"
+                              htmlFor="mnfName"
                               className="form-label float-start"
                             >
                               mnf Name
@@ -131,15 +119,15 @@ export default function Addproduct() {
                               type="text"
                               name="distributorName"
                               id="mnfName"
-                              value={product.distributorName}
-                              onChange={handle}
+                              value={sub_title}
+                              onChange={(e) => setSubTitle(e.target.value)}
                               placeholder={"Enter mnf name"}
                             />
                           </div>
 
                           <div className="mb-3 col-md-6">
                             <label
-                              for="medType"
+                              htmlFor="medType"
                               className="form-label float-start"
                             >
                               MNF type
@@ -147,10 +135,9 @@ export default function Addproduct() {
                             <select
                               id="medType"
                               name="productType"
-                              value={product.productType}
-                              onChange={handle}
+                              value={productType}
+                              onChange={(e) => setProductType(e.target.value)}
                               className="select2 form-select"
-                              // onChange={handle}
                             >
                               <option value="">Select </option>
                               <option value="OTC">OTC</option>
@@ -161,25 +148,25 @@ export default function Addproduct() {
 
                           <div className="mb-3 col-md-6">
                             <label
-                              for="discription"
+                              htmlFor="discription"
                               className="form-label float-start"
                             >
-                              Disdription
+                              Discription
                             </label>
                             <input
                               className="form-control"
                               type="text"
                               name="discription"
                               id="discription"
-                              value={product.discription}
-                              onChange={handle}
+                              value={description}
+                              onChange={(e) => setDescription(e.target.value)}
                               placeholder={"Enter discription"}
                             />
                           </div>
 
                           <div className="mb-3 col-md-6">
                             <label
-                              for="taxes"
+                              htmlFor="taxes"
                               className="form-label float-start"
                             >
                               Taxes
@@ -189,15 +176,15 @@ export default function Addproduct() {
                               type="text"
                               name="taxes"
                               id="taxes"
-                              value={product.taxes}
-                              onChange={handle}
+                              value={taxes}
+                              onChange={(e) => setTaxes(e.target.value)}
                               placeholder={"taxes"}
                             />
                           </div>
                         </div>
                         <div className="mt-2">
                           <button
-                            onClick={event => postData(event)}
+                            onClick={(event) => postData(event)}
                             className="btn btn-primary me-2"
                           >
                             Add
@@ -205,6 +192,7 @@ export default function Addproduct() {
                           <button
                             type="reset"
                             className="btn btn-outline-secondary"
+                            onClick={handleCancel}
                           >
                             Cancel
                           </button>

@@ -23,7 +23,6 @@ export default function Retailerlist() {
       .then((res) => {
         if (res.status === 200) {
           setRetailerList(res.data.data);
-          console.log(res.data.data._id)
         }
       })
       .catch((err) => {
