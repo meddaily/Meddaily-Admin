@@ -26,7 +26,7 @@ export default function Addret() {
     addDrugLicenceImage: "",
     addGstNumber: "",
     addGstImage: "",
-    panNumber: ""
+    panNumber: "",
   });
   console.log(retailer);
 
@@ -37,90 +37,91 @@ export default function Addret() {
     setRetailer({ ...retailer, [name]: value });
   }
 
-      //data send in backend by using async function postData
-      const postData = async (e) => {
-        e.preventDefault();
-        const {
-          typeOfBusiness,
-          businessName,
-          ownerName,
-          businessAddress,
-          pinCode,
-          city,
-          area,
-          state,
-          phoneNumber,
-          password,
-          confirmPassword,
-          email,
-          pharmacistName,
-          pharmacistPhoneNumber,
-          addDrugLicenceNumber,
-          addGstNumber,
-          addGstImage,
-          panNumber
-        } = retailer;
-  
-        const reqBody = {
-          "typeOfBusiness": typeOfBusiness,
-          "businessName": businessName,
-          "ownerName": ownerName,
-          "businessAddress": businessAddress,
-          "pinCode": pinCode,
-          "city": city,
-          "area": area,
-          "state": state,
-          "phoneNumber": phoneNumber,
-          "password": password,
-          "confirmPassword": confirmPassword,
-          "email": email,
-          "pharmacistName": pharmacistName,
-          "pharmacistPhoneNumber": pharmacistPhoneNumber,
-          "addDrugLicenceNumber": addDrugLicenceNumber,
-          "addGstNumber": addGstNumber,
-          "addGstImage": addGstImage,
-          "panNumber": panNumber
-        }
-        const axiosConfig = {
-          headers: {
-              'Content-Type': 'application/json'
-          }
-        };
-  
-        await axios
-        .post(`http://13.235.8.138:81/retailer_register`, reqBody, axiosConfig)
-        .then((res) => {
-          debugger
-          if (res.status === 200) {
-            toastr.success(res.data.message);
-            setRetailer({
-              typeOfBusiness: "",
-              businessName: "",
-              ownerName: "",
-              businessAddress: "",
-              pinCode: "",
-              city: "",
-              area: "",
-              state: "",
-              phoneNumber: "",
-              password: "",
-              confirmPassword: "",
-              email: "",
-              pharmacistName: "",
-              pharmacistPhoneNumber: "",
-              addDrugLicenceNumber: "",
-              addDrugLicenceImage: "",
-              addGstNumber: "",
-              addGstImage: "",
-              panNumber: ""
-            })
-          }
-        })
-        .catch((err) => {
-          toastr.error(err.response.data.message);
-          console.log(err);
+  //data send in backend by using async function postData
+  const postData = async (e) => {
+    e.preventDefault();
+    const {
+      typeOfBusiness,
+      businessName,
+      ownerName,
+      businessAddress,
+      pinCode,
+      city,
+      area,
+      state,
+      phoneNumber,
+      password,
+      confirmPassword,
+      email,
+      pharmacistName,
+      pharmacistPhoneNumber,
+      addDrugLicenceNumber,
+      addGstNumber,
+      addGstImage,
+      panNumber,
+    } = retailer;
+
+    const reqBody = {
+      typeOfBusiness: typeOfBusiness,
+      businessName: businessName,
+      ownerName: ownerName,
+      businessAddress: businessAddress,
+      pinCode: pinCode,
+      city: city,
+      area: area,
+      state: state,
+      phoneNumber: phoneNumber,
+      password: password,
+      confirmPassword: confirmPassword,
+      email: email,
+      pharmacistName: pharmacistName,
+      pharmacistPhoneNumber: pharmacistPhoneNumber,
+      addDrugLicenceNumber: addDrugLicenceNumber,
+      addGstNumber: addGstNumber,
+      addGstImage: addGstImage,
+      panNumber: panNumber,
+    };
+    const axiosConfig = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    try {
+      const response = await axios.post(
+        "http://13.235.8.138:81/retailer_register",
+        reqBody,
+        axiosConfig
+      );
+      debugger;
+      if (response.status === 200) {
+        toastr.success(response.data.message);
+        setRetailer({
+          typeOfBusiness: "",
+          businessName: "",
+          ownerName: "",
+          businessAddress: "",
+          pinCode: "",
+          city: "",
+          area: "",
+          state: "",
+          phoneNumber: "",
+          password: "",
+          confirmPassword: "",
+          email: "",
+          pharmacistName: "",
+          pharmacistPhoneNumber: "",
+          addDrugLicenceNumber: "",
+          addDrugLicenceImage: "",
+          addGstNumber: "",
+          addGstImage: "",
+          panNumber: "",
         });
-      };
+      }
+    } catch (err) {
+      toastr.error(err.response.data.message);
+      console.error(err);
+    }
+  };
   return (
     <>
       <div className="layout-wrapper layout-content-navbar">
@@ -139,9 +140,7 @@ export default function Addret() {
                     </div>
                     <hr className="my-0" />
                     <div className="card-body">
-                      <form
-                        id="formAccountSettings"
-                      >
+                      <form id="formAccountSettings">
                         <div className="row">
                           <div className="mb-3 col-md-6">
                             <label
@@ -538,7 +537,7 @@ export default function Addret() {
                         </div>
                         <div className="mt-2">
                           <button
-                            onClick={event => postData(event)}
+                            onClick={postData}
                             className="btn btn-primary me-2"
                           >
                             Save

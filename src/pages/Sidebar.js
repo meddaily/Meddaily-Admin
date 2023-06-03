@@ -4,12 +4,17 @@ import Dropdown from "react-bootstrap/Dropdown";
 
 export default function Sidebar() {
   return (
-    <aside id="layout-menu"
+    <aside
+      id="layout-menu"
       className="layout-menu menu-vertical menu bg-menu-theme"
     >
       <div className="app-brand demo">
         <Link to="/" className="app-brand-link">
-          <img src="../assets/img/logo2.png" alt="logo" style={{height:"90px",width:"175px"}} />
+          <img
+            src="../assets/img/logo2.png"
+            alt="logo"
+            style={{ height: "90px", width: "175px" }}
+          />
         </Link>
       </div>
 
@@ -31,7 +36,9 @@ export default function Sidebar() {
               className="menu-link menu-toggle"
             >
               <i className="menu-icon tf-icons bx bx-box"></i>
-              <div data-i18n="Layouts" style={{fontSize:"14px"}}>Distributor Management</div>
+              <div data-i18n="Layouts" style={{ fontSize: "14px" }}>
+                Distributor Management
+              </div>
             </Dropdown.Toggle>
 
             <Dropdown.Menu>
@@ -118,7 +125,7 @@ export default function Sidebar() {
 
         {/* Orgders */}
         <li className="menu-item ">
-        <Dropdown>
+          <Dropdown>
             <Dropdown.Toggle
               variant="success"
               className="menu-link menu-toggle"
@@ -136,6 +143,31 @@ export default function Sidebar() {
               <li className="menu-item">
                 <Link to="/addorder" className="menu-link">
                   <div data-i18n="Without navbar">Add new Order</div>
+                </Link>
+              </li>
+            </Dropdown.Menu>
+          </Dropdown>
+        </li>
+        {/* category */}
+        <li className="menu-item ">
+          <Dropdown>
+            <Dropdown.Toggle
+              variant="success"
+              className="menu-link menu-toggle"
+            >
+              <i className="menu-icon tf-icons bx bx-box"></i>
+              <div data-i18n="Analytics">Category</div>
+            </Dropdown.Toggle>
+
+            <Dropdown.Menu>
+              <li className="menu-item active">
+                <Link to="/categorylist" className="menu-link">
+                  <div data-i18n="Without menu">Category List</div>
+                </Link>
+              </li>
+              <li className="menu-item">
+                <Link to="/addnewcategory" className="menu-link">
+                  <div data-i18n="Without navbar">Add new Category</div>
                 </Link>
               </li>
             </Dropdown.Menu>

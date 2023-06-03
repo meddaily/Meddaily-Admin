@@ -1,9 +1,11 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import Sidebar from "./Sidebar";
-import { useHistory } from "react-router-dom";
+// import { useHistory } from "react-router-dom";
 import Navbar from "./Navbar";
 import axios from "axios";
+import toastr from "toastr";
+
 export default function Distributordetails() {
   const [formData, setFormData] = useState({
     gstno: "",
@@ -23,7 +25,7 @@ export default function Distributordetails() {
     }));
   };
 
-  let history = useHistory();
+  // let history = useHistory();
   // function handleclick() {
   //   // history.push("#");
   //   const handleAppandAdd = async () => {
@@ -62,7 +64,18 @@ export default function Distributordetails() {
         formData,
         axiosConfig
       );
-      console.log(res);
+      if (res.status === 200) {
+        toastr.success("Distributor Approved");
+        setFormData({
+          gstno: "",
+          gstimg: "",
+          bankname: "",
+          benificiaryname: "",
+          accountno: "",
+          ifsccode: "",
+          upiid: "",
+        });
+      }
     } catch (error) {
       console.log(error);
     }
@@ -90,13 +103,13 @@ export default function Distributordetails() {
                     <div className="card-body">
                       <form
                         id="formAccountSettings"
-                        method="POST"
-                        onsubmit="return false"
+                        // method="POST"
+                        // onsubmit="return false"
                       >
                         <div className="row">
                           <div className="mb-3 col-md-6">
                             <label
-                              for="timeZones"
+                              htmlFor="gstno"
                               className="form-label float-start"
                             >
                               GST NO.
@@ -104,8 +117,8 @@ export default function Distributordetails() {
                             <input
                               className="form-control"
                               type="text"
-                              id="gst"
-                              name="gst"
+                              id="gstno"
+                              name="gstno"
                               placeholder="12123323423"
                               value={formData.gstno}
                               onChange={handleInputChange}
@@ -113,7 +126,7 @@ export default function Distributordetails() {
                           </div>
                           <div className="mb-3 col-md-6">
                             <label
-                              for="timeZones"
+                              htmlFor="gstimg"
                               className="form-label float-start"
                             >
                               GST img
@@ -121,8 +134,8 @@ export default function Distributordetails() {
                             <input
                               className="form-control"
                               type="text"
-                              id="gst"
-                              name="gst"
+                              id="gstimg"
+                              name="gstimg"
                               placeholder="view/img.jpg"
                               value={formData.gstimg}
                               onChange={handleInputChange}
@@ -142,13 +155,13 @@ export default function Distributordetails() {
                     <div className="card-body">
                       <form
                         id="formAccountSettings"
-                        method="POST"
-                        onsubmit="return false"
+                        // method="POST"
+                        // onsubmit={handleSubmit}
                       >
                         <div className="row">
                           <div className="mb-3 col-md-6">
                             <label
-                              for="timeZones"
+                              htmlFor="bankname"
                               className="form-label float-start"
                             >
                               Bank Name
@@ -156,8 +169,8 @@ export default function Distributordetails() {
                             <input
                               className="form-control"
                               type="text"
-                              id="gst"
-                              name="gst"
+                              id="bankname"
+                              name="bankname"
                               placeholder="Bank Name"
                               value={formData.bankname}
                               onChange={handleInputChange}
@@ -165,7 +178,7 @@ export default function Distributordetails() {
                           </div>
                           <div className="mb-3 col-md-6">
                             <label
-                              for="timeZones"
+                              htmlFor="benificiaryname"
                               className="form-label float-start"
                             >
                               Benificiary Name
@@ -173,8 +186,8 @@ export default function Distributordetails() {
                             <input
                               className="form-control"
                               type="text"
-                              id="gst"
-                              name="gst"
+                              id="benificiaryname"
+                              name="benificiaryname"
                               placeholder="Benificiary Name"
                               value={formData.benificiaryname}
                               onChange={handleInputChange}
@@ -182,7 +195,7 @@ export default function Distributordetails() {
                           </div>
                           <div className="mb-3 col-md-6">
                             <label
-                              for="timeZones"
+                              htmlFor="accountno"
                               className="form-label float-start"
                             >
                               Account No.
@@ -190,8 +203,8 @@ export default function Distributordetails() {
                             <input
                               className="form-control"
                               type="text"
-                              id="gst"
-                              name="gst"
+                              id="accountno"
+                              name="accountno"
                               placeholder="123456789"
                               value={formData.accountno}
                               onChange={handleInputChange}
@@ -199,7 +212,7 @@ export default function Distributordetails() {
                           </div>
                           <div className="mb-3 col-md-6">
                             <label
-                              for="timeZones"
+                              htmlFor="ifsccode"
                               className="form-label float-start"
                             >
                               IFSC
@@ -207,8 +220,8 @@ export default function Distributordetails() {
                             <input
                               className="form-control"
                               type="text"
-                              id="gst"
-                              name="gst"
+                              id="ifsccode"
+                              name="ifsccode"
                               placeholder="12123323423"
                               value={formData.ifsccode}
                               onChange={handleInputChange}
@@ -216,7 +229,7 @@ export default function Distributordetails() {
                           </div>
                           <div className="mb-3 col-md-6">
                             <label
-                              for="timeZones"
+                              htmlFor="upiid"
                               className="form-label float-start"
                             >
                               UPI ID
@@ -224,8 +237,8 @@ export default function Distributordetails() {
                             <input
                               className="form-control"
                               type="text"
-                              id="gst"
-                              name="gst"
+                              id="upiid"
+                              name="upiid"
                               placeholder="12345678"
                               value={formData.upiid}
                               onChange={handleInputChange}

@@ -25,7 +25,7 @@ export default function Ordertbody(props) {
                         Action
                       </button>
                       <ul className="dropdown-menu">
-                        <li><Link className="dropdown-item" to={`/orderdetails/${props.orderId}`}>{props.details}</Link></li>
+                        <li><Link className="dropdown-item" to={`/orderdetails/${props.id}`}>{props.details}</Link></li>
                         <li><Link className="dropdown-item" to={`/updateorder/${props.orderId}`}>Edit</Link></li>
                         <li><Link id={props.key} onClick={event => props.deleteOrder(event, props.orderId)} className="dropdown-item" to="/deleteorder">Delete</Link></li>
                       </ul>

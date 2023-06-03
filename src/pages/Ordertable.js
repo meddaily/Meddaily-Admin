@@ -71,7 +71,7 @@ export default function Ordertable() {
     orderList.map((item,i) => {
       return (
         <Ordertbody
-          id={item.i}
+          id={item._id}
           orderId={item.order_id}
           userType={item.userType}
           userId={item.userId}

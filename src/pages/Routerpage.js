@@ -24,7 +24,8 @@ import Updateproduct from "./Updateporduct";
 import Offers from "./Offers";
 import Returntable from "./Returntable";
 import Payouttable from "./Payouttable";
-
+import CategoryList from "./CategoryList";
+import AddNewCategory from "./AddNewCat";
 
 export default function Routerpage() {
   return (
@@ -54,6 +55,9 @@ export default function Routerpage() {
           <Route path="/updateproduct" component={Updateproduct} />
           <Route path="/offer" component={Offers} />
           <Route path="/returntable" component={Returntable} />
+          <Route path="/payouttable" component={Payouttable} />
+          <Route path="/categorylist" component={CategoryList} />
+          <Route path="/addnewcategory" component={AddNewCategory} />
           <Route path="/payouttable" component={Payouttable} />
         </Switch>
       </Router>
