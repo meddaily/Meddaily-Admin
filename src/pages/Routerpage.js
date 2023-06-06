@@ -28,7 +28,7 @@ import CategoryList from "./CategoryList";
 import AddNewCategory from "./AddNewCat";
 // distributor
 import DistDashboard from "../DistributorLogin/DistDashboard";
-import OrderList from "../DistributorLogin/OrderList"
+import OrderList from "../DistributorLogin/OrderList";
 import DisReturnTable from "../DistributorLogin/DisReturnTable";
 
 export default function Routerpage() {
@@ -36,7 +36,8 @@ export default function Routerpage() {
     <>
       <Router>
         <Switch>
-          <Route exact path="/" component={DistDashboard} />
+          <Route exact path="/" component={Dashbord} />
+          <Route exact path="/distdashboard" component={DistDashboard} />
           <Route path="/adddis" component={Adddis} />
           <Route path="/addret" component={Addret} />
           <Route path="/distributordetails" component={Distributordetails} />
@@ -66,7 +67,6 @@ export default function Routerpage() {
           {/* distributor */}
           <Route path="/orderlist" component={OrderList} />
           <Route path="/disreturntable" component={DisReturnTable} />
-         
         </Switch>
       </Router>
     </>

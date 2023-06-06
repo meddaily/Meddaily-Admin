@@ -36,10 +36,12 @@ export default function Login() {
     await axios
       .post(`http://13.235.8.138:81/distributor_login`, reqBody, axiosConfig)
       .then((res) => {
-        if (res.data.message === "login successful") {
+        if (res.data.status === true) {
           localStorage.setItem("authToken", res?.data?.token);
-          history.push("/distributordashboard");
+          history.push("/distdashboard");
           window.location.reload();
+        }else{
+          toastr.error(res?.data?.message);
         }
       })
       .catch((err) => {

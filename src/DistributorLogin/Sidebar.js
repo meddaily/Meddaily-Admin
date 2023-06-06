@@ -9,7 +9,7 @@ export default function Sidebar() {
       className="layout-menu menu-vertical menu bg-menu-theme"
     >
       <div className="app-brand demo">
-        <Link to="/" className="app-brand-link">
+        <Link to="/distdashboard" className="app-brand-link">
           <img
             src="../assets/img/logo2.png"
             alt="logo"
@@ -22,7 +22,7 @@ export default function Sidebar() {
 
       <ul className="menu-inner py-1">
         <li className="menu-item ">
-          <Link to="/" className="menu-link">
+          <Link to="/distdashboard" className="menu-link">
             <i className="menu-icon tf-icons bx bx-home-circle"></i>
             <div data-i18n="Analytics">Dashboard</div>
           </Link>
@@ -49,24 +49,24 @@ export default function Sidebar() {
 
             <Dropdown.Menu>
               <li className="menu-item">
-                <Link to="/" className="menu-link">
+                <Link to="/distdashboard" className="menu-link">
                   <div data-i18n="Without menu">My Inventory</div>
                 </Link>
               </li>
               <li className="menu-item">
-                <Link to="/" className="menu-link">
+                <Link to="/distdashboard" className="menu-link">
                   <div data-i18n="Without navbar">Update Bulk</div>
                 </Link>
               </li>
               <li className="menu-item">
-                <Link to="/" className="menu-link">
+                <Link to="/distdashboard" className="menu-link">
                   <div data-i18n="Without navbar">
                     List New Products To Inventory
                   </div>
                 </Link>
               </li>
               <li className="menu-item">
-                <Link to="/" className="menu-link">
+                <Link to="/distdashboard" className="menu-link">
                   <div data-i18n="Container">Request To Add New</div>
                 </Link>
               </li>
@@ -76,7 +76,7 @@ export default function Sidebar() {
 
         {/* Payments */}
         <li className="menu-item ">
-          <Link to="/" className="menu-link">
+          <Link to="/distdashboard" className="menu-link">
             <i className="menu-icon tf-icons bx bx-box"></i>
             <div data-i18n="Analytics">Payments</div>
           </Link>
@@ -84,14 +84,14 @@ export default function Sidebar() {
 
         {/* Offers */}
         <li className="menu-item ">
-          <Link to="/" className="menu-link">
+          <Link to="/distdashboard" className="menu-link">
             <i className="menu-icon tf-icons bx bx-box"></i>
             <div data-i18n="Analytics">Offers</div>
           </Link>
         </li>
         {/* Return */}
         <li className="menu-item ">
-          <Link to="/" className="menu-link">
+          <Link to="/distdashboard" className="menu-link">
             <i className="menu-icon tf-icons bx bx-box"></i>
             <div data-i18n="Analytics">Return</div>
           </Link>

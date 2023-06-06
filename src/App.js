@@ -1,44 +1,50 @@
 import { useHistory } from "react-router-dom";
-import './App.css';
+import "./App.css";
 // import Ham from './Ham/Ham';
 
-
-import Routerpage from './pages/Routerpage';
-import AuthRoute from './pages/AuthRoute';
-import { useEffect, useState } from 'react';
+import Routerpage from "./pages/Routerpage";
+import AuthRoute from "./pages/AuthRoute";
+import { useEffect, useState } from "react";
 
 function App() {
   let history = useHistory();
 
-  const [ isLoggedIn, setIsLoggedIn ]  = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   useEffect(() => {
     checkAuth();
-  })
+  });
+  // const checkAuth = () => {
+  //   const authToken = localStorage.getItem("authToken");
+  //   if (authToken) {
+  //     setIsLoggedIn(true);
+  //     history.push("/");
+  //   } else {
+  //     history.push('/login')
+  //   }
+  // }
   const checkAuth = () => {
     const authToken = localStorage.getItem("authToken");
+    const currentPath = history.location.pathname;
     if (authToken) {
       setIsLoggedIn(true);
-      history.push("/");
+      if (currentPath === "/login") {
+        history.push("/");
+      }
     } else {
-      history.push('/login')
+      setIsLoggedIn(false);
+      if (currentPath !== "/distributorlogin") {
+        history.push("/login");
+      }
     }
-  }
+  };
   return (
     <>
-   
-    <div className="App">
-    {
-      isLoggedIn && <Routerpage />
-    }
-    {
-      !isLoggedIn && <AuthRoute />
-    }
-{/* <Ham/> */}
-    
-
-    </div>
+      <div className="App">
+        {isLoggedIn && <Routerpage />}
+        {!isLoggedIn && <AuthRoute />}
+        {/* <Ham/> */}
+      </div>
     </>
-    
   );
 }
 

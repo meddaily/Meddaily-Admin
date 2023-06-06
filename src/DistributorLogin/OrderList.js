@@ -24,9 +24,9 @@ export default function OrderDetails() {
           },
         }
       );
-      console.log("authToken", authToken);
+      // console.log("authToken", authToken);
 
-      debugger;
+      // debugger;
       if (response.status === 200) {
         setOrderDetails(response?.data?.message);
         console.log(response.data.message);

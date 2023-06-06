@@ -21,7 +21,7 @@ export default function Login() {
     if (email === "") {
       return toastr.warning("Please enter credentials");
     }
-    if (email === "") {
+    if (password === "") {
       return toastr.warning("Please enter credentials");
     }
     const reqBody = {
@@ -36,10 +36,12 @@ export default function Login() {
     await axios
       .post(`http://13.235.8.138:81/login`, reqBody, axiosConfig)
       .then((res) => {
-        if (res.status === 200) {
-          localStorage.setItem("authToken", res?.data?.data?.token);
+        if (res.data.status === true) {
+          localStorage.setItem("authToken", res?.data?.token);
           history.push("/");
           window.location.reload();
+        } else {
+          toastr.error(res?.data?.message);
         }
       })
       .catch((err) => {
