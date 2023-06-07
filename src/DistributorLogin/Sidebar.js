@@ -49,24 +49,24 @@ export default function Sidebar() {
 
             <Dropdown.Menu>
               <li className="menu-item">
-                <Link to="/distdashboard" className="menu-link">
+                <Link to="/myinventory" className="menu-link">
                   <div data-i18n="Without menu">My Inventory</div>
                 </Link>
               </li>
               <li className="menu-item">
-                <Link to="/distdashboard" className="menu-link">
+                <Link to="/bulkuploadinv" className="menu-link">
                   <div data-i18n="Without navbar">Update Bulk</div>
                 </Link>
               </li>
               <li className="menu-item">
-                <Link to="/distdashboard" className="menu-link">
+                <Link to="/listnewinv" className="menu-link">
                   <div data-i18n="Without navbar">
                     List New Products To Inventory
                   </div>
                 </Link>
               </li>
               <li className="menu-item">
-                <Link to="/distdashboard" className="menu-link">
+                <Link to="/addnewinv" className="menu-link">
                   <div data-i18n="Container">Request To Add New</div>
                 </Link>
               </li>
@@ -91,7 +91,7 @@ export default function Sidebar() {
         </li>
         {/* Return */}
         <li className="menu-item ">
-          <Link to="/distdashboard" className="menu-link">
+          <Link to="/distreturn" className="menu-link">
             <i className="menu-icon tf-icons bx bx-box"></i>
             <div data-i18n="Analytics">Return</div>
           </Link>

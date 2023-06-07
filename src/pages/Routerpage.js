@@ -30,6 +30,10 @@ import AddNewCategory from "./AddNewCat";
 import DistDashboard from "../DistributorLogin/DistDashboard";
 import OrderList from "../DistributorLogin/OrderList";
 import DisReturnTable from "../DistributorLogin/DisReturnTable";
+import MyInventory from "../DistributorLogin/MyInventory";
+import AddNewInventory from "../DistributorLogin/AddNewInventory";
+import BulkUploadInv from "../DistributorLogin/BulkUploadInv"
+import ListNewProductInv from "../DistributorLogin/ListNewProductInv"
 
 export default function Routerpage() {
   return (
@@ -37,7 +41,9 @@ export default function Routerpage() {
       <Router>
         <Switch>
           <Route exact path="/" component={Dashbord} />
+          {/* dislogin */}
           <Route exact path="/distdashboard" component={DistDashboard} />
+          {/* admin */}
           <Route path="/adddis" component={Adddis} />
           <Route path="/addret" component={Addret} />
           <Route path="/distributordetails" component={Distributordetails} />
@@ -66,7 +72,12 @@ export default function Routerpage() {
           <Route path="/payouttable" component={Payouttable} />
           {/* distributor */}
           <Route path="/orderlist" component={OrderList} />
-          <Route path="/disreturntable" component={DisReturnTable} />
+          <Route path="/distreturn" component={DisReturnTable} />
+          <Route path="/myinventory" component={MyInventory} />
+          <Route path="/addnewinv" component={AddNewInventory} />
+          <Route path="/bulkuploadinv" component={BulkUploadInv} />
+          <Route path="/listnewinv" component={ListNewProductInv} />
+          
         </Switch>
       </Router>
     </>

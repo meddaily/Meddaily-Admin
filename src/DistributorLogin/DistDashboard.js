@@ -12,7 +12,7 @@ import Sidebar from "../DistributorLogin/Sidebar";
 
 export default function Dashbord() {
   const authToken = localStorage.getItem("authToken");
-  console.log("dashboard",authToken)
+  console.log("dashboard", authToken);
   return (
     <>
       <div className="layout-wrapper layout-content-navbar">
@@ -34,9 +34,8 @@ export default function Dashbord() {
                               Congratulations John! 🎉
                             </h5>
                             <p className="mb-4">
-                              You have done <span className="fw-bold">72%</span>{" "}
-                              more sales today. Check your new badge in your
-                              profile.
+                              You have available balance<span className="fw-bold">50,000</span> today.
+                              Check your new badge in your profile.
                             </p>
 
                             <Link

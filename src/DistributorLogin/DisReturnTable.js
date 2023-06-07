@@ -55,7 +55,7 @@ export default function DisReturnTable() {
                             <th>View More</th>
                           </tr>
                         </thead>
-                        <tbody className="table-border-bottom-0">
+                        {/* <tbody className="table-border-bottom-0">
                           {formattedData &&
                             formattedData.length > 0 &&
                             formattedData.map((item, i) => (
@@ -77,7 +77,7 @@ export default function DisReturnTable() {
                                 </td>
                               </tr>
                             ))}
-                        </tbody>
+                        </tbody> */}
                       </table>
                     </div>
                   </div>
