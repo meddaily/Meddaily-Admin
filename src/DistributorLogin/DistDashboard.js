@@ -11,7 +11,7 @@ import Navbar from "../pages/Navbar";
 import Sidebar from "../DistributorLogin/Sidebar";
 
 export default function Dashbord() {
-  const authToken = localStorage.getItem("authToken");
+  const authToken = localStorage.getItem("disToken");
   console.log("dashboard", authToken);
   return (
     <>

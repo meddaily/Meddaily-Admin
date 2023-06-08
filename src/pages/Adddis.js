@@ -97,20 +97,20 @@ export default function Adddis() {
     }
 
     const reqBody = {
-      firstName: firstName,
-      lastName: lastName,
-      phoneNumber: phoneNumber,
+      firstname: firstName,
+      lastname: lastName,
+      phonenumber: phoneNumber,
       email: email,
       pinCode: pinCode,
       city: city,
       area: area,
       state: state,
-      businessName: businessName,
-      companyName: companyName,
+      businessname: businessName,
+      companyname: companyName,
       password: password,
       confirmPassword: confirmPassword,
-      distributorCode: distributorCode,
-      distributorType: distributorType,
+      distributorcode: distributorCode,
+      distributortype: distributorType,
     };
     const axiosConfig = {
       headers: {
@@ -121,7 +121,6 @@ export default function Adddis() {
     await axios
       .post(`http://13.235.8.138:81/distributor_register`, reqBody, axiosConfig)
       .then((res) => {
-        debugger;
         if (res.status === 200) {
           toastr.success(res.data.message);
           setDistributor({

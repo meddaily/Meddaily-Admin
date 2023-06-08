@@ -51,6 +51,7 @@ export default function Producttable() {
         console.log(err);
       });
   }
+  
 
   const product =
     productList &&
@@ -60,10 +61,9 @@ export default function Producttable() {
         <Producttbody
           key={i}
           deleteProduct={() => deleteProduct(item._id)}
-          productId={item.productId}
-          // productname={item.productTitle}
+          productId={item._id}
+          describtion={item.description}
           productname={item.title}
-          // mnfname={item.distributorName}
           mnfname={item.sub_title}
           medicinetype={item.productType ? item.productType : "N/A"}
           delete={"Action"}

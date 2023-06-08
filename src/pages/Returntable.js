@@ -17,7 +17,7 @@ export default function Returntable() {
 
   async function getAllReturns() {
     await axios
-      .get(`http://13.235.8.138:81/get_all_return_delivered_order`)
+      .get(`http://13.235.8.138:81/return_order_accepted`)
       .then((res) => {
         if (res.status === 200) {
           setReturnList(res.data.data);
@@ -66,7 +66,7 @@ export default function Returntable() {
                                 </td>
                                 <td>{item.name || "NA"}</td>
                                 <td>{item.price || 0}</td>
-                                <td>{item.quantity || 0}</td>
+                                <td>{item.order_status || 0}</td>
                                 <td>
                                   <div className="dropdown">
                                     <Link className="dropdown-item" to="#">

@@ -56,30 +56,51 @@ export default function Addret() {
       pharmacistName,
       pharmacistPhoneNumber,
       addDrugLicenceNumber,
+      addDrugLicenceImage,
       addGstNumber,
       addGstImage,
       panNumber,
     } = retailer;
 
     const reqBody = {
-      typeOfBusiness: typeOfBusiness,
-      businessName: businessName,
-      ownerName: ownerName,
-      businessAddress: businessAddress,
-      pinCode: pinCode,
+      // businesstype: businesstype,
+      // businessname: businessname,
+      // ownername: ownername,
+      // address: address,
+      // pincode: pincode,
+      // city: city,
+      // area: area,
+      // state: state,
+      // phonenumber: phonenumber,
+      // password: password,
+      // confirmpassword: confirmpassword,
+      // email: email,
+      // pharname: pharname,
+      // pharphone: pharphone,
+      // licenseno: licenseno,
+      // image1: image1,
+      // gstno: gstno,
+      // image2: image2,
+      // panno: panno,
+      businesstype: typeOfBusiness,
+      businessname: businessName,
+      ownername: ownerName,
+      address: businessAddress,
+      pincode: pinCode,
       city: city,
       area: area,
       state: state,
-      phoneNumber: phoneNumber,
+      phonenumber: phoneNumber,
       password: password,
-      confirmPassword: confirmPassword,
+      confirmpassword: confirmPassword,
       email: email,
-      pharmacistName: pharmacistName,
-      pharmacistPhoneNumber: pharmacistPhoneNumber,
-      addDrugLicenceNumber: addDrugLicenceNumber,
-      addGstNumber: addGstNumber,
-      addGstImage: addGstImage,
-      panNumber: panNumber,
+      pharname: pharmacistName,
+      pharphone: pharmacistPhoneNumber,
+      licenseno: addDrugLicenceNumber,
+      image1: addDrugLicenceImage,
+      gstno: addGstNumber,
+      image2: addGstImage,
+      panno: panNumber,
     };
     const axiosConfig = {
       headers: {
@@ -140,7 +161,7 @@ export default function Addret() {
                     </div>
                     <hr className="my-0" />
                     <div className="card-body">
-                      <form id="formAccountSettings">
+                      <form id="formAccountSettings" onSubmit={postData}>
                         <div className="row">
                           <div className="mb-3 col-md-6">
                             <label
@@ -537,7 +558,7 @@ export default function Addret() {
                         </div>
                         <div className="mt-2">
                           <button
-                            onClick={postData}
+                            type="submit"
                             className="btn btn-primary me-2"
                           >
                             Save

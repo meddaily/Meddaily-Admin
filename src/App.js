@@ -5,6 +5,7 @@ import "./App.css";
 import Routerpage from "./pages/Routerpage";
 import AuthRoute from "./pages/AuthRoute";
 import { useEffect, useState } from "react";
+// import Ham from "./Ham/Ham";
 
 function App() {
   let history = useHistory();
@@ -12,7 +13,7 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   useEffect(() => {
     checkAuth();
-  });
+  }, []);
   // const checkAuth = () => {
   //   const authToken = localStorage.getItem("authToken");
   //   if (authToken) {
@@ -22,13 +23,22 @@ function App() {
   //     history.push('/login')
   //   }
   // }
+
   const checkAuth = () => {
-    const authToken = localStorage.getItem("authToken");
+    const loginAuthToken = localStorage.getItem("authToken"); // admin login token
+    const distributorAuthToken = localStorage.getItem("disToken"); // Distributor login token
+    // const authToken = localStorage.getItem("authToken");
     const currentPath = history.location.pathname;
-    if (authToken) {
+
+    if (loginAuthToken) {
       setIsLoggedIn(true);
-      if (currentPath === "/login") {
+      if (currentPath !== "/login") {
         history.push("/");
+      }
+    } else if (distributorAuthToken) {
+      setIsLoggedIn(true);
+      if (currentPath !== "/distributorlogin") {
+        history.push("/distdashboard");
       }
     } else {
       setIsLoggedIn(false);
@@ -37,6 +47,7 @@ function App() {
       }
     }
   };
+
   return (
     <>
       <div className="App">

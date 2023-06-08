@@ -8,7 +8,7 @@ import Col from "react-bootstrap/Col";
 import Navbar from "../pages/Navbar";
 
 export default function OrderDetails() {
-  const authToken = localStorage.getItem("authToken");
+  const authToken = localStorage.getItem("disToken");
   const [orderDetails, setOrderDetails] = useState([]);
   useEffect(() => {
     getOrderDetails();

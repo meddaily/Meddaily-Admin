@@ -1,22 +1,69 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
 import { useState } from "react";
+import { useLocation } from "react-router-dom";
+import axios from "axios";
+import { useEffect } from "react";
+import { useHistory } from "react-router-dom";
+import toastr from "toastr";
 
 export default function Updateproduct() {
-  const [productName, setProductName] = useState("");
-  const [mnfType, setMnfType] = useState("");
-  const [medType, setMedType] = useState("");
-  const [description, setDescription] = useState("");
-  const [taxes, setTaxes] = useState("");
+  const defaultFormData = {
+    productName: "",
+    mnfType: "",
+    medType: "",
+    description: "",
+    taxes: "",
+  };
+  const [edit, setEdit] = useState(defaultFormData);
+  const location = useLocation();
+  const id = location.state.id;
+  useEffect(() => {
+    axios
+      .get(`http://13.235.8.138:81/editproduct/${id}`)
+      .then((response) => {
+        setEdit(response.data.data[0]);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
+
+  const { title, sub_title, description, taxes, medType, category_id, _id } =
+    edit;
+  const history = useHistory();
+  const handleUpdate = async (event) => {
+    event.preventDefault();
+    const reqbody = {
+      title,
+      sub_title,
+      description,
+      category_id: category_id,
+      _id: _id,
+    };
+
+    try {
+      const response = await axios.post(
+        "http://13.235.8.138:81/updateproduct",
+        reqbody
+      );
+      console.log(response);
+
+      if (response.status === 200) {
+        toastr.success(response?.data?.message);
+        history.push("/producttable");
+      } else {
+        toastr.error("Failed to update product");
+      }
+    } catch (error) {
+      console.error(error);
+      toastr.error("Failed to update product");
+    }
+  };
 
   const handleCancel = () => {
-    setProductName("");
-    setMnfType("");
-    setMedType("");
-    setDescription("");
-    setTaxes("");
+    setEdit(defaultFormData);
   };
 
   return (
@@ -43,8 +90,8 @@ export default function Updateproduct() {
                     <div className="card-body">
                       <form
                         id="formAccountSettings"
-                        method="POST"
-                        onSubmit="return false"
+                        // method="POST"
+                        // onSubmit="return false"
                       >
                         <div className="row">
                           <div className="mb-3 col-md-6">
@@ -60,9 +107,13 @@ export default function Updateproduct() {
                               id="firstName"
                               name="firstName"
                               placeholder="Product Name"
-                              value={productName}
-                              onChange={(e) => setProductName(e.target.value)}
-                              autoFocus
+                              value={title}
+                              onChange={(e) =>
+                                setEdit({
+                                  ...edit,
+                                  title: e.target.value,
+                                })
+                              }
                             />
                           </div>
                           <div className="mb-3 col-md-6">
@@ -78,8 +129,13 @@ export default function Updateproduct() {
                               name="lastName"
                               id="lastName"
                               placeholder="Manufacturer"
-                              value={mnfType}
-                              onChange={(e) => setMnfType(e.target.value)}
+                              value={sub_title}
+                              onChange={(e) =>
+                                setEdit({
+                                  ...edit,
+                                  sub_title: e.target.value,
+                                })
+                              }
                             />
                           </div>
                           <div className="mb-3 col-md-6">
@@ -94,7 +150,12 @@ export default function Updateproduct() {
                                 id="medType"
                                 name="productType"
                                 value={medType}
-                                onChange={(e) => setMedType(e.target.value)}
+                                onChange={(e) =>
+                                  setEdit({
+                                    ...edit,
+                                    medType: e.target.value,
+                                  })
+                                }
                                 className="select2 form-select"
                               >
                                 <option value="">Select </option>
@@ -117,7 +178,12 @@ export default function Updateproduct() {
                               id="email"
                               name="email"
                               value={description}
-                              onChange={(e) => setDescription(e.target.value)}
+                              onChange={(e) =>
+                                setEdit({
+                                  ...edit,
+                                  description: e.target.value,
+                                })
+                              }
                               placeholder="Discription"
                             />
                           </div>
@@ -135,13 +201,18 @@ export default function Updateproduct() {
                               name="organization"
                               placeholder="0000"
                               value={taxes}
-                              onChange={(e) => setTaxes(e.target.value)}
+                              onChange={(e) =>
+                                setEdit({
+                                  ...edit,
+                                  taxes: e.target.value,
+                                })
+                              }
                             />
                           </div>
                         </div>
                         <div className="mt-2">
                           <button
-                            type="submit"
+                            onClick={handleUpdate}
                             className="btn btn-primary me-2"
                           >
                             Update

@@ -40,7 +40,13 @@ export default function producttbody(props) {
                     </Link>
                   </li>
                   <li>
-                    <Link className="dropdown-item" to="/updateproduct">
+                    <Link className="dropdown-item" 
+                    // to="/updateproduct"
+                    to={{
+                      pathname: "/updateproduct",
+                      state: { id: props.productId },
+                    }}
+                    >
                       Edit
                     </Link>
                   </li>

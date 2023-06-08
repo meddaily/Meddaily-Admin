@@ -37,7 +37,7 @@ export default function Login() {
       .post(`http://13.235.8.138:81/distributor_login`, reqBody, axiosConfig)
       .then((res) => {
         if (res.data.status === true) {
-          localStorage.setItem("authToken", res?.data?.token);
+          localStorage.setItem("disToken", res?.data?.token);
           history.push("/distdashboard");
           window.location.reload();
         }else{
