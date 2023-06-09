@@ -10,12 +10,12 @@ function Ham() {
 
   const showSidebar = () => {
     if (sidebar) {
-        document.body.style.overflow="visible";
+      document.body.style.overflow = "visible";
       setTimeout(() => {
         setSidebar(!sidebar);
       }, 2000);
     } else {
-      document.body.style.overflow="hidden";
+      document.body.style.overflow = "hidden";
       setTimeout(() => {
         setSidebar(!sidebar);
       }, 0);
@@ -24,27 +24,32 @@ function Ham() {
 
   return (
     <>
-      <div value={{ color: "#fff" }} >
+      <div value={{ color: "#fff" }}>
         <div className="navbar">
           <Link to="#" className="menu-bars">
             <i className="bx bx-menu bx-sm" onClick={showSidebar}></i>
           </Link>
         </div>
-        <nav className={sidebar ? "nav-menu active" : "nav-menu"} id={sidebar?"on":"off"}>
-          <ul 
+        <nav
+          className={sidebar ? "nav-menu active" : "nav-menu"}
+          id={sidebar ? "on" : "off"}
+        >
+          <ul
             className="nav-menu-items"
             onClick={showSidebar}
             style={{ width: "100%", left: "-10rem" }}
           >
-         
-            
             <li className="navbar-toggle">
               <Link to="#" className="menu-bars"></Link>
             </li>
             <aside className=" menu-vertical menu bg-menu-theme h-100 d-block position-absolute left-0 start-0 position-absolute">
               <div className="app-brand demo">
                 <Link to="/" className="app-brand-link">
-                  <img src="../assets/img/logo2.png" alt="logo" style={{height:"70px",width:"150px"}} />
+                  <img
+                    src="../assets/img/logo2.png"
+                    alt="logo"
+                    style={{ height: "70px", width: "150px" }}
+                  />
                 </Link>
               </div>
 
@@ -154,11 +159,60 @@ function Ham() {
                 </li>
 
                 {/* Orgders */}
-                <li className="menu-item ">
+                {/* <li className="menu-item ">
                   <Link to="/ordertable" className="menu-link">
                     <i className="menu-icon tf-icons bx bx-box"></i>
                     <div data-i18n="Analytics">Orders</div>
                   </Link>
+                </li> */}
+                <li className="menu-item ">
+                  <Dropdown>
+                    <Dropdown.Toggle
+                      variant="success"
+                      className="menu-link menu-toggle"
+                    >
+                      <i className="menu-icon tf-icons bx bx-box"></i>
+                      <div data-i18n="Analytics">Orders</div>
+                    </Dropdown.Toggle>
+
+                    <Dropdown.Menu>
+                      <li className="menu-item active">
+                        <Link to="/ordertable" className="menu-link">
+                          <div data-i18n="Without menu">View Orders</div>
+                        </Link>
+                      </li>
+                      <li className="menu-item">
+                        <Link to="/addorder" className="menu-link">
+                          <div data-i18n="Without navbar">Add new Order</div>
+                        </Link>
+                      </li>
+                    </Dropdown.Menu>
+                  </Dropdown>
+                </li>
+                {/* category */}
+                <li className="menu-item ">
+                  <Dropdown>
+                    <Dropdown.Toggle
+                      variant="success"
+                      className="menu-link menu-toggle"
+                    >
+                      <i className="menu-icon tf-icons bx bx-box"></i>
+                      <div data-i18n="Analytics">Category</div>
+                    </Dropdown.Toggle>
+
+                    <Dropdown.Menu>
+                      <li className="menu-item active">
+                        <Link to="/categorylist" className="menu-link">
+                          <div data-i18n="Without menu">Category List</div>
+                        </Link>
+                      </li>
+                      <li className="menu-item">
+                        <Link to="/addnewcategory" className="menu-link">
+                          <div data-i18n="Without navbar">Add new Category</div>
+                        </Link>
+                      </li>
+                    </Dropdown.Menu>
+                  </Dropdown>
                 </li>
 
                 {/* Settings */}

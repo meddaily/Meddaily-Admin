@@ -5,7 +5,7 @@ import Sidebar from "./Sidebar";
 import Container from "react-bootstrap/Container";
 import { Row, Form } from "react-bootstrap";
 import Col from "react-bootstrap/Col";
-import Navbar from "../pages/Navbar";
+import Navbar from "./Navbar";
 
 export default function OrderDetails() {
   const authToken = localStorage.getItem("disToken");

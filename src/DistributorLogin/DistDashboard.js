@@ -6,11 +6,12 @@ import { Link } from "react-router-dom";
 // import OrderStatisticsChart from "./charts/OrderStatisticsChart";
 // import Profilereportchart from "./charts/Profilereportchart";
 // import Totalrevenuechart from "./charts/Totalrevenuechart";
-import Navbar from "../pages/Navbar";
+// import Navbar from "../pages/Navbar";
+import Navbar from "./Navbar";
 
 import Sidebar from "../DistributorLogin/Sidebar";
 
-export default function Dashbord() {
+export default function DistDashbord() {
   const authToken = localStorage.getItem("disToken");
   console.log("dashboard", authToken);
   return (
@@ -34,7 +35,8 @@ export default function Dashbord() {
                               Congratulations John! 🎉
                             </h5>
                             <p className="mb-4">
-                              You have available balance<span className="fw-bold">50,000</span> today.
+                              You have available balance
+                              <span className="fw-bold">50,000</span> today.
                               Check your new badge in your profile.
                             </p>
 

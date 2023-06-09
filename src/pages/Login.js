@@ -52,7 +52,7 @@ export default function Login() {
 
   return (
     <>
-      <div class="container-xxl" style={{ width: "45rem" }}>
+      <div className="container-xxl" style={{ width: "45rem" }}>
         <div className="authentication-wrapper authentication-basic container-p-y">
           <div className="authentication-inner">
             <div className="card">
@@ -72,7 +72,7 @@ export default function Login() {
 
                 <div id="formAuthentication" className="mb-3">
                   <div className="mb-3">
-                    <label for="email" className="form-label float-start">
+                    <label htmlFor="email" className="form-label float-start">
                       Email or Username
                     </label>
                     <input
@@ -87,7 +87,7 @@ export default function Login() {
                   </div>
                   <div className="mb-3 form-password-toggle">
                     <div className="d-flex justify-content-between">
-                      <label className="form-label" for="password">
+                      <label className="form-label" htmlFor="password">
                         Password
                       </label>
                     </div>
@@ -113,7 +113,7 @@ export default function Login() {
                         type="checkbox"
                         id="remember-me"
                       />
-                      <label className="form-check-label" for="remember-me">
+                      <label className="form-check-label" htmlFor="remember-me">
                         {" "}
                         Remember Me{" "}
                       </label>

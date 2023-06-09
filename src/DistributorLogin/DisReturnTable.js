@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import toastr from "toastr";
 import { Link } from "react-router-dom";
-import Navbar from "../pages/Navbar";
-import Sidebar from "../DistributorLogin/Sidebar";
+import Navbar from "./Navbar";
+import Sidebar from "./Sidebar";
 
 export default function DisReturnTable() {
   const authToken = localStorage.getItem("authToken");
@@ -20,7 +20,7 @@ export default function DisReturnTable() {
       .then((res) => {
         if (res.status === 200) {
           setReturnList(res.data.data);
-          console.log(res)
+          console.log(res);
         }
       })
       .catch((err) => {

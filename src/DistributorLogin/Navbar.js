@@ -1,13 +1,13 @@
 import React from "react";
 import { Link, useHistory } from "react-router-dom";
-import Ham from "../Ham/Ham";
+import Ham from "./Ham/Ham";
 
 export default function Navbar() {
   const history = useHistory();
 
   const onLogout = () => {
-    localStorage.removeItem("authToken");
-    // localStorage.removeItem("disToken");
+    // localStorage.removeItem("authToken");
+    localStorage.removeItem("disToken");
     history.push("/login");
     window.location.reload();
   };

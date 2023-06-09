@@ -1,6 +1,6 @@
 import React from "react";
 import Sidebar from "./Sidebar";
-import Navbar from "../pages/Navbar";
+import Navbar from "./Navbar";
 import { useState } from "react";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 
