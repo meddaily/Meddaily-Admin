@@ -6,8 +6,8 @@ export default function Navbar() {
   const history = useHistory();
 
   const onLogout = () => {
-    // localStorage.removeItem("authToken");
     localStorage.removeItem("disToken");
+    localStorage.removeItem("id");
     history.push("/login");
     window.location.reload();
   };

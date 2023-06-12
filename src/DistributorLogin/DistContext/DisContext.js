@@ -1,5 +1,6 @@
 import React, { createContext, useState, useEffect } from "react";
 import axios from "axios";
+import toastr from "toastr";
 
 // Create the context
 export const ApiContext = createContext();
@@ -7,32 +8,30 @@ export const ApiContext = createContext();
 // Create a provider component
 export const ApiProvider = ({ children }) => {
   const [products, setProducts] = useState([]);
-  const [token, setToken] = useState("");
 
   useEffect(() => {
+    const authToken = localStorage.getItem("disToken");
     // Fetch products with token
-    const fetchProducts = async () => {
+    async function getOrderDetails() {
       try {
-        const authToken = localStorage.getItem("authToken");
-
-        if (authToken) {
-          const response = await axios.get(
-            "http://13.235.8.138:81/distributor_get_product",
-            {
-              headers: {
-                Authorization: `Bearer ${authToken}`,
-              },
-            }
-          );
-          setProducts(response.data);
-          setToken(authToken);
+        const response = await axios.get(
+          `http://13.235.8.138:81/distributor_get_product`,
+          {
+            headers: {
+              token: `${authToken}`,
+            },
+          }
+        );
+        if (response.status === 200) {
+          setProducts(response?.data?.product);
         }
-      } catch (error) {
-        console.error("Error fetching products:", error);
+      } catch (err) {
+        toastr.error(err?.response?.data?.message);
+        console.log(err);
       }
-    };
+    }
 
-    fetchProducts();
+    getOrderDetails();
   }, []);
 
   // Provide the products state to the children components
@@ -40,7 +39,6 @@ export const ApiProvider = ({ children }) => {
     <ApiContext.Provider
       value={{
         products,
-        token,
       }}
     >
       {children}

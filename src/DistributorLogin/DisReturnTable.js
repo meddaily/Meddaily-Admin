@@ -4,10 +4,10 @@ import toastr from "toastr";
 import { Link } from "react-router-dom";
 import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
+import Loading from "../Loading/Loading";
 
 export default function DisReturnTable() {
-  const authToken = localStorage.getItem("authToken");
-
+  const authToken = localStorage.getItem("disToken");
   const [returnList, setReturnList] = useState([]);
 
   useEffect(() => {
@@ -15,21 +15,27 @@ export default function DisReturnTable() {
   }, [authToken]);
 
   async function getAllReturns() {
-    await axios
-      .post(`http://13.235.8.138:81/return_order_accept`)
-      .then((res) => {
-        if (res.status === 200) {
-          setReturnList(res.data.data);
-          console.log(res);
+    try {
+      const response = await axios.post(
+        `http://13.235.8.138:81/return_order_accept`,
+        {},
+        {
+          headers: {
+            token: `${authToken}`,
+          },
         }
-      })
-      .catch((err) => {
-        toastr.error(err.response.data.message);
-        console.log(err);
-      });
-  }
-  const formattedData = [returnList];
+      );
 
+      if (response.status === 200) {
+        setReturnList(response?.data?.data);
+      }
+    } catch (err) {
+      toastr.error(err?.response?.data?.message);
+      console.log(err);
+    }
+  }
+
+  const formattedData = [returnList];
   return (
     <>
       <div className="layout-wrapper layout-content-navbar">
@@ -55,29 +61,36 @@ export default function DisReturnTable() {
                             <th>View More</th>
                           </tr>
                         </thead>
-                        {/* <tbody className="table-border-bottom-0">
-                          {formattedData &&
-                            formattedData.length > 0 &&
-                            formattedData.map((item, i) => (
+                        <tbody className="table-border-bottom-0">
+                          {formattedData && formattedData.length > 0 ? (
+                            <tr>
+                              <td>
+                                <i className="fab fa-angular fa-lg text-danger me-3"></i>{" "}
+                                {formattedData.order_id || "NA"}
+                              </td>
+                              <td>{formattedData.name || "NA"}</td>
+                              <td>{formattedData.price || 0}</td>
+                              <td>{formattedData.quantity || 0}</td>
+                              <td>
+                                <div className="dropdown">
+                                  <Link className="dropdown-item" to="#">
+                                    {" "}
+                                    View Full Details
+                                  </Link>
+                                </div>
+                              </td>
+                            </tr>
+                          ) : (
+                            // <Loading />
+                            <>
                               <tr>
-                                <td>
-                                  <i className="fab fa-angular fa-lg text-danger me-3"></i>{" "}
-                                  {item.order_id || "NA"}
-                                </td>
-                                <td>{item.name || "NA"}</td>
-                                <td>{item.price || 0}</td>
-                                <td>{item.quantity || 0}</td>
-                                <td>
-                                  <div className="dropdown">
-                                    <Link className="dropdown-item" to="#">
-                                      {" "}
-                                      View Full Details
-                                    </Link>
-                                  </div>
+                                <td colSpan="5" style={{ textAlign: "center" }}>
+                                  <Loading />
                                 </td>
                               </tr>
-                            ))}
-                        </tbody> */}
+                            </>
+                          )}
+                        </tbody>
                       </table>
                     </div>
                   </div>

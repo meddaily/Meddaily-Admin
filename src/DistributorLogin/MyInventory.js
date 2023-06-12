@@ -3,9 +3,14 @@ import Sidebar from "./Sidebar";
 import Navbar from "./Navbar";
 import { useState } from "react";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
+import { useEffect } from "react";
+import axios from "axios";
+import { useContext } from "react";
+import { ApiContext } from "./DistContext/DisContext";
 
 const MyInventory = () => {
-    const [distributorList,setDistributorList] =useState("")
+  const { products } = useContext(ApiContext);
+  const maxLength = 50;
   return (
     <>
       <div className="layout-wrapper layout-content-navbar">
@@ -18,57 +23,50 @@ const MyInventory = () => {
               <div className="container-xxl flex-grow-1 container-p-y">
                 <div className="row">
                   <div className="card">
-                    <h5 className="card-header float-start">
-                      My Inventory
-                    </h5>
+                    <h5 className="card-header float-start">My Inventory</h5>
+
                     <div className="table-responsive text-nowrap">
                       <table className="table">
                         <thead>
                           <tr>
                             <th>Name</th>
-                            <th>Business name</th>
-                            <th>Price</th>
-                            <th>InStock</th>
+                            <th>Describtion</th>
                             <th>Action</th>
                           </tr>
                         </thead>
-                        {/* <tbody className="table-border-bottom-0">
-                          {distributorList &&
-                            distributorList.length > 0 &&
-                            distributorList.map((dist, k) => [
-                              <tr key={k}>
-                                <td>
-                                  <i className="fab fa-angular fa-lg text-danger me-3"></i>{" "}
-                                  <strong>{`${dist.firstname || ""} ${
-                                    dist.lastname
-                                  }`}</strong>
-                                </td>
-                                <td>{dist.distributorCode || "NA"}</td>
-                                <td>
-                                  {`${dist.area || ""}, ${dist.city || ""}
-                                   ${
-                                    dist.state || ""
-                                  } ${dist.pinCode || ""}` || "NA"}
-                                </td>
-                                <td>{Number(dist.phonenumber) || "NA"}</td>
-                                <td>
-                                  <div className="dropdown">
-                                    <Link
-                                      className="dropdown-item"
-                                      // to="/distributordetails"
-                                      to={{
-                                        pathname: "/distributordetails",
-                                        state: { id: dist._id },
-                                      }}
-                                    >
-                                      {" "}
-                                      View Full Details
-                                    </Link>
-                                  </div>
-                                </td>
-                              </tr>,
-                            ])}
-                        </tbody> */}
+                        <tbody>
+                          {products &&
+                            products.length > 0 &&
+                            products.map((product) => {
+                              return (
+                                <tr key={product._id}>
+                                  <td>{product.title}</td>
+                                  <td>
+                                    {product.description.substring(
+                                      0,
+                                      maxLength
+                                    ) + "..."}
+                                  </td>
+                                  <td>
+                                    <div className="dropdown">
+                                      <Link
+                                        className="dropdown-item"
+                                        to={{
+                                          pathname: "/updateinv",
+                                          state: {
+                                            productId: product._id,
+                                          },
+                                        }}
+                                      >
+                                        {" "}
+                                        View Full Details
+                                      </Link>
+                                    </div>
+                                  </td>
+                                </tr>
+                              );
+                            })}
+                        </tbody>
                       </table>
                     </div>
                   </div>

@@ -32,8 +32,9 @@ import OrderList from "../DistributorLogin/OrderList";
 import DisReturnTable from "../DistributorLogin/DisReturnTable";
 import MyInventory from "../DistributorLogin/MyInventory";
 import AddNewInventory from "../DistributorLogin/AddNewInventory";
-import BulkUploadInv from "../DistributorLogin/BulkUploadInv"
-import ListNewProductInv from "../DistributorLogin/ListNewProductInv"
+import BulkUploadInv from "../DistributorLogin/BulkUploadInv";
+import ListNewProductInv from "../DistributorLogin/ListNewProductInv";
+import UpdateInventory from "../DistributorLogin/UpdateInventory";
 
 export default function Routerpage() {
   return (
@@ -77,7 +78,7 @@ export default function Routerpage() {
           <Route path="/addnewinv" component={AddNewInventory} />
           <Route path="/bulkuploadinv" component={BulkUploadInv} />
           <Route path="/listnewinv" component={ListNewProductInv} />
-          
+          <Route path="/updateinv" component={UpdateInventory} />
         </Switch>
       </Router>
     </>

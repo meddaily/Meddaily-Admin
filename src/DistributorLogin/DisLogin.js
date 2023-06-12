@@ -37,6 +37,8 @@ export default function Login() {
       .post(`http://13.235.8.138:81/distributor_login`, reqBody, axiosConfig)
       .then((res) => {
         if (res.data.status === true) {
+          const distributorId = res.data.data._id; // Get the _id from the response data object
+          localStorage.setItem("id", distributorId); // Set the _id in localStorage
           localStorage.setItem("disToken", res?.data?.token);
           history.push("/distdashboard");
           window.location.reload();

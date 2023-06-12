@@ -13,7 +13,6 @@ import Sidebar from "../DistributorLogin/Sidebar";
 
 export default function DistDashbord() {
   const authToken = localStorage.getItem("disToken");
-  console.log("dashboard", authToken);
   return (
     <>
       <div className="layout-wrapper layout-content-navbar">

@@ -17,10 +17,10 @@ export default function Returntable() {
 
   async function getAllReturns() {
     await axios
-      .get(`http://13.235.8.138:81/return_order_accepted`)
+      .get(`http://13.235.8.138:81/get_all_return_delivered_order`)
       .then((res) => {
         if (res.status === 200) {
-          setReturnList(res.data.data);
+          setReturnList(res?.data?.data);
         }
       })
       .catch((err) => {
@@ -28,8 +28,10 @@ export default function Returntable() {
         console.log(err);
       });
   }
-  const formattedData = [returnList];
+  const formattedData = returnList ? [returnList] : null;
 
+  // const formattedData = [returnList];
+  console.log(returnList)
   return (
     <>
       <div className="layout-wrapper layout-content-navbar">
