@@ -18,7 +18,7 @@ export default function Producttable() {
 
   async function getAllProducts() {
     await axios
-      .get(`http://13.235.8.138:81/getproduct`)
+      .get(`http://api.meddaily.in/getproduct`)
       .then((res) => {
         if (res.status === 200) {
           setProductList(res.data.data);

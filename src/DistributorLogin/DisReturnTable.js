@@ -17,7 +17,7 @@ export default function DisReturnTable() {
   async function getAllReturns() {
     try {
       const response = await axios.post(
-        `http://13.235.8.138:81/return_order_accept`,
+        `http://api.meddaily.in/return_order_accept`,
         {},
         {
           headers: {

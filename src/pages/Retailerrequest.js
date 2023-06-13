@@ -11,7 +11,7 @@ export default function Retailerrequest() {
   const handleRetailerReq = async () => {
     try {
       const response = await axios.get(
-        "http://13.235.8.138:81/retailer_request"
+        "http://api.meddaily.in/retailer_request"
       );
       setRetailerReq(response?.data?.data);
     } catch (error) {

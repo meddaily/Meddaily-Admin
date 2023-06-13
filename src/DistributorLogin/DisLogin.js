@@ -34,7 +34,7 @@ export default function Login() {
       },
     };
     await axios
-      .post(`http://13.235.8.138:81/distributor_login`, reqBody, axiosConfig)
+      .post(`http://api.meddaily.in/distributor_login`, reqBody, axiosConfig)
       .then((res) => {
         if (res.data.status === true) {
           const distributorId = res.data.data._id; // Get the _id from the response data object

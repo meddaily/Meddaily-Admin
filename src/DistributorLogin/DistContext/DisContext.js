@@ -15,7 +15,7 @@ export const ApiProvider = ({ children }) => {
     async function getOrderDetails() {
       try {
         const response = await axios.get(
-          `http://13.235.8.138:81/distributor_get_product`,
+          `http://api.meddaily.in/distributor_get_product`,
           {
             headers: {
               token: `${authToken}`,

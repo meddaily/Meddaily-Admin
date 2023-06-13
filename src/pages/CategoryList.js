@@ -17,7 +17,7 @@ export default function CategoryList() {
 
   async function getCategoryList() {
     try {
-      const res = await axios.get(`http://13.235.8.138:81/getcategory`);
+      const res = await axios.get(`http://api.meddaily.in/getcategory`);
       if (res.status === 200) {
         setCategoryList(res?.data?.data);
       }

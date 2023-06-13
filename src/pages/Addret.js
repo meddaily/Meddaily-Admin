@@ -109,7 +109,7 @@ export default function Addret() {
     };
     try {
       const response = await axios.post(
-        "http://13.235.8.138:81/retailer_register",
+        "http://api.meddaily.in/retailer_register",
         reqBody,
         axiosConfig
       );

@@ -60,7 +60,7 @@ export default function Distributordetails() {
 
     try {
       const res = await axios.post(
-        "http://13.235.8.138:81/distributor_approve",
+        "http://api.meddaily.in/distributor_approve",
         formData,
         axiosConfig
       );

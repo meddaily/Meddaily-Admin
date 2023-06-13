@@ -32,7 +32,7 @@ export default function Distributordetailsr() {
   const handleDistDetails = async (e) => {
     try {
       const response = await axios.post(
-        "http://13.235.8.138:81/distributor_detail",
+        "http://api.meddaily.in/distributor_detail",
         { ...formData, id: id }
       );
       setFormData(response?.data?.data);

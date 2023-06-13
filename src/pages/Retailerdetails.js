@@ -38,7 +38,7 @@ export default function Retailerdetails() {
   const handleRetailerDetails = async (e) => {
     try {
       const response = await axios.post(
-        "http://13.235.8.138:81/retailer_detail",
+        "http://api.meddaily.in/retailer_detail",
         { ...formData, id: id }
       );
       setFormData(response?.data?.data);

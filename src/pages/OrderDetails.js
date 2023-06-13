@@ -28,7 +28,7 @@ export default function OrderDetails() {
       },
     };
     await axios
-      .post(`http://13.235.8.138:81/order_detail`, reqbody, axiosconfig)
+      .post(`http://api.meddaily.in/order_detail`, reqbody, axiosconfig)
       .then((res) => {
         if (res.status === 200) {
           setOrderDetails(res?.data?.message);

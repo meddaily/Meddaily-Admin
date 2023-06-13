@@ -119,7 +119,7 @@ export default function Adddis() {
     };
 
     await axios
-      .post(`http://13.235.8.138:81/distributor_register`, reqBody, axiosConfig)
+      .post(`http://api.meddaily.in/distributor_register`, reqBody, axiosConfig)
       .then((res) => {
         if (res.status === 200) {
           toastr.success(res.data.message);

@@ -19,7 +19,7 @@ export default function Retailerlist() {
 
   async function getAllRetailers() {
     await axios
-      .get(`http://13.235.8.138:81/retailer_list`)
+      .get(`http://api.meddaily.in/retailer_list`)
       .then((res) => {
         if (res.status === 200) {
           setRetailerList(res.data.data);

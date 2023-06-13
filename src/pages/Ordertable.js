@@ -19,7 +19,7 @@ export default function Ordertable() {
 
   const handleOrders = async () => {
     try {
-      const response = await axios.get("http://13.235.8.138:81/all_order");
+      const response = await axios.get("http://api.meddaily.in/all_order");
       setOrderList(response?.data?.message);
     } catch (error) {
       console.error(error);

@@ -17,7 +17,7 @@ export default function Returntable() {
 
   async function getAllReturns() {
     await axios
-      .get(`http://13.235.8.138:81/get_all_return_delivered_order`)
+      .get(`http://api.meddaily.in/get_all_return_delivered_order`)
       .then((res) => {
         if (res.status === 200) {
           setReturnList(res?.data?.data);

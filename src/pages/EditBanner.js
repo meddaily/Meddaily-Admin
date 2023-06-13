@@ -25,7 +25,7 @@ const EditBanner = () => {
   const editBanneer = async () => {
     try {
       const response = await axios.get(
-        `http://13.235.8.138:81/editbanner/${bannerId}`
+        `http://api.meddaily.in/editbanner/${bannerId}`
       );
       if (response.status === 200) {
         setEditBanner(response);

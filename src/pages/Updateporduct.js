@@ -21,7 +21,7 @@ export default function Updateproduct() {
   const id = location.state.id;
   useEffect(() => {
     axios
-      .get(`http://13.235.8.138:81/editproduct/${id}`)
+      .get(`http://api.meddaily.in/editproduct/${id}`)
       .then((response) => {
         setEdit(response.data.data[0]);
       })
@@ -45,7 +45,7 @@ export default function Updateproduct() {
 
     try {
       const response = await axios.post(
-        "http://13.235.8.138:81/updateproduct",
+        "http://api.meddaily.in/updateproduct",
         reqbody
       );
       console.log(response);
