@@ -26,6 +26,8 @@ import Returntable from "./Returntable";
 import Payouttable from "./Payouttable";
 import CategoryList from "./CategoryList";
 import AddNewCategory from "./AddNewCat";
+import Banner from "./Banner";
+import EditBanner from "./EditBanner";
 // distributor
 import DistDashboard from "../DistributorLogin/DistDashboard";
 import OrderList from "../DistributorLogin/OrderList";
@@ -71,6 +73,9 @@ export default function Routerpage() {
           <Route path="/categorylist" component={CategoryList} />
           <Route path="/addnewcategory" component={AddNewCategory} />
           <Route path="/payouttable" component={Payouttable} />
+          <Route path="/banner" component={Banner} />
+          <Route path="/editbanner" component={EditBanner} />
+
           {/* distributor */}
           <Route path="/orderlist" component={OrderList} />
           <Route path="/distreturn" component={DisReturnTable} />

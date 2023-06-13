@@ -174,6 +174,14 @@ export default function Sidebar() {
           </Dropdown>
         </li>
 
+        {/* Banners */}
+        <li className="menu-item ">
+          <Link to="/banner" className="menu-link">
+            <i className="menu-icon tf-icons bx bx-box"></i>
+            <div data-i18n="Analytics">Banner Setting</div>
+          </Link>
+        </li>
+
         {/* Settings */}
         <li className="menu-item ">
           <Dropdown>
