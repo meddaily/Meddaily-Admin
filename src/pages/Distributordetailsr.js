@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Sidebar from "./Sidebar";
-import { useHistory } from "react-router-dom";
+// import { useHistory } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import Navbar from "./Navbar";
 import axios from "axios";
@@ -21,10 +21,10 @@ export default function Distributordetailsr() {
   const [formData, setFormData] = useState(defaultFormData);
   const location = useLocation();
   const { id } = location.state;
-  let history = useHistory();
-  function handleclick() {
-    history.push("/gstinfo");
-  }
+  // let history = useHistory();
+  // function handleclick(e) {
+  //   history.push("/gstinfo");
+  // }
   useEffect(() => {
     handleDistDetails();
   }, []);
@@ -36,6 +36,7 @@ export default function Distributordetailsr() {
         { ...formData, id: id }
       );
       setFormData(response?.data?.data);
+      console.log(response.data.data);
     } catch (error) {
       console.error(error);
     }
@@ -326,17 +327,23 @@ export default function Distributordetailsr() {
 
                       {/* button */}
                       <div className="col-12">
-                        <button
-                          type="button"
-                          className="btn btn-primary"
-                          style={{
-                            backgroundColor: "Darkblue",
-                            border: "Darkblue",
+                        <Link
+                          to={{
+                            pathname: "/gstinfo",
+                            state: { id: id },
                           }}
-                          onClick={handleclick}
                         >
-                          Review Button
-                        </button>
+                          <button
+                            type="button"
+                            className="btn btn-primary"
+                            style={{
+                              backgroundColor: "Darkblue",
+                              border: "Darkblue",
+                            }}
+                          >
+                            Review Button
+                          </button>
+                        </Link>
                       </div>
                     </div>
                   </div>

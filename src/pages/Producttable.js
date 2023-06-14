@@ -12,13 +12,16 @@ export default function Producttable() {
 
   const [productList, setProductList] = useState([]);
 
+  const [selectedMedicineType, setSelectedMedicineType] = useState("");
+
   useEffect(() => {
     getAllProducts();
-  }, [authToken]);
+  }, [authToken, selectedMedicineType]);
 
   async function getAllProducts() {
+    const apiUrl = `http://api.meddaily.in/getproduct?medicineType=${selectedMedicineType}`;
     await axios
-      .get(`http://api.meddaily.in/getproduct`)
+      .get(apiUrl)
       .then((res) => {
         if (res.status === 200) {
           setProductList(res.data.data);
@@ -29,10 +32,16 @@ export default function Producttable() {
         console.log(err);
       });
   }
+  // handle medicine type
+  function handleMedicineTypeChange(type) {
+    setSelectedMedicineType(type);
+    getAllProducts();
+  }
+
   //del fun
   async function deleteProduct(productId) {
     await axios
-      .delete(`http://13.235.8.138:81/deleteproduct/${productId}`, {
+      .delete(`http://api.meddaily.in/deleteproduct/${productId}`, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -51,25 +60,28 @@ export default function Producttable() {
         console.log(err);
       });
   }
-  
 
   const product =
-    productList &&
-    productList.length > 0 &&
-    productList.map((item, i) => {
-      return (
-        <Producttbody
-          key={i}
-          deleteProduct={() => deleteProduct(item._id)}
-          productId={item._id}
-          describtion={item.description}
-          productname={item.title}
-          mnfname={item.sub_title}
-          medicinetype={item.productType ? item.productType : "N/A"}
-          delete={"Action"}
-        />
-      );
-    });
+    productList && productList.length > 0 ? (
+      productList.map((item, i) => {
+        return (
+          <Producttbody
+            key={i}
+            deleteProduct={() => deleteProduct(item._id)}
+            productId={item._id}
+            describtion={item.description}
+            productname={item.title}
+            mnfname={item.sub_title}
+            medicinetype={item.productType ? item.productType : "N/A"}
+            delete={"Action"}
+          />
+        );
+      })
+    ) : (
+      <tr>
+        <td colSpan="4">No products found</td>
+      </tr>
+    );
 
   return (
     <>
@@ -97,17 +109,29 @@ export default function Producttable() {
                   </button>
                   <ul className="dropdown-menu">
                     <li>
-                      <a className="dropdown-item" href="javascript:void(0);">
+                      <a
+                        className="dropdown-item"
+                        href="javascript:void(0);"
+                        onClick={() => handleMedicineTypeChange("Genric")}
+                      >
                         Genric
                       </a>
                     </li>
                     <li>
-                      <a className="dropdown-item" href="javascript:void(0);">
+                      <a
+                        className="dropdown-item"
+                        href="javascript:void(0);"
+                        onClick={() => handleMedicineTypeChange("OTC")}
+                      >
                         OTC
                       </a>
                     </li>
                     <li>
-                      <a className="dropdown-item" href="javascript:void(0);">
+                      <a
+                        className="dropdown-item"
+                        href="javascript:void(0);"
+                        onClick={() => handleMedicineTypeChange("Branded")}
+                      >
                         Branded
                       </a>
                     </li>

@@ -5,6 +5,7 @@ import Sidebar from "./Sidebar";
 import Navbar from "./Navbar";
 import axios from "axios";
 import toastr from "toastr";
+import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
 
 export default function Distributordetails() {
   const [formData, setFormData] = useState({
@@ -16,7 +17,9 @@ export default function Distributordetails() {
     ifsccode: "",
     upiid: "",
   });
-
+  const location = useLocation();
+  const { id } = location.state;
+  console.log(id);
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setFormData((prevFormData) => ({
@@ -25,31 +28,6 @@ export default function Distributordetails() {
     }));
   };
 
-  // let history = useHistory();
-  // function handleclick() {
-  //   // history.push("#");
-  //   const handleAppandAdd = async () => {
-  //     const reqBody = {
-  //        "gstNo":"",
-  //           };
-  //     const axiosConfig = {
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //     };
-  //     try {
-  //       const res = axios.post(
-  //         "http://13.235.8.138:81/distributor_approve",
-  //         reqBody,
-  //         axiosConfig
-  //       );
-  //       console.log(res);
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
-  //   handleAppandAdd();
-  // }
   const handleSubmit = async (event) => {
     event.preventDefault();
     const axiosConfig = {
@@ -60,8 +38,8 @@ export default function Distributordetails() {
 
     try {
       const res = await axios.post(
-        "http://api.meddaily.in/distributor_approve",
-        formData,
+        `http://api.meddaily.in/distributor_approve`,
+        {id},
         axiosConfig
       );
       if (res.status === 200) {

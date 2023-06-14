@@ -4,14 +4,17 @@ import toastr from "toastr";
 import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
 import { useState } from "react";
+import { useContext } from "react";
+import { ApiContext } from "../DistributorLogin/DistContext/DisContext";
 // import config from "../appConfig";
 
 export default function Addproduct() {
   const [title, setTitle] = useState("");
   const [sub_title, setSubTitle] = useState("");
-  const [productType, setProductType] = useState("");
+  const [categoryId, setCategoryId] = useState("");
   const [description, setDescription] = useState("");
-  const [taxes, setTaxes] = useState("");
+  // contextapi
+  const { category } = useContext(ApiContext);
 
   const postData = async (e) => {
     e.preventDefault();
@@ -21,16 +24,12 @@ export default function Addproduct() {
     if (sub_title === "") {
       return toastr.warning("Manufacturer name cannot be empty !");
     }
-    if (productType === "") {
-      return toastr.warning("Meidicine type cannot be empty !");
-    }
 
     const reqBody = {
       title: title,
       sub_title: sub_title,
-      productType: productType,
+      category_id: categoryId,
       description: description,
-      taxes: taxes,
     };
     const axiosConfig = {
       headers: {
@@ -49,9 +48,8 @@ export default function Addproduct() {
         toastr.success(response.data.message);
         setTitle("");
         setSubTitle("");
-        setProductType("");
         setDescription("");
-        setTaxes("");
+        setCategoryId("");
       }
     } catch (err) {
       toastr.error(err.response.data.message);
@@ -61,9 +59,8 @@ export default function Addproduct() {
   const handleCancel = () => {
     setTitle("");
     setSubTitle("");
-    setProductType("");
     setDescription("");
-    setTaxes("");
+    setCategoryId("");
   };
   return (
     <>
@@ -124,25 +121,31 @@ export default function Addproduct() {
                               placeholder={"Enter mnf name"}
                             />
                           </div>
-
                           <div className="mb-3 col-md-6">
                             <label
                               htmlFor="medType"
                               className="form-label float-start"
                             >
-                              MNF type
+                              Category
                             </label>
                             <select
                               id="medType"
                               name="productType"
-                              value={productType}
-                              onChange={(e) => setProductType(e.target.value)}
+                              value={categoryId}
+                              onChange={(e) => setCategoryId(e.target.value)}
                               className="select2 form-select"
                             >
-                              <option value="">Select </option>
-                              <option value="OTC">OTC</option>
-                              <option value="Generic">Generic</option>
-                              <option value="Branded">Branded</option>
+                              <option value="">Select</option>
+                              {category &&
+                                category.length > 0 &&
+                                category.map((categoryItem) => (
+                                  <option
+                                    key={categoryItem._id}
+                                    value={categoryItem._id}
+                                  >
+                                    {categoryItem.name}
+                                  </option>
+                                ))}
                             </select>
                           </div>
 
@@ -161,24 +164,6 @@ export default function Addproduct() {
                               value={description}
                               onChange={(e) => setDescription(e.target.value)}
                               placeholder={"Enter discription"}
-                            />
-                          </div>
-
-                          <div className="mb-3 col-md-6">
-                            <label
-                              htmlFor="taxes"
-                              className="form-label float-start"
-                            >
-                              Taxes
-                            </label>
-                            <input
-                              className="form-control"
-                              type="text"
-                              name="taxes"
-                              id="taxes"
-                              value={taxes}
-                              onChange={(e) => setTaxes(e.target.value)}
-                              placeholder={"taxes"}
                             />
                           </div>
                         </div>

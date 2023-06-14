@@ -6,6 +6,8 @@ import { useHistory } from "react-router-dom";
 import Navbar from "./Navbar";
 import { useState } from "react";
 import { useEffect } from "react";
+import toastr from "toastr";
+
 import axios from "axios";
 export default function Retailerdetailsr() {
   const defaultFormData = {
@@ -28,8 +30,25 @@ export default function Retailerdetailsr() {
   const location = useLocation();
   const { id } = location.state;
   let history = useHistory();
-  function handleclick() {
-    history.push("#");
+  async function handleclick() {
+    const axiosConfig = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    try {
+      const response = await axios.post(
+        `http://api.meddaily.in/retailer_approve`,
+        { id },
+        axiosConfig
+      );
+      if (response.status == 200) {
+        toastr.success(response.data.message);
+        setFormData("");
+      }
+    } catch (error) {
+      console.log(error);
+    }
   }
   useEffect(() => {
     handleRetailerDetails();

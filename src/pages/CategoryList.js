@@ -44,25 +44,38 @@ export default function CategoryList() {
                       <table className="table">
                         <thead>
                           <tr>
+                            <th>Id</th>
                             <th>Name</th>
                             <th>Img</th>
-                            <th>Id</th>
                             <th>View More</th>
                           </tr>
                         </thead>
                         <tbody className="table-border-bottom-0">
                           {categoryList &&
                             categoryList.length > 0 &&
-                            categoryList.map((item, i) => (
-                              <tr key={i}>
+                            categoryList.map((item, ind) => (
+                              <tr key={ind}>
+                                <td>{ind + 1}</td>
                                 <td>
                                   <i className="fab fa-angular fa-lg text-danger me-3"></i>{" "}
                                   {item.name || "NA"}
                                 </td>
                                 <td>
-                                  <img src={item.image || "NA"} alt="img" />{" "}
+                                  {item.image ? (
+                                    <img
+                                      src={item.image}
+                                      alt="img"
+                                      style={{
+                                        width: "100px",
+                                        height: "100px",
+                                        objectFit: "cover",
+                                      }}
+                                    />
+                                  ) : (
+                                    "NA"
+                                  )}{" "}
                                 </td>
-                                <td>{item._id || "NA"}</td>
+                                {/* <td>{item._id || "NA"}</td> */}
                                 <td>
                                   <div className="dropdown">
                                     <Link className="dropdown-item" to="#">

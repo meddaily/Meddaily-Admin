@@ -8,6 +8,7 @@ export const ApiContext = createContext();
 // Create a provider component
 export const ApiProvider = ({ children }) => {
   const [products, setProducts] = useState([]);
+  const [category, setCategory] = useState([]);
 
   useEffect(() => {
     const authToken = localStorage.getItem("disToken");
@@ -32,13 +33,25 @@ export const ApiProvider = ({ children }) => {
     }
 
     getOrderDetails();
+    getCategory();
   }, []);
+
+  // admin add product
+  const getCategory = async () => {
+    try {
+      const response = await axios.get(`http://api.meddaily.in/getCategory`);
+      setCategory(response?.data?.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   // Provide the products state to the children components
   return (
     <ApiContext.Provider
       value={{
         products,
+        category,
       }}
     >
       {children}

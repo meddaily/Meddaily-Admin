@@ -7,38 +7,45 @@ import axios from "axios";
 import { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import toastr from "toastr";
+import { useContext } from "react";
+import { ApiContext } from "../DistributorLogin/DistContext/DisContext";
 
 export default function Updateproduct() {
   const defaultFormData = {
     productName: "",
     mnfType: "",
-    medType: "",
+    categoryId: "",
     description: "",
-    taxes: "",
   };
   const [edit, setEdit] = useState(defaultFormData);
   const location = useLocation();
   const id = location.state.id;
+
+  console.log(edit);
+  // context api
+  const { category } = useContext(ApiContext);
+  console.log("edit", category);
+
   useEffect(() => {
     axios
       .get(`http://api.meddaily.in/editproduct/${id}`)
       .then((response) => {
         setEdit(response.data.data[0]);
+        console.log("object", response);
       })
       .catch((error) => {
         console.error(error);
       });
   }, []);
 
-  const { title, sub_title, description, taxes, medType, category_id, _id } =
-    edit;
+  const { title, sub_title, description, category_id, _id } = edit;
   const history = useHistory();
   const handleUpdate = async (event) => {
     event.preventDefault();
     const reqbody = {
-      title,
-      sub_title,
-      description,
+      title: title,
+      sub_title: sub_title,
+      description: description,
       category_id: category_id,
       _id: _id,
     };
@@ -138,7 +145,7 @@ export default function Updateproduct() {
                               }
                             />
                           </div>
-                          <div className="mb-3 col-md-6">
+                          {/* <div className="mb-3 col-md-6">
                             <label
                               className="form-label float-start"
                               htmlFor="phoneNumber "
@@ -164,6 +171,38 @@ export default function Updateproduct() {
                                 <option value="Branded">Branded</option>
                               </select>
                             </div>
+                          </div> */}
+                          <div className="mb-3 col-md-6">
+                            <label
+                              htmlFor="medType"
+                              className="form-label float-start"
+                            >
+                              Category
+                            </label>
+                            <select
+                              id="medType"
+                              name="productType"
+                              value={category_id}
+                              onChange={(e) =>
+                                setEdit({
+                                  ...edit,
+                                  category_id: e.target.value,
+                                })
+                              }
+                              className="select2 form-select"
+                            >
+                              <option value="">Select</option>
+                              {category &&
+                                category.length > 0 &&
+                                category.map((categoryItem) => (
+                                  <option
+                                    key={categoryItem._id}
+                                    value={categoryItem._id}
+                                  >
+                                    {categoryItem.name}
+                                  </option>
+                                ))}
+                            </select>
                           </div>
                           <div className="mb-3 col-md-6">
                             <label
@@ -185,28 +224,6 @@ export default function Updateproduct() {
                                 })
                               }
                               placeholder="Discription"
-                            />
-                          </div>
-                          <div className="mb-3 col-md-6">
-                            <label
-                              htmlFor="organization"
-                              className="form-label float-start"
-                            >
-                              Taxes
-                            </label>
-                            <input
-                              type="text"
-                              className="form-control"
-                              id="organization"
-                              name="organization"
-                              placeholder="0000"
-                              value={taxes}
-                              onChange={(e) =>
-                                setEdit({
-                                  ...edit,
-                                  taxes: e.target.value,
-                                })
-                              }
                             />
                           </div>
                         </div>

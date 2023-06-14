@@ -7,60 +7,160 @@ import { useState } from "react";
 // import config from "../appConfig";
 
 export default function Addret() {
-  const [retailer, setRetailer] = useState({
-    typeOfBusiness: "",
-    businessName: "",
-    ownerName: "",
-    businessAddress: "",
-    pinCode: "",
-    city: "",
-    area: "",
-    state: "",
-    phoneNumber: "",
-    password: "",
-    confirmPassword: "",
-    email: "",
-    pharmacistName: "",
-    pharmacistPhoneNumber: "",
-    addDrugLicenceNumber: "",
-    addDrugLicenceImage: "",
-    addGstNumber: "",
-    addGstImage: "",
-    panNumber: "",
-  });
-  console.log(retailer);
+  // const [retailer,setRetailer] = useState({
+  //   typeOfBusiness: "",
+  //   businessName: "",
+  //   ownerName: "",
+  //   businessAddress: "",
+  //   pinCode: "",
+  //   city: "",
+  //   area: "",
+  //   state: "",
+  //   phoneNumber: "",
+  //   password: "",
+  //   confirmPassword: "",
+  //   email: "",
+  //   pharmacistName: "",
+  //   pharmacistPhoneNumber: "",
+  //   addDrugLicenceNumber: "",
+  //   addDrugLicenceImage: "",
+  //   addGstNumber: "",
+  //   addGstImage: "",
+  //   panNumber: "",
+  // });
+  // console.log(retailer);
+  //  add sep usestate
+  const [typeOfBusiness, setTypeOfBusiness] = useState("");
+  const [businessName, setBusinessName] = useState("");
+  const [ownerName, setOwnerName] = useState("");
+  const [businessAddress, setBusinessAddress] = useState("");
+  const [pinCode, setPinCode] = useState("");
+  const [city, setCity] = useState("");
+  const [area, setArea] = useState("");
+  const [state, setState] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [email, setEmail] = useState("");
+  const [pharmacistName, setPharmacistName] = useState("");
+  const [pharmacistPhoneNumber, setPharmacistPhoneNumber] = useState("");
+  const [addDrugLicenceNumber, setAddDrugLicenceNumber] = useState("");
+  const [addDrugLicenceImage, setAddDrugLicenceImage] = useState("");
+  const [addGstNumber, setAddGstNumber] = useState("");
+  const [addGstImage, setAddGstImage] = useState("");
+  const [panNumber, setPanNumber] = useState("");
 
-  let name, value;
-  function handle(e) {
-    name = e.target.name;
-    value = e.target.value;
-    setRetailer({ ...retailer, [name]: value });
-  }
+
+
+console.log(typeOfBusiness,businessAddress,businessName,ownerName,pinCode,city,state,phoneNumber,password,confirmPassword,area,email,pharmacistName,pharmacistPhoneNumber,addDrugLicenceImage,addDrugLicenceNumber,addGstNumber,addGstImage,panNumber)
+
+
+  // let name, value;
+  // function handle(e) {
+  //   name = e.target.name;
+  //   value = e.target.value;
+  //   setRetailer({ ...retailer, [name]: value });
+  // }
 
   //data send in backend by using async function postData
   const postData = async (e) => {
     e.preventDefault();
-    const {
-      typeOfBusiness,
-      businessName,
-      ownerName,
-      businessAddress,
-      pinCode,
-      city,
-      area,
-      state,
-      phoneNumber,
-      password,
-      confirmPassword,
-      email,
-      pharmacistName,
-      pharmacistPhoneNumber,
-      addDrugLicenceNumber,
-      addDrugLicenceImage,
-      addGstNumber,
-      addGstImage,
-      panNumber,
-    } = retailer;
+    // const {
+    //   typeOfBusiness,
+    //   businessName,
+    //   ownerName,
+    //   businessAddress,
+    //   pinCode,
+    //   city,
+    //   area,
+    //   state,
+    //   phoneNumber,
+    //   password,
+    //   confirmPassword,
+    //   email,
+    //   pharmacistName,
+    //   pharmacistPhoneNumber,
+    //   addDrugLicenceNumber,
+    //   addDrugLicenceImage,
+    //   addGstNumber,
+    //   addGstImage,
+    //   panNumber,
+    // } = retailer;
+
+    if (!typeOfBusiness) {
+      toastr.warning("Please select a business type!");
+      return;
+    }
+    if (!businessName) {
+      toastr.warning("Business name cannot be empty!");
+      return;
+    }
+    if (!ownerName) {
+      toastr.warning("Owner name cannot be empty!");
+      return;
+    }
+    if (!businessAddress) {
+      toastr.warning("Business address cannot be empty!");
+      return;
+    }
+    if (!pinCode) {
+      toastr.warning("Pin code cannot be empty!");
+      return;
+    }
+    if (!city) {
+      toastr.warning("City cannot be empty!");
+      return;
+    }
+    if (!area) {
+      toastr.warning("Area cannot be empty!");
+      return;
+    }
+    if (!state) {
+      toastr.warning("State cannot be empty!");
+      return;
+    }
+    if (!phoneNumber) {
+      toastr.warning("Phone number cannot be empty!");
+      return;
+    }
+    if (!password) {
+      toastr.warning("Password cannot be empty!");
+      return;
+    }
+    if (!confirmPassword) {
+      toastr.warning("Confirm password cannot be empty!");
+      return;
+    }
+    if (password !== confirmPassword) {
+      toastr.warning("Passwords do not match!");
+      return;
+    }
+    if (!email) {
+      toastr.warning("Email cannot be empty!");
+      return;
+    }
+    if (!pharmacistName) {
+      toastr.warning("Pharmacist name cannot be empty!");
+      return;
+    }
+    if (!pharmacistPhoneNumber) {
+      toastr.warning("Pharmacist phone number cannot be empty!");
+      return;
+    }
+    if (!addDrugLicenceNumber) {
+      toastr.warning("Drug licence number cannot be empty!");
+      return;
+    }
+
+    if (!addGstNumber) {
+      toastr.warning("GST number cannot be empty!");
+      return;
+    }
+
+    if (!panNumber) {
+      toastr.warning("PAN number cannot be empty!");
+      return;
+    }
 
     const reqBody = {
       // businesstype: businesstype,
@@ -102,41 +202,55 @@ export default function Addret() {
       image2: addGstImage,
       panno: panNumber,
     };
-    const axiosConfig = {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
+    const formData = new FormData();
+    formData.append("businesstype", typeOfBusiness);
+    formData.append("businessname", businessName);
+    formData.append("ownername", ownerName);
+    formData.append("address", businessAddress);
+    formData.append("pincode", pinCode);
+    formData.append("city", city);
+    formData.append("area", area);
+    formData.append("state", state);
+    formData.append("phonenumber", phoneNumber);
+    formData.append("password", password);
+    formData.append("confirmpassword", confirmPassword);
+    formData.append("email", email);
+    formData.append("pharname", pharmacistName);
+    formData.append("pharphone", pharmacistPhoneNumber);
+    formData.append("licenseno", addDrugLicenceNumber);
+    formData.append("image1", addDrugLicenceImage);
+    formData.append("gstno", addGstNumber);
+    formData.append("image2", addGstImage);
+    formData.append("panno", panNumber);
+
     try {
       const response = await axios.post(
         "http://api.meddaily.in/retailer_register",
-        reqBody,
-        axiosConfig
+        formData
       );
-      debugger;
       if (response.status === 200) {
         toastr.success(response.data.message);
-        setRetailer({
-          typeOfBusiness: "",
-          businessName: "",
-          ownerName: "",
-          businessAddress: "",
-          pinCode: "",
-          city: "",
-          area: "",
-          state: "",
-          phoneNumber: "",
-          password: "",
-          confirmPassword: "",
-          email: "",
-          pharmacistName: "",
-          pharmacistPhoneNumber: "",
-          addDrugLicenceNumber: "",
-          addDrugLicenceImage: "",
-          addGstNumber: "",
-          addGstImage: "",
-          panNumber: "",
-        });
+        // setRetailer({
+        //   typeOfBusiness: "",
+        //   businessName: "",
+        //   ownerName: "",
+        //   businessAddress: "",
+        //   pinCode: "",
+        //   city: "",
+        //   area: "",
+        //   state: "",
+        //   phoneNumber: "",
+        //   password: "",
+        //   confirmPassword: "",
+        //   email: "",
+        //   pharmacistName: "",
+        //   pharmacistPhoneNumber: "",
+        //   addDrugLicenceNumber: "",
+        //   addDrugLicenceImage: "",
+        //   addGstNumber: "",
+        //   addGstImage: "",
+        //   panNumber: "",
+        // });
       }
     } catch (err) {
       toastr.error(err.response.data.message);
@@ -173,8 +287,10 @@ export default function Addret() {
                             <select
                               id="typeOfBusiness"
                               name="typeOfBusiness"
-                              value={retailer.typeOfBusiness}
-                              onChange={handle}
+                              value={typeOfBusiness}
+                              onChange={(e) =>
+                                setTypeOfBusiness(e.target.value)
+                              }
                               className="select2 form-select"
                               // onChange={handle}
                             >
@@ -197,8 +313,8 @@ export default function Addret() {
                               type="text"
                               name="businessName"
                               id="businessName"
-                              value={retailer.businessName}
-                              onChange={handle}
+                              value={businessName}
+                              onChange={(e) => setBusinessName(e.target.value)}
                               placeholder={"Enter business name"}
                             />
                           </div>
@@ -215,8 +331,8 @@ export default function Addret() {
                               id="ownerName"
                               name="ownerName"
                               placeholder="Owner name"
-                              value={retailer.ownerName}
-                              onChange={handle}
+                              value={ownerName}
+                              onChange={(e) => setOwnerName(e.target.value)}
                               autofocus
                             />
                           </div>
@@ -232,8 +348,10 @@ export default function Addret() {
                               className="form-control"
                               id="businessAddress"
                               name="businessAddress"
-                              value={retailer.businessAddress}
-                              onChange={handle}
+                              value={businessAddress}
+                              onChange={(e) =>
+                                setBusinessAddress(e.target.value)
+                              }
                               placeholder="Business address"
                             />
                           </div>
@@ -251,8 +369,8 @@ export default function Addret() {
                               name="pinCode"
                               placeholder="231465"
                               maxlength="6"
-                              value={retailer.pinCode}
-                              onChange={handle}
+                              value={pinCode}
+                              onChange={(e) => setPinCode(e.target.value)}
                             />
                           </div>
                           <div className="mb-3 col-md-6">
@@ -268,8 +386,8 @@ export default function Addret() {
                               id="city"
                               name="city"
                               placeholder="City"
-                              value={retailer.city}
-                              onChange={handle}
+                              value={city}
+                              onChange={(e) => setCity(e.target.value)}
                             />
                           </div>
                           <div className="mb-3 col-md-6">
@@ -285,8 +403,8 @@ export default function Addret() {
                               id="area"
                               name="area"
                               placeholder="Enter your business area"
-                              value={retailer.area}
-                              onChange={handle}
+                              value={area}
+                              onChange={(e) => setArea(e.target.value)}
                             />
                           </div>
                           <div className="mb-3 col-md-6">
@@ -300,7 +418,7 @@ export default function Addret() {
                               id="state"
                               name="state"
                               className="select2 form-select"
-                              onChange={handle}
+                              onChange={(e) => setState(e.target.value)}
                             >
                               <option value="">Select </option>
                               <option value="Andhra Pradesh">
@@ -358,8 +476,8 @@ export default function Addret() {
                                 id="phoneNumber"
                                 name="phoneNumber"
                                 placeholder="202 555 0111"
-                                value={retailer.phoneNumber}
-                                onChange={handle}
+                                value={phoneNumber}
+                                onChange={(e) => setPhoneNumber(e.target.value)}
                               />
                             </div>
                           </div>
@@ -375,8 +493,8 @@ export default function Addret() {
                               type="text"
                               id="password"
                               name="password"
-                              value={retailer.password}
-                              onChange={handle}
+                              value={password}
+                              onChange={(e) => setPassword(e.target.value)}
                               placeholder="12123323423"
                             />
                           </div>
@@ -392,8 +510,10 @@ export default function Addret() {
                               type="text"
                               id="confirmPassword"
                               name="confirmPassword"
-                              value={retailer.confirmPassword}
-                              onChange={handle}
+                              value={confirmPassword}
+                              onChange={(e) =>
+                                setConfirmPassword(e.target.value)
+                              }
                               placeholder="12123323423"
                             />
                           </div>
@@ -410,8 +530,8 @@ export default function Addret() {
                               id="email"
                               name="email"
                               placeholder="john.doe@example.com"
-                              value={retailer.email}
-                              onChange={handle}
+                              value={email}
+                              onChange={(e) => setEmail(e.target.value)}
                             />
                           </div>
 
@@ -429,8 +549,10 @@ export default function Addret() {
                                 id="pharmacistName"
                                 name="pharmacistName"
                                 placeholder="enter pharmacist name"
-                                value={retailer.pharmacistName}
-                                onChange={handle}
+                                value={pharmacistName}
+                                onChange={(e) =>
+                                  setPharmacistName(e.target.value)
+                                }
                               />
                             </div>
                           </div>
@@ -451,8 +573,10 @@ export default function Addret() {
                                 id="pharmacistPhoneNumber"
                                 name="pharmacistPhoneNumber"
                                 placeholder="phone numberF"
-                                value={retailer.pharmacistPhoneNumber}
-                                onChange={handle}
+                                value={pharmacistPhoneNumber}
+                                onChange={(e) =>
+                                  setPharmacistPhoneNumber(e.target.value)
+                                }
                               />
                             </div>
                           </div>
@@ -471,8 +595,10 @@ export default function Addret() {
                                 id="addDrugLicenceNumber"
                                 name="addDrugLicenceNumber"
                                 placeholder="add drug licence number"
-                                value={retailer.addDrugLicenceNumber}
-                                onChange={handle}
+                                value={addDrugLicenceNumber}
+                                onChange={(e) =>
+                                  setAddDrugLicenceNumber(e.target.value)
+                                }
                               />
                             </div>
                           </div>
@@ -491,8 +617,10 @@ export default function Addret() {
                                 id="addDrugLicenceImage"
                                 name="addDrugLicenceImage"
                                 placeholder="enter pharmacist name"
-                                value={retailer.addDrugLicenceImage}
-                                onChange={handle}
+                                // value={addDrugLicenceImage}
+                                onChange={(e) =>
+                                  setAddDrugLicenceImage(e.target.files[0])
+                                }
                               />
                             </div>
                           </div>
@@ -510,8 +638,10 @@ export default function Addret() {
                                 id="addGstNumber"
                                 name="addGstNumber"
                                 placeholder="add gst number"
-                                value={retailer.addGstNumber}
-                                onChange={handle}
+                                value={addGstNumber}
+                                onChange={(e) =>
+                                  setAddGstNumber(e.target.value)
+                                }
                               />
                             </div>
                           </div>
@@ -530,8 +660,12 @@ export default function Addret() {
                                 id="addGstImage"
                                 name="addGstImage"
                                 placeholder="enter pharmacist name"
-                                value={retailer.addGstImage}
-                                onChange={handle}
+                                // value={addGstImage}
+                                onChange={(e) =>
+                                  setAddGstImage(e.target.files[0])
+                                }
+
+                                // onChange={handle}
                               />
                             </div>
                           </div>
@@ -550,8 +684,8 @@ export default function Addret() {
                                 id="panNumber"
                                 name="panNumber"
                                 placeholder="pan number"
-                                value={retailer.panNumber}
-                                onChange={handle}
+                                value={panNumber}
+                                onChange={(e) => setPanNumber(e.target.value)}
                               />
                             </div>
                           </div>
