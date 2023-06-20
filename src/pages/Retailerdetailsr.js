@@ -45,6 +45,7 @@ export default function Retailerdetailsr() {
       if (response.status == 200) {
         toastr.success(response.data.message);
         setFormData("");
+        history.push("/retailerlist");
       }
     } catch (error) {
       console.log(error);
@@ -348,7 +349,7 @@ export default function Retailerdetailsr() {
                           }}
                           onClick={handleclick}
                         >
-                          Approve and add
+                          Approve
                         </button>
                       </div>
                     </div>

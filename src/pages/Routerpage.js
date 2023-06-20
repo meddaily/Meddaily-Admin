@@ -28,6 +28,7 @@ import CategoryList from "./CategoryList";
 import AddNewCategory from "./AddNewCat";
 import Banner from "./Banner";
 import EditBanner from "./EditBanner";
+import AddNewBan from "./AddNewBan";
 // distributor
 import DistDashboard from "../DistributorLogin/DistDashboard";
 import OrderList from "../DistributorLogin/OrderList";
@@ -75,6 +76,7 @@ export default function Routerpage() {
           <Route path="/payouttable" component={Payouttable} />
           <Route path="/banner" component={Banner} />
           <Route path="/editbanner" component={EditBanner} />
+          <Route path="/addnewban" component={AddNewBan} />
 
           {/* distributor */}
           <Route path="/orderlist" component={OrderList} />

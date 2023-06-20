@@ -1,11 +1,12 @@
 import React from "react";
 import Sidebar from "./Sidebar";
 import Navbar from "./Navbar";
+import toastr from "toastr";
 import { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom/cjs/react-router-dom.min";
-import { FaPencilAlt, FaTrash } from "react-icons/fa"
+import { Link } from "react-router-dom";
+import { FaPencilAlt, FaTrash } from "react-icons/fa";
 
 const Banner = () => {
   const [banner, setBanner] = useState([]);
@@ -24,8 +25,18 @@ const Banner = () => {
     }
   };
 
-  const handleDel = () => {
-    console.log("del");
+  const handleDel = async (id) => {
+    try {
+      const res = await axios.delete(
+        `http://api.meddaily.in/deletebanner/${id}`
+      );
+      if (res.status === 200) {
+        toastr.success(res?.data?.message);
+        getBanner();
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -51,9 +62,11 @@ const Banner = () => {
                         <div className="row">
                           <div className="col-md-12 d-flex justify-content-between">
                             <h3 className="text-muted">Listing All Banners</h3>
-                            <button className="btn btn-info">
-                              Add New Banner
-                            </button>
+                            <Link to="/addnewban">
+                              <button className="btn btn-primary">
+                                Add New Banner
+                              </button>
+                            </Link>
                           </div>
                           <hr className="mt-4" />
                           <div className="col-md-12 mt-3">
@@ -77,7 +90,15 @@ const Banner = () => {
                                         <td>{index}</td>
                                         <td>{name}</td>
                                         <td>
-                                          <img src={image} alt="banner" />
+                                          <img
+                                            src={image}
+                                            alt="banner"
+                                            style={{
+                                              width: "100px",
+                                              height: "100px",
+                                              objectFit: "cover",
+                                            }}
+                                          />
                                         </td>
                                         <td>
                                           <Link
@@ -92,8 +113,9 @@ const Banner = () => {
                                             </span>
                                           </Link>
                                           <span
-                                            onClick={handleDel}
+                                            onClick={() => handleDel(item._id)}
                                             className="text-danger"
+                                            style={{cursor:"pointer"}}
                                           >
                                             <FaTrash className="action-icon" />{" "}
                                             {/* Delete Icon */}

@@ -405,17 +405,17 @@ export default function Retailerdetails() {
 
                       {/* button */}
                       <div class="col-12">
-                        <button
+                        {/* <button
                           type="button"
                           class="btn btn-primary"
                           style={{
                             backgroundColor: "Darkblue",
                             border: "Darkblue",
                           }}
-                          onClick={handleclick}
+                          // onClick={handleclick}
                         >
                           Approve and add
-                        </button>
+                        </button> */}
                       </div>
                     </div>
                   </div>

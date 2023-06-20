@@ -32,6 +32,7 @@ export default function OrderDetails() {
       .then((res) => {
         if (res.status === 200) {
           setOrderDetails(res?.data?.message);
+          console.log(res);
         }
       })
       .catch((err) => {
@@ -55,215 +56,69 @@ export default function OrderDetails() {
                     <div className="card-header d-flex justify-content-between align-items-center">
                       <h5 className="mb-0">Order Details</h5>
                     </div>
-
                     <hr className="my-0" />
                     <div className="card-body">
-                      {/* <Card>
-                        <Card.Header>
-                          <h4>Order Details</h4>
-                        </Card.Header>
-                        <Card.Body>
-                          <ListGroup variant="flush">
-                            <ListGroupItem>
-                              <h5>Order ID: {orderDetails.order_id}</h5>
-                            </ListGroupItem>
-                            <ListGroupItem>
-                              <p>
-                                Distributor ID: {orderDetails.distributor_id}
-                              </p>
-                            </ListGroupItem>
-                            <ListGroupItem>
-                              <p>Retailer ID: {orderDetails.retailer_id}</p>
-                            </ListGroupItem>
-                            <ListGroupItem>
-                              <p>Price: ${orderDetails.price}</p>
-                            </ListGroupItem>
-                            <ListGroupItem>
-                              <h5>Products:</h5>
-                              <ul>
-                                {orderDetails &&
-                                  orderDetails.length > 0 &&
-                                  orderDetails.products.map((product) => (
-                                    <li key={product.id}>
-                                      <p>Product ID: {product.id}</p>
-                                      <p>Name: {product.name}</p>
-                                      <p>Price: ${product.price}</p>
-                                    </li>
-                                  ))}
-                              </ul>
-                            </ListGroupItem>
-                            <ListGroupItem>
-                              <p>Order Status: {orderDetails.order_status}</p>
-                            </ListGroupItem>
-                            <ListGroupItem>
-                              <p>
-                                Payment Status: {orderDetails.payment_status}
-                              </p>
-                            </ListGroupItem>
-                            <ListGroupItem>
-                              <p>Payment Type: {orderDetails.payment_type}</p>
-                            </ListGroupItem>
-                            <ListGroupItem>
-                              <p>Time: {orderDetails.time}</p>
-                            </ListGroupItem>
-                            <ListGroupItem>
-                              <p>Created At: {orderDetails.createdAt}</p>
-                            </ListGroupItem>
-                            <ListGroupItem>
-                              <p>Updated At: {orderDetails.updatedAt}</p>
-                            </ListGroupItem>
-                            <ListGroupItem>
-                              <p>Return Status: {orderDetails.return_status}</p>
-                            </ListGroupItem>
-                          </ListGroup>
-                        </Card.Body>
-                      </Card> */}
-                      {/* <div>
-                        <h1>Order Details</h1>
-                        <div>
-                          <h3>Order ID: {orderDetails.order_id}</h3>
-                          <p>Distributor ID: {orderDetails.distributor_id}</p>
-                          <p>Retailer ID: {orderDetails.retailer_id}</p>
-                          <p>Price: ${orderDetails.price}</p>
-                          <h4>Products:</h4>
-                          <ul>
-                            {orderDetails && orderDetails.length>0 && orderDetails.products.map((product) => (
-                              <li key={product.id}>
-                                <p>Product ID: {product.id}</p>
-                                <p>Name: {product.name}</p>
-                                <p>Price: ${product.price}</p>
-                              </li>
-                            ))}
-                          </ul>
-                          <p>Order Status: {orderDetails.order_status}</p>
-                          <p>Payment Status: {orderDetails.payment_status}</p>
-                          <p>Payment Type: {orderDetails.payment_type}</p>
-                          <p>Time: {orderDetails.time}</p>
-                          <p>Created At: {orderDetails.createdAt}</p>
-                          <p>Updated At: {orderDetails.updatedAt}</p>
-                          <p>Return Status: {orderDetails.return_status}</p>
+                      <div className="container mt-4">
+                        <h3 className="mb-3">Order Details</h3>
+                        <hr />
+                        <div className="row justify-content-center">
+                          <div className="col-md-6">
+                            <p>
+                              <strong>Order ID:</strong> {orderDetails.order_id}
+                            </p>
+                            <p>
+                              <strong>Order Date:</strong>{" "}
+                              {new Date(
+                                orderDetails.createdAt
+                              ).toLocaleString()}
+                            </p>
+                            <p>
+                              <strong>Order Status:</strong>{" "}
+                              {orderDetails.order_status}
+                            </p>
+                            <p>
+                              <strong>Payment Type:</strong>{" "}
+                              {orderDetails.payment_type}
+                            </p>
+                            <p>
+                              <strong>Total Price:</strong> {orderDetails.price}
+                            </p>
+                            <p>
+                              <strong>Payment Status:</strong>{" "}
+                              {orderDetails.payment_status}
+                            </p>
+                          </div>
                         </div>
-                      </div> */}
-                      {/* {orderDetails &&
-                        orderDetails.length > 0 &&
-                        orderDetails.map((item, k) => [ */}
-                      <Container
-                        style={{ marginBottom: "2em", textAlign: "left" }}
-                      >
-                        <div
-                          // key={k.toString()}
-                          style={{ marginBottom: "1em" }}
-                        >
-                          <Row>
-                            <Col>
-                              <Form.Group>
-                                <Form.Label>Order Id</Form.Label>
-                                <Form.Control
-                                  type="text"
-                                  placeholder="Disabled input"
-                                  aria-label="Disabled input example"
-                                  value={orderDetails.order_id || "NA"}
-                                  disabled
-                                  readOnly
-                                />
-                              </Form.Group>
-                            </Col>
-                            <Col>
-                              <Form.Group>
-                                <Form.Label>Product Id</Form.Label>
-                                <Form.Control
-                                  type="text"
-                                  placeholder="Disabled input"
-                                  aria-label="Disabled input example"
-                                  value={
-                                    orderDetails.products &&
-                                    orderDetails.products.length > 0
-                                      ? orderDetails.products[0].id
-                                      : "NA"
-                                  }
-                                  disabled
-                                  readOnly
-                                />
-                              </Form.Group>
-                            </Col>
-                            <Col>
-                              <Form.Group>
-                                <Form.Label>Quantity</Form.Label>
 
-                                <Form.Control
-                                  type="text"
-                                  placeholder="Disabled input"
-                                  aria-label="Disabled input example"
-                                  value={orderDetails.order_status || "NA"}
-                                  disabled
-                                  readOnly
-                                />
-                              </Form.Group>
-                            </Col>
-                          </Row>
+                        <div className="row mt-4">
+                          <div className="col-md-12">
+                            <h4>Products:</h4>
+                            <table className="table table-striped">
+                              <thead>
+                                <tr>
+                                  <th>Product Name</th>
+                                  <th>Quantity</th>
+                                  <th>Price</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                {orderDetails &&
+                                  orderDetails.products &&
+                                  orderDetails.products.length > 0 &&
+                                  orderDetails.products.map(
+                                    (product, index) => (
+                                      <tr key={index}>
+                                        <td>{product.name}</td>
+                                        <td>{product.quantity}</td>
+                                        <td>{product.price.upDatePrice}</td>
+                                      </tr>
+                                    )
+                                  )}
+                              </tbody>
+                            </table>
+                          </div>
                         </div>
-                        <div>
-                          <Row>
-                            <Col>
-                              <Form.Group>
-                                <Form.Label>Total price</Form.Label>
-                                <Form.Control
-                                  type="text"
-                                  placeholder="Disabled input"
-                                  aria-label="Disabled input example"
-                                  value={orderDetails.price || "NA"}
-                                  disabled
-                                  readOnly
-                                />
-                              </Form.Group>
-                            </Col>
-                            <Col>
-                              <Form.Group>
-                                <Form.Label>User Id</Form.Label>
-                                <Form.Control
-                                  type="text"
-                                  placeholder="Disabled input"
-                                  aria-label="Disabled input example"
-                                  value={
-                                    orderDetails.products &&
-                                    orderDetails.products.length > 0
-                                      ? orderDetails.products[0].name
-                                      : "NA"
-                                  }
-                                  disabled
-                                  readOnly
-                                />
-                              </Form.Group>
-                            </Col>
-                            <Col>
-                              <Form.Group>
-                                <Form.Label>User Type</Form.Label>
-                                <Form.Control
-                                  type="text"
-                                  placeholder="Disabled input"
-                                  aria-label="Disabled input example"
-                                  value={orderDetails.payment_type || "NA"}
-                                  disabled
-                                  readOnly
-                                />
-                              </Form.Group>
-                            </Col>
-                          </Row>
-                        </div>
-                      </Container>
-                      ,{/* ])} */}
-                      {/* <div class="col-12">
-                        <button
-                          type="button"
-                          class="btn btn-primary"
-                          style={{
-                            backgroundColor: "Darkblue",
-                            border: "Darkblue",
-                          }}
-                        >
-                          Approve and add
-                        </button>
-                      </div> */}
+                      </div>
                     </div>
                   </div>
                 </div>

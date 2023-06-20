@@ -20,7 +20,9 @@ export default function Ordertable() {
   const handleOrders = async () => {
     try {
       const response = await axios.get("http://api.meddaily.in/all_order");
-      setOrderList(response?.data?.message);
+      if (response.status === 200) {
+        setOrderList(response?.data?.message);
+      }
     } catch (error) {
       console.error(error);
     }
@@ -68,7 +70,7 @@ export default function Ordertable() {
   const order =
     orderList &&
     orderList.length > 0 &&
-    orderList.map((item,i) => {
+    orderList.map((item, i) => {
       return (
         <Ordertbody
           id={item._id}

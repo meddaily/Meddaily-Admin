@@ -1,107 +1,151 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
+import React, { useEffect } from "react";
 import Sidebar from "./Sidebar";
 import Navbar from "./Navbar";
-
+import toastr from "toastr";
+import { useState } from "react";
+import { useLocation } from "react-router-dom";
+import axios from "axios";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 const EditBanner = () => {
-  const [editBanner, setEditBanner] = useState({
+  const [editBannerData, setEditBannerData] = useState({
     name: "",
     image: "",
-    id: "",
   });
-  const { name, image, id } = editBanneer;
+  const history = useHistory();
   const location = useLocation();
-  const { bannerId } = location.state;
-
+  const { id } = location.state;
   useEffect(() => {
-    editBanneer();
-  }, []);
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setEditBanner({ ...editBanner, [name]: value });
-  };
-  const editBanneer = async () => {
+    getEditBanner();
+  }, [id]);
+  const getEditBanner = async () => {
     try {
-      const response = await axios.get(
-        `http://api.meddaily.in/editbanner/${bannerId}`
+      const res = await axios.get(`http://api.meddaily.in/editbanner/${id}`);
+      setEditBannerData(res?.data?.data?.[0]);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const handleUpdateBanner = async () => {
+    const reqbody = {
+      name: editBannerData.name,
+      image: editBannerData.image,
+      id: id,
+    };
+    const axiosConfig = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    try {
+      const res = await axios.post(
+        `http://api.meddaily.in/updatebanner`,
+        reqbody,
+        axiosConfig
       );
-      if (response.status === 200) {
-        setEditBanner(response);
-        console.log(response);
+      if (res.status === 200) {
+        toastr.success(res?.data?.message);
+        history.push("/banner");
       }
     } catch (error) {
       console.log(error);
     }
   };
+  const handleCancel = () => {
+    setEditBannerData((prevData) => ({
+      ...prevData,
+      name: "",
+      image: "",
+    }));
+  };
+
   return (
-    <>
-      <div className="layout-wrapper layout-content-navbar">
-        <div className="layout-container">
-          <Sidebar />
+    <div className="layout-wrapper layout-content-navbar">
+      <div className="layout-container">
+        <Sidebar />
 
-          <div className="layout-page">
-            <Navbar />
+        <div className="layout-page">
+          <Navbar />
 
-            <div className="content-wrapper">
-              <div className="container-xxl flex-grow-1 container-p-y">
-                <div className="row">
-                  <div className="card mb-12">
-                    <div className="card-header d-flex justify-content-between align-items-center">
-                      <h5 className="mb-0">Edit Banner</h5>
-                      <small className="text-muted float-end">
-                        Default label
-                      </small>
-                    </div>
-                    <hr className="my-0" />
-                    <div className="card-body">
-                      <form id="formAccountSettings">
-                        <div>
-                          <label htmlFor="name">Name:</label>
-                          <input
-                            type="text"
-                            id="name"
-                            value={name}
-                            onChange={handleChange}
-                          />
+          <div className="content-wrapper">
+            <div className="container-xxl flex-grow-1 container-p-y">
+              <div className="row">
+                <div className="card mb-12">
+                  <div className="card-header d-flex justify-content-between align-items-center">
+                    <h5 className="mb-0">Edit Banner</h5>
+                    <small className="text-muted float-end">
+                      Default label
+                    </small>
+                  </div>
+                  <hr className="my-0" />
+                  <div className="card-body">
+                    <form id="formAccountSettings">
+                      <div className="row">
+                        <div className="col-md-6">
+                          <div className="mb-3">
+                            <label htmlFor="name" className="form-label">
+                              Name:
+                            </label>
+                            <input
+                              type="text"
+                              name="name"
+                              id="name"
+                              className="form-control"
+                              value={editBannerData.name}
+                              onChange={(e) =>
+                                setEditBannerData((prevData) => ({
+                                  ...prevData,
+                                  name: e.target.value,
+                                }))
+                              }
+                            />
+                          </div>
                         </div>
-                        <div>
-                          <label htmlFor="imageUpload">Image:</label>
-                          <input
-                            type="file"
-                            accept="image/*"
-                            name="imageUpload"
-                            id="imageUpload"
-                            value={image}
-                            onChange={handleChange}
-                          />
+                        <div className="col-md-6">
+                          <div className="mb-3">
+                            <label htmlFor="imageUpload" className="form-label">
+                              Image:
+                            </label>
+                            <input
+                              type="file"
+                              accept="image/*"
+                              name="imageUpload"
+                              id="imageUpload"
+                              className="form-control"
+                              onChange={(e) =>
+                                setEditBannerData((prevData) => ({
+                                  ...prevData,
+                                  image: e.target.files[0],
+                                }))
+                              }
+                            />
+                          </div>
                         </div>
-                        <div>
-                          <label htmlFor="id">ID</label>
-                          <input
-                            type="text"
-                            id="id"
-                            value={id}
-                            onChange={handleChange}
-                          />
-                        </div>
-                        <div>
-                          <button type="button">Update</button>
-                          <button type="button">Cancel</button>
-                        </div>
-                      </form>
-                    </div>
+                      </div>
+                      <div>
+                        <button
+                          type="button"
+                          className="btn btn-primary"
+                          onClick={handleUpdateBanner}
+                        >
+                          Update
+                        </button>
+                        <button
+                          type="button"
+                          className="btn btn-secondary mx-3"
+                          onClick={handleCancel}
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    </form>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-
-          <div className="layout-overlay layout-menu-toggle"></div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

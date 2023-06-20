@@ -1,5 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import toastr from "toastr";
+import axios from "axios";
 import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
 import { useState } from "react";
@@ -7,15 +9,56 @@ import { useState } from "react";
 export default function Addbul() {
   const [bul, setBul] = useState({
     csvFile: "",
+    category: "",
   });
-  console.log(bul);
-
-  let name, value;
-  function handle(e) {
-    name = e.target.name;
-    value = e.target.value;
-    setBul({ ...bul, [name]: value });
+  const handleCancel=()=>{
+    setBul({ csvFile: "", category: "" });
   }
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (
+      file &&
+      file.type ===
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    ) {
+      setBul({ ...bul, csvFile: file });
+    } else {
+      setBul({ ...bul, csvFile: "" });
+      console.log("Invalid file type. Please select an Excel file.");
+    }
+  };
+
+  const handleCategoryChange = (e) => {
+    const categoryName = e.target.value;
+    setBul({ ...bul, category: categoryName });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!bul.csvFile) {
+      console.log("Please select an Excel file.");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("file", bul.csvFile);
+    formData.append("category", bul.category);
+
+    try {
+      const response = await axios.post(
+        "http://api.meddaily.in/bulkupload",
+        formData
+      );
+      if (response.status === 200) {
+        toastr.success(response?.data?.message);
+        setBul({ csvFile: "", category: "" });
+        document.getElementById("csvFile").value = "";
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
       <div className="layout-wrapper layout-content-navbar">
@@ -31,22 +74,17 @@ export default function Addbul() {
                   <div className="card mb-12">
                     <div className="card-header d-flex justify-content-between align-items-center">
                       <h5 className="mb-0">Upload csv file</h5>
-                      
                     </div>
-
                     <hr className="my-0" />
                     <div className="card-body">
-                      <form
-                        id="formAccountSettings"
-                        method="POST"
-                        onsubmit="return false"
-                      >
+                      <form id="formAccountSettings" onSubmit={handleSubmit}>
                         <div className="row">
-                        <div className="mb-3 col-md-6">
+                          <div className="mb-3 col-md-6">
                             <label
                               className="form-label float-start"
-                              for="csvFile"
+                              htmlFor="csvFile"
                             >
+                              Choose an Excel file:
                             </label>
                             <div className="input-group input-group-merge">
                               <input
@@ -54,34 +92,31 @@ export default function Addbul() {
                                 type="file"
                                 id="csvFile"
                                 name="csvFile"
-                                placeholder="enter pharmacist name"
-                                value={bul.csvFile}
-                                onChange={handle}
+                                accept=".xlsx, .xls"
+                                onChange={handleFileChange}
                               />
                             </div>
                           </div>
 
-                          
                           <div className="mb-3 col-md-6">
-                          <div className="mt-2">
-                          <button
-                            className="btn btn-primary me-2"
-                           
-                          >
-                            <a href="https://www.google.co.in/"
-                            target={"_blank"} > Download sample file</a>
-                           
-                          </button>
-                          
-                        </div>
+                            <label
+                              className="form-label float-start"
+                              htmlFor="category"
+                            >
+                              Category name:
+                            </label>
+                            <div className="input-group input-group-merge">
+                              <input
+                                className="form-control"
+                                type="text"
+                                id="category"
+                                name="category"
+                                value={bul.category}
+                                onChange={handleCategoryChange}
+                              />
+                            </div>
                           </div>
                         </div>
-
-
-
-
-
-
 
                         <div className="mt-2">
                           <button
@@ -93,6 +128,7 @@ export default function Addbul() {
                           <button
                             type="reset"
                             className="btn btn-outline-secondary"
+                            onClick={handleCancel}
                           >
                             Cancel
                           </button>
