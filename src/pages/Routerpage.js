@@ -38,6 +38,11 @@ import AddNewInventory from "../DistributorLogin/AddNewInventory";
 import BulkUploadInv from "../DistributorLogin/BulkUploadInv";
 import ListNewProductInv from "../DistributorLogin/ListNewProductInv";
 import UpdateInventory from "../DistributorLogin/UpdateInventory";
+import OrderDates from "./OrderDates";
+import OrderIdFilter from "./OrderIdFilter";
+import OrderDisId from "./OrderDisId";
+import OffersList from "./OffersList";
+import EditCategory from "./EditCategory";
 
 export default function Routerpage() {
   return (
@@ -77,6 +82,11 @@ export default function Routerpage() {
           <Route path="/banner" component={Banner} />
           <Route path="/editbanner" component={EditBanner} />
           <Route path="/addnewban" component={AddNewBan} />
+          <Route path="/orderdates" component={OrderDates} />
+          <Route path="/orderidfilter" component={OrderIdFilter} />
+          <Route path="/orderdisid" component={OrderDisId} />
+          <Route path="/offerslist" component={OffersList} />
+          <Route path="/editcategory" component={EditCategory} />
 
           {/* distributor */}
           <Route path="/orderlist" component={OrderList} />

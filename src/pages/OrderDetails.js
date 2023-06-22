@@ -32,7 +32,7 @@ export default function OrderDetails() {
       .then((res) => {
         if (res.status === 200) {
           setOrderDetails(res?.data?.message);
-          console.log(res);
+          // console.log(res);
         }
       })
       .catch((err) => {

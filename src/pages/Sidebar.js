@@ -231,7 +231,7 @@ export default function Sidebar() {
                 </Link>
               </li>
               <li className="menu-item">
-                <Link to="/distributorrequest" className="menu-link">
+                <Link to="/offerslist" className="menu-link">
                   <div data-i18n="Without navbar">All Offers</div>
                 </Link>
               </li>

@@ -6,6 +6,7 @@ import Sidebar from "./Sidebar";
 import Orderdata from "./Orderdata";
 import Ordertbody from "./Ordertbody";
 import config from "../appConfig";
+import { Link } from "react-router-dom/cjs/react-router-dom.min";
 
 export default function Ordertable() {
   const authToken = localStorage.getItem("authToken");
@@ -27,20 +28,6 @@ export default function Ordertable() {
       console.error(error);
     }
   };
-
-  // async function getAllOrders() {
-  //   await axios
-  //     .get(`http://13.235.8.138:81/all_order`)
-  //     .then((res) => {
-  //       if (res.status === 200) {
-  //         setOrderList(res.data.data);
-  //       }
-  //     })
-  //     .catch((err) => {
-  //       toastr.error(err.response.data.message);
-  //       console.log(err);
-  //     });
-  // };
 
   async function deleteOrder(event, orderId) {
     event.preventDefault();
@@ -107,19 +94,20 @@ export default function Ordertable() {
                   </button>
                   <ul className="dropdown-menu">
                     <li>
-                      <a className="dropdown-item" href="javascript:void(0);">
+                      <Link to="/orderdates" className="dropdown-item">
                         Filter by date
-                      </a>
+                      </Link>
                     </li>
                     <li>
-                      <a className="dropdown-item" href="javascript:void(0);">
-                        Order id
-                      </a>
+                      <Link to="/orderidfilter" className="dropdown-item">
+                        Order Id
+                      </Link>
                     </li>
                     <li>
-                      <a className="dropdown-item" href="javascript:void(0);">
+                     
+                      <Link to="/orderdisid" className="dropdown-item">
                         Distributor id
-                      </a>
+                      </Link>
                     </li>
                   </ul>
                 </div>

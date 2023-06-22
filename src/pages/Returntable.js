@@ -10,28 +10,40 @@ export default function Returntable() {
   const authToken = localStorage.getItem("authToken");
 
   const [returnList, setReturnList] = useState([]);
+  const [fromDate, setFromDate] = useState("");
+  const [toDate, setToDate] = useState("");
 
   useEffect(() => {
-    getAllReturns();
-  }, [authToken]);
+    if (fromDate && toDate) {
+      getAllReturns();
+    }
+  }, [fromDate, toDate]);
 
   async function getAllReturns() {
-    await axios
-      .get(`http://api.meddaily.in/get_all_return_delivered_order`)
-      .then((res) => {
-        if (res.status === 200) {
-          setReturnList(res?.data?.data);
-        }
-      })
-      .catch((err) => {
-        toastr.error(err.response.data.message);
-        console.log(err);
-      });
+    try {
+      const response = await axios.get(
+        `http://api.meddaily.in/get_return_admin?from=${fromDate}&to=${toDate}`
+      );
+      if (response.status === 200) {
+        console.log(response.data.data);
+        setReturnList(response?.data?.data);
+      }
+    } catch (err) {
+      toastr.error(err.response.data.message);
+      console.log(err);
+    }
   }
-  const formattedData = returnList ? [returnList] : null;
 
-  // const formattedData = [returnList];
-  console.log(returnList)
+  console.log(returnList);
+
+  const handleFromDateChange = (event) => {
+    setFromDate(event.target.value);
+  };
+
+  const handleToDateChange = (event) => {
+    setToDate(event.target.value);
+  };
+
   return (
     <>
       <div className="layout-wrapper layout-content-navbar">
@@ -46,6 +58,40 @@ export default function Returntable() {
                 <div className="row">
                   <div className="card">
                     <h5 className="card-header">Return Table</h5>
+                    <div className="card-body">
+                      <div className="row mb-3">
+                        <label
+                          htmlFor="fromDate"
+                          className="col-sm-2 col-form-label text-end"
+                        >
+                          From Date:
+                        </label>
+                        <div className="col-sm-4">
+                          <input
+                            type="date"
+                            id="fromDate"
+                            className="form-control"
+                            value={fromDate}
+                            onChange={handleFromDateChange}
+                          />
+                        </div>
+                        <label
+                          htmlFor="toDate"
+                          className="col-sm-2 col-form-label text-end"
+                        >
+                          To Date:
+                        </label>
+                        <div className="col-sm-4">
+                          <input
+                            type="date"
+                            id="toDate"
+                            className="form-control"
+                            value={toDate}
+                            onChange={handleToDateChange}
+                          />
+                        </div>
+                      </div>
+                    </div>
                     <div className="table-responsive text-nowrap">
                       <table className="table">
                         <thead>
@@ -54,14 +100,14 @@ export default function Returntable() {
                             <th>Vendor Name</th>
                             <th>Return Amount</th>
                             <th>Quantity</th>
+                            <th>Payment Type</th>
                             <th>View More</th>
                           </tr>
                         </thead>
                         <tbody className="table-border-bottom-0">
-                          {formattedData &&
-                            formattedData.length > 0 &&
-                            formattedData.map((item, i) => (
-                              <tr>
+                          {returnList && returnList.length > 0 ? (
+                            returnList.map((item, i) => (
+                              <tr key={i}>
                                 <td>
                                   <i className="fab fa-angular fa-lg text-danger me-3"></i>{" "}
                                   {item.order_id || "NA"}
@@ -69,6 +115,7 @@ export default function Returntable() {
                                 <td>{item.name || "NA"}</td>
                                 <td>{item.price || 0}</td>
                                 <td>{item.order_status || 0}</td>
+                                <td>{item.payment_type || "NA"}</td>
                                 <td>
                                   <div className="dropdown">
                                     <Link className="dropdown-item" to="#">
@@ -78,7 +125,14 @@ export default function Returntable() {
                                   </div>
                                 </td>
                               </tr>
-                            ))}
+                            ))
+                          ) : (
+                            <tr>
+                              <td colSpan="6" className="text-center">
+                                No data available
+                              </td>
+                            </tr>
+                          )}
                         </tbody>
                       </table>
                     </div>

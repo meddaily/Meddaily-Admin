@@ -110,8 +110,9 @@ const AddNewBan = () => {
                               Add
                             </button>
                             <button
-                              type="button"
+                              type="reset"
                               className="btn btn-secondary mx-3"
+                              onClick={(e)=>setBanner("")}
                             >
                               Cancel
                             </button>

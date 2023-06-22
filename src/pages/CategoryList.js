@@ -4,7 +4,8 @@ import toastr from "toastr";
 import { Link } from "react-router-dom";
 import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
-import config from "../appConfig";
+import { FaPencilAlt, FaTrash } from "react-icons/fa";
+
 
 export default function CategoryList() {
   const authToken = localStorage.getItem("authToken");
@@ -25,6 +26,21 @@ export default function CategoryList() {
       console.log(error);
     }
   }
+
+  const handleDel = async (id) => {
+    try {
+      const res = await axios.delete(
+        `http://api.meddaily.in/deletecategory/${id}`
+      );
+      if (res.status === 200) {
+        toastr.success(res?.data?.message);
+        getCategoryList();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
 
   return (
     <>
@@ -77,12 +93,25 @@ export default function CategoryList() {
                                 </td>
                                 {/* <td>{item._id || "NA"}</td> */}
                                 <td>
-                                  <div className="dropdown">
-                                    <Link className="dropdown-item" to="#">
-                                      {" "}
-                                      View Full Details
-                                    </Link>
-                                  </div>
+                                  <Link
+                                    to={{
+                                      pathname: "/editcategory",
+                                      state: { id: item._id },
+                                    }}
+                                  >
+                                    <span className="text-info">
+                                      <FaPencilAlt className="action-icon" />{" "}
+                                      {/* Edit Icon */}
+                                    </span>
+                                  </Link>
+                                  <span
+                                    onClick={() => handleDel(item._id)}
+                                    className="text-danger"
+                                    style={{ cursor: "pointer" }}
+                                  >
+                                    <FaTrash className="action-icon" />{" "}
+                                    {/* Delete Icon */}
+                                  </span>
                                 </td>
                               </tr>
                             ))}
