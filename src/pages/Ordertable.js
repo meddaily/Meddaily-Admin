@@ -3,7 +3,6 @@ import axios from "axios";
 import toastr from "toastr";
 import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
-import Orderdata from "./Orderdata";
 import Ordertbody from "./Ordertbody";
 import config from "../appConfig";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
@@ -23,6 +22,7 @@ export default function Ordertable() {
       const response = await axios.get("http://api.meddaily.in/all_order");
       if (response.status === 200) {
         setOrderList(response?.data?.message);
+        console.log(response)
       }
     } catch (error) {
       console.error(error);
@@ -62,8 +62,8 @@ export default function Ordertable() {
         <Ordertbody
           id={item._id}
           orderId={item.order_id}
-          userType={item.userType}
-          userId={item.userId}
+          userType={item.retailer_name}
+          userId={item.distributor_name}
           price={item.price}
           details={"View Full details"}
           deleteOrder={deleteOrder}

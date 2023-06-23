@@ -13,6 +13,7 @@ export default function Producttable() {
   const [productList, setProductList] = useState([]);
 
   const [selectedMedicineType, setSelectedMedicineType] = useState("");
+  // console.log(productList);
 
   useEffect(() => {
     getAllProducts();
@@ -60,7 +61,6 @@ export default function Producttable() {
         console.log(err);
       });
   }
-
   const product =
     productList && productList.length > 0 ? (
       productList.map((item, i) => {
@@ -72,7 +72,8 @@ export default function Producttable() {
             describtion={item.description}
             productname={item.title}
             mnfname={item.sub_title}
-            medicinetype={item.productType ? item.productType : "N/A"}
+            medicinetype={item.category_id ? item.category_id : "N/A"}
+            // medicinetype={item.selectedMedicineType ? item.category_id : "N/A"}
             delete={"Action"}
           />
         );

@@ -2,14 +2,8 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import toastr from "toastr";
 import Sidebar from "./Sidebar";
-import { Card, ListGroup, ListGroupItem } from "react-bootstrap";
-import { useHistory } from "react-router-dom";
 import { useParams } from "react-router-dom";
-import Container from "react-bootstrap/Container";
-import { Row, Form } from "react-bootstrap";
-import Col from "react-bootstrap/Col";
 import Navbar from "./Navbar";
-import config from "../appConfig";
 
 export default function OrderDetails() {
   const authToken = localStorage.getItem("authToken");
@@ -18,21 +12,17 @@ export default function OrderDetails() {
   useEffect(() => {
     getOrderDetails(id);
   }, [authToken]);
-  async function getOrderDetails(orderId) {
-    const reqbody = {
-      order_id: id,
-    };
-    const axiosconfig = {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
+  async function getOrderDetails(orderid) {
     await axios
-      .post(`http://api.meddaily.in/order_detail`, reqbody, axiosconfig)
+      .get(`http://api.meddaily.in/order_details_admin?order_id=${id}`, {
+        headers: {
+          "Content-Type": "application/json",
+          token: localStorage.getItem("authToken"),
+        },
+      })
       .then((res) => {
         if (res.status === 200) {
-          setOrderDetails(res?.data?.message);
-          // console.log(res);
+          setOrderDetails(res?.data?.data);
         }
       })
       .catch((err) => {
@@ -41,6 +31,7 @@ export default function OrderDetails() {
       });
   }
 
+  console.log(orderDetails);
   return (
     <>
       <div className="layout-wrapper layout-content-navbar">
@@ -66,71 +57,92 @@ export default function OrderDetails() {
                             <p>
                               <strong>Order ID:</strong> {orderDetails.order_id}
                             </p>
+                          </div>
+                          <div className="col-md-6">
                             <p>
                               <strong>Order Date:</strong>{" "}
                               {new Date(
                                 orderDetails.createdAt
                               ).toLocaleString()}
                             </p>
+                          </div>
+                          <div className="col-md-6">
                             <p>
                               <strong>Order Status:</strong>{" "}
                               {orderDetails.order_status}
                             </p>
+                          </div>
+                          <div className="col-md-6">
                             <p>
                               <strong>Payment Type:</strong>{" "}
                               {orderDetails.payment_type}
                             </p>
+                          </div>
+                          <div className="col-md-6">
                             <p>
                               <strong>Total Price:</strong> {orderDetails.price}
                             </p>
+                          </div>
+                          <div className="col-md-6">
                             <p>
                               <strong>Payment Status:</strong>{" "}
                               {orderDetails.payment_status}
                             </p>
                           </div>
-                        </div>
-
-                        <div className="row mt-4">
-                          <div className="col-md-12">
-                            <h4>Products:</h4>
-                            <table className="table table-striped">
-                              <thead>
-                                <tr>
-                                  <th>Product Name</th>
-                                  <th>Quantity</th>
-                                  <th>Price</th>
-                                </tr>
-                              </thead>
-                              <tbody>
-                                {orderDetails &&
-                                  orderDetails.products &&
-                                  orderDetails.products.length > 0 &&
-                                  orderDetails.products.map(
-                                    (product, index) => (
-                                      <tr key={index}>
-                                        <td>{product.name}</td>
-                                        <td>{product.quantity}</td>
-                                        <td>{product.price.upDatePrice}</td>
-                                      </tr>
-                                    )
-                                  )}
-                              </tbody>
-                            </table>
+                          <div className="col-md-6">
+                            <p>
+                               <strong>Retailor-Address:</strong>{" "}
+                               {orderDetails.retailer_address}
+                            </p>
                           </div>
+                          <div className="col-md-6">
+                            <p>
+                               <strong>Distributor-Address:</strong>{" "}
+                               {orderDetails.distributor_address}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="row mt-4">
+                        <div className="col-md-12">
+                          <h4>Products:</h4>
+                          <table className="table table-striped">
+                            <thead>
+                              <tr>
+                                <th>Product Name</th>
+                                <th>Quantity</th>
+                                <th>Price</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {orderDetails &&
+                                orderDetails.products &&
+                                orderDetails.products.length > 0 &&
+                                orderDetails.products.map((product, index) => (
+                                  <tr key={index}>
+                                    <td>{product.name}</td>
+                                    <td>{product.quantity}</td>
+                                    <td>{product.price.upDatePrice}</td>
+                                  </tr>
+                                ))}
+                            </tbody>
+                          </table>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-
-                <div className="content-backdrop fade"></div>
               </div>
+
+              <div className="content-backdrop fade"></div>
             </div>
           </div>
-
-          <div className="layout-overlay layout-menu-toggle"></div>
         </div>
+
+        <div className="layout-overlay layout-menu-toggle"></div>
       </div>
+      {/* </div> */}
     </>
   );
 }

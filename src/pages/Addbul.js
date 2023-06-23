@@ -1,19 +1,30 @@
 import React from "react";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import toastr from "toastr";
 import axios from "axios";
 import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
 import { useState } from "react";
+import { useContext } from "react";
+import { ApiContext } from "../DistributorLogin/DistContext/DisContext";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 export default function Addbul() {
   const [bul, setBul] = useState({
     csvFile: "",
     category: "",
   });
-  const handleCancel=()=>{
+  const [categoryId, setCategoryId] = useState("");
+  const { category } = useContext(ApiContext);
+  const history = useHistory();
+
+  console.log(categoryId);
+  console.log(category);
+  console.log(bul.csvFile);
+
+  const handleCancel = () => {
     setBul({ csvFile: "", category: "" });
-  }
+  };
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (
@@ -28,13 +39,14 @@ export default function Addbul() {
     }
   };
 
-  const handleCategoryChange = (e) => {
-    const categoryName = e.target.value;
-    setBul({ ...bul, category: categoryName });
-  };
+  // const handleCategoryChange = (e) => {
+  //   const categoryName = e.target.value;
+  //   setBul({ ...bul, category: categoryName });
+  // };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    debugger;
     if (!bul.csvFile) {
       console.log("Please select an Excel file.");
       return;
@@ -42,7 +54,7 @@ export default function Addbul() {
 
     const formData = new FormData();
     formData.append("file", bul.csvFile);
-    formData.append("category", bul.category);
+    formData.append("category", categoryId);
 
     try {
       const response = await axios.post(
@@ -53,6 +65,7 @@ export default function Addbul() {
         toastr.success(response?.data?.message);
         setBul({ csvFile: "", category: "" });
         document.getElementById("csvFile").value = "";
+        history.push("/producttable");
       }
     } catch (error) {
       console.log(error);
@@ -106,14 +119,33 @@ export default function Addbul() {
                               Category name:
                             </label>
                             <div className="input-group input-group-merge">
-                              <input
+                              {/* <input
                                 className="form-control"
                                 type="text"
                                 id="category"
                                 name="category"
                                 value={bul.category}
                                 onChange={handleCategoryChange}
-                              />
+                              /> */}
+                              <select
+                                id="medType"
+                                name="productType"
+                                value={categoryId}
+                                onChange={(e) => setCategoryId(e.target.value)}
+                                className="select2 form-select"
+                              >
+                                <option value="">Select</option>
+                                {category &&
+                                  category.length > 0 &&
+                                  category.map((categoryItem) => (
+                                    <option
+                                      key={categoryItem._id}
+                                      value={categoryItem._id}
+                                    >
+                                      {categoryItem.name}
+                                    </option>
+                                  ))}
+                              </select>
                             </div>
                           </div>
                         </div>
