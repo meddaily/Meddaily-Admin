@@ -15,6 +15,7 @@ export default function Distributorrequest() {
         "http://api.meddaily.in/distributor_request"
       );
       setDistReq(response?.data?.data);
+      console.log(response)
     } catch (error) {
       console.error(error);
     }

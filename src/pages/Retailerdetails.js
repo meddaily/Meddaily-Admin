@@ -27,10 +27,7 @@ export default function Retailerdetails() {
   const [formData, setFormData] = useState(defaultFormData);
   const location = useLocation();
   const { id } = location.state;
-  let history = useHistory();
-  function handleclick() {
-    history.push("#");
-  }
+
   useEffect(() => {
     handleRetailerDetails();
   }, []);
@@ -42,6 +39,7 @@ export default function Retailerdetails() {
         { ...formData, id: id }
       );
       setFormData(response?.data?.data);
+      console.log(response.data.data);
     } catch (error) {
       console.error(error);
     }
@@ -58,9 +56,14 @@ export default function Retailerdetails() {
     licenseimage,
     pincode,
     gstno,
-    gstimg,
     panno,
     panimg,
+    address,
+    gstimage,
+    password,
+    pharname,
+    pharphone,
+    state,
   } = formData;
 
   return (
@@ -107,6 +110,7 @@ export default function Retailerdetails() {
                                   ownername: e.target.value,
                                 })
                               }
+                              readOnly
                             />
                           </div>
                           <div className="mb-3 col-md-6">
@@ -128,6 +132,7 @@ export default function Retailerdetails() {
                                   businessname: e.target.value,
                                 })
                               }
+                              readOnly
                             />
                           </div>
                           <div className="mb-3 col-md-6">
@@ -149,6 +154,7 @@ export default function Retailerdetails() {
                                   businesstype: e.target.value,
                                 })
                               }
+                              readOnly
                             />
                           </div>
                           <div className="mb-3 col-md-6">
@@ -173,6 +179,7 @@ export default function Retailerdetails() {
                                     phonenumber: e.target.value,
                                   })
                                 }
+                                readOnly
                               />
                             </div>
                           </div>
@@ -195,6 +202,7 @@ export default function Retailerdetails() {
                                   email: e.target.value,
                                 })
                               }
+                              readOnly
                               placeholder="john.doe@example.com"
                             />
                           </div>
@@ -219,6 +227,7 @@ export default function Retailerdetails() {
                                   pincode: e.target.value,
                                 })
                               }
+                              readOnly
                               maxlength="6"
                             />
                           </div>
@@ -242,6 +251,7 @@ export default function Retailerdetails() {
                                   city: e.target.value,
                                 })
                               }
+                              readOnly
                             />
                           </div>
                           <div className="mb-3 col-md-6">
@@ -264,6 +274,7 @@ export default function Retailerdetails() {
                                   area: e.target.value,
                                 })
                               }
+                              readOnly
                             />
                           </div>
 
@@ -287,6 +298,7 @@ export default function Retailerdetails() {
                                   licenseno: e.target.value,
                                 })
                               }
+                              readOnly
                             />
                           </div>
                           <div className="mb-3 col-md-6">
@@ -296,20 +308,7 @@ export default function Retailerdetails() {
                             >
                               Drug Licence img
                             </label>
-                            <input
-                              className="form-control"
-                              type="text"
-                              id="gst"
-                              name="gst"
-                              placeholder="view/img.jpg"
-                              value={licenseimage}
-                              onChange={(e) =>
-                                setFormData({
-                                  ...formData,
-                                  licenseimage: e.target.value,
-                                })
-                              }
-                            />
+                           <img src={licenseimage} alt="img" />
                           </div>
                           <div className="mb-3 col-md-6">
                             <label
@@ -331,30 +330,10 @@ export default function Retailerdetails() {
                                   gstno: e.target.value,
                                 })
                               }
+                              readOnly
                             />
                           </div>
-                          <div className="mb-3 col-md-6">
-                            <label
-                              for="timeZones"
-                              className="form-label float-start"
-                            >
-                              Gst img
-                            </label>
-                            <input
-                              className="form-control"
-                              type="text"
-                              id="gst"
-                              name="gst"
-                              placeholder="view/img.jpg"
-                              value={gstimg}
-                              onChange={(e) => {
-                                setFormData({
-                                  ...formData,
-                                  gstimg: e.target.value,
-                                });
-                              }}
-                            />
-                          </div>
+
                           <div className="mb-3 col-md-6">
                             <label
                               for="timeZones"
@@ -367,7 +346,6 @@ export default function Retailerdetails() {
                               type="text"
                               id="gst"
                               name="gst"
-                              placeholder="12123323423"
                               value={panno}
                               onChange={(e) =>
                                 setFormData({
@@ -375,6 +353,7 @@ export default function Retailerdetails() {
                                   panno: e.target.value,
                                 })
                               }
+                              readOnly
                             />
                           </div>
                           <div className="mb-3 col-md-6">
@@ -382,22 +361,87 @@ export default function Retailerdetails() {
                               for="timeZones"
                               className="form-label float-start"
                             >
-                              Pan img
+                              Address
                             </label>
                             <input
                               className="form-control"
                               type="text"
                               id="gst"
                               name="gst"
-                              placeholder="view/img.jpg"
-                              value={panimg}
-                              onChange={(e) =>
-                                setFormData({
-                                  ...formData,
-                                  panimg: e.target.value,
-                                })
-                              }
+                              value={address}
+                              readOnly
                             />
+                          </div>
+                          <div className="mb-3 col-md-6">
+                            <label
+                              for="timeZones"
+                              className="form-label float-start"
+                            >
+                              Password
+                            </label>
+                            <input
+                              className="form-control"
+                              value={password}
+                              readOnly
+                            />
+                          </div>
+                          <div className="mb-3 col-md-6">
+                            <label
+                              for="timeZones"
+                              className="form-label float-start"
+                            >
+                              Pharma Name
+                            </label>
+                            <input
+                              className="form-control"
+                              value={pharname}
+                              readOnly
+                            />
+                          </div>
+                          <div className="mb-3 col-md-6">
+                            <label
+                              for="timeZones"
+                              className="form-label float-start"
+                            >
+                              Pharma Phone
+                            </label>
+                            <input
+                              className="form-control"
+                              value={pharphone}
+                              readOnly
+                            />
+                          </div>
+                          <div className="mb-3 col-md-6">
+                            <label
+                              for="timeZones"
+                              className="form-label float-start"
+                            >
+                              State
+                            </label>
+                            <input
+                              className="form-control"
+                              value={state}
+                              readOnly
+                            />
+                          </div>
+
+                          <div className="mb-3 col-md-6">
+                            <label
+                              for="timeZones"
+                              className="form-label float-start"
+                            >
+                              Pan img
+                            </label>
+                            <img src={panimg} alt="panimg" />
+                          </div>
+                          <div className="mb-3 col-md-6">
+                            <label
+                              for="timeZones"
+                              className="form-label float-start"
+                            >
+                              Gst img
+                            </label>
+                            <img src={gstimage} alt="gstimg" />
                           </div>
                         </div>
                         <div className="mt-2"></div>

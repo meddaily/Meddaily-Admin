@@ -18,6 +18,7 @@ export default function Distributordetailsr() {
     distributorcode: "",
     distributortype: "",
     pincode: "",
+    accountnumber: "",
   };
   const [formData, setFormData] = useState(defaultFormData);
   const location = useLocation();
@@ -73,6 +74,15 @@ export default function Distributordetailsr() {
     distributorcode,
     distributortype,
     pincode,
+    account_number,
+    bank_name,
+    benificiary_name,
+    drug_licence,
+    gst_file,
+    ifsc_code,
+    image,
+    gst_number,
+    password,
   } = formData;
   return (
     <>
@@ -121,7 +131,7 @@ export default function Distributordetailsr() {
                                   firstname: e.target.value,
                                 })
                               }
-                              autofocus
+                              readOnly
                             />
                           </div>
                           <div className="mb-3 col-md-6">
@@ -143,6 +153,7 @@ export default function Distributordetailsr() {
                                   lastname: e.target.value,
                                 })
                               }
+                              readOnly
                             />
                           </div>
                           <div className="mb-3 col-md-6">
@@ -167,6 +178,7 @@ export default function Distributordetailsr() {
                                     phonenumber: e.target.value,
                                   })
                                 }
+                                readOnly
                               />
                             </div>
                           </div>
@@ -189,6 +201,7 @@ export default function Distributordetailsr() {
                                   email: e.target.value,
                                 })
                               }
+                              readOnly
                               placeholder="john.doe@example.com"
                             />
                           </div>
@@ -211,6 +224,7 @@ export default function Distributordetailsr() {
                                   firstname: e.target.value,
                                 })
                               }
+                              readOnly
                             />
                           </div>
                           <div className="mb-3 col-md-6">
@@ -233,6 +247,7 @@ export default function Distributordetailsr() {
                                   pincode: e.target.value,
                                 })
                               }
+                              readOnly
                               maxlength="6"
                             />
                           </div>
@@ -256,6 +271,7 @@ export default function Distributordetailsr() {
                                   city: e.target.value,
                                 })
                               }
+                              readOnly
                             />
                           </div>
                           <div className="mb-3 col-md-6">
@@ -278,6 +294,7 @@ export default function Distributordetailsr() {
                                   area: e.target.value,
                                 })
                               }
+                              readOnly
                             />
                           </div>
 
@@ -288,7 +305,7 @@ export default function Distributordetailsr() {
                             >
                               Distributor Code
                             </label>
-                            <select
+                            {/* <select
                               id="country"
                               className="select2 form-select"
                             >
@@ -323,7 +340,13 @@ export default function Distributordetailsr() {
                               <option value="United States">
                                 United States
                               </option>
-                            </select>
+                            </select> */}
+                            <input
+                              className="form-control"
+                              type="text"
+                              readOnly
+                              value={distributorcode}
+                            />
                           </div>
                           <div className="mb-3 col-md-6">
                             <label
@@ -332,7 +355,7 @@ export default function Distributordetailsr() {
                             >
                               Distributor Type
                             </label>
-                            <select
+                            {/* <select
                               id="language"
                               className="select2 form-select"
                             >
@@ -341,7 +364,174 @@ export default function Distributordetailsr() {
                               <option value="fr">French</option>
                               <option value="de">German</option>
                               <option value="pt">Portuguese</option>
-                            </select>
+                            </select> */}
+                            <input
+                              className="form-control"
+                              type="text"
+                              readOnly
+                              value={distributortype}
+                            />
+                          </div>
+                          <div className="mb-3 col-md-6">
+                            <label
+                              for="address"
+                              className="form-label float-start"
+                            >
+                              Account Number
+                            </label>
+                            <input
+                              type="text"
+                              className="form-control"
+                              id="accountNumber"
+                              name="accountNumber"
+                              placeholder="accountNumber"
+                              value={account_number}
+                              onChange={(e) =>
+                                setFormData({
+                                  ...formData,
+                                  accountnumber: e.target.value,
+                                })
+                              }
+                              readOnly
+                            />
+                          </div>
+                          <div className="mb-3 col-md-6">
+                            <label
+                              for="address"
+                              className="form-label float-start"
+                            >
+                              Bank Name
+                            </label>
+                            <input
+                              type="text"
+                              className="form-control"
+                              value={bank_name}
+                              onChange={(e) =>
+                                setFormData({
+                                  ...formData,
+                                  bank_name: e.target.value,
+                                })
+                              }
+                              readOnly
+                            />
+                          </div>
+                          <div className="mb-3 col-md-6">
+                            <label
+                              for="address"
+                              className="form-label float-start"
+                            >
+                              Benificary Name
+                            </label>
+                            <input
+                              type="text"
+                              className="form-control"
+                              value={benificiary_name}
+                              onChange={(e) =>
+                                setFormData({
+                                  ...formData,
+                                  benificiary_name: e.target.value,
+                                })
+                              }
+                              readOnly
+                            />
+                          </div>
+                          <div className="mb-3 col-md-6">
+                            <label
+                              for="address"
+                              className="form-label float-start"
+                            >
+                              Ifsc Code
+                            </label>
+                            <input
+                              type="text"
+                              className="form-control"
+                              value={ifsc_code}
+                              onChange={(e) =>
+                                setFormData({
+                                  ...formData,
+                                  ifsc_code: e.target.value,
+                                })
+                              }
+                              readOnly
+                            />
+                          </div>
+                          <div className="mb-3 col-md-6">
+                            <label
+                              for="address"
+                              className="form-label float-start"
+                            >
+                              Drug Licence Number
+                            </label>
+                            <input
+                              type="text"
+                              className="form-control"
+                              value={drug_licence}
+                              onChange={(e) =>
+                                setFormData({
+                                  ...formData,
+                                  drug_licence: e.target.value,
+                                })
+                              }
+                              readOnly
+                            />
+                          </div>
+                          <div className="mb-3 col-md-6">
+                            <label
+                              for="address"
+                              className="form-label float-start"
+                            >
+                              GST Number
+                            </label>
+                            <input
+                              type="text"
+                              className="form-control"
+                              value={gst_number}
+                              onChange={(e) =>
+                                setFormData({
+                                  ...formData,
+                                  gst_number: e.target.value,
+                                })
+                              }
+                              readOnly
+                            />
+                          </div>
+                          <div className="mb-3 col-md-6">
+                            <label
+                              for="address"
+                              className="form-label float-start"
+                            >
+                              Password
+                            </label>
+                            <input
+                              type="text"
+                              className="form-control"
+                              value={password}
+                              onChange={(e) =>
+                                setFormData({
+                                  ...formData,
+                                  password: e.target.value,
+                                })
+                              }
+                              readOnly
+                            />
+                          </div>
+                          <div className="mb-3 col-md-6">
+                            <label
+                              for="address"
+                              className="form-label float-start"
+                            >
+                              GST File
+                            </label>
+                            <img src={gst_file} alt="img" />
+                          </div>
+                          <div className="mb-3 col-md-6">
+                            <label
+                              for="address"
+                              className="form-label float-start"
+                            >
+                              Image
+                            </label>
+                            <img src={image} alt="img" />
                           </div>
                         </div>
                         <div className="mt-2"></div>

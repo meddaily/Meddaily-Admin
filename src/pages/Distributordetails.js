@@ -40,7 +40,7 @@ export default function Distributordetails() {
 
   const handleOrders = async () => {
     try {
-      const response = await axios.get("http://13.235.8.138:81/all_order");
+      const response = await axios.get("http://api.meddaily.in/all_order");
       setOrder(response?.data?.message);
     } catch (error) {
       console.error(error);
@@ -56,6 +56,17 @@ export default function Distributordetails() {
     distributorcode,
     distributortype,
     pincode,
+    password,
+    gst_number,
+    gst_file,
+    state,
+    account_number,
+    bank_name,
+    benificiary_name,
+    drug_licence,
+    ifsc_code,
+    image,
+    pannumber,
   } = formData;
 
   return (
@@ -105,7 +116,7 @@ export default function Distributordetails() {
                                   firstname: e.target.value,
                                 })
                               }
-                              autofocus
+                              readOnly
                             />
                           </div>
                           <div className="mb-3 col-md-6">
@@ -127,6 +138,7 @@ export default function Distributordetails() {
                                   lastname: e.target.value,
                                 })
                               }
+                              readOnly
                             />
                           </div>
                           <div className="mb-3 col-md-6">
@@ -150,6 +162,7 @@ export default function Distributordetails() {
                                     phonenumber: e.target.value,
                                   })
                                 }
+                                readOnly
                                 placeholder="202 555 0111"
                               />
                             </div>
@@ -173,6 +186,7 @@ export default function Distributordetails() {
                                   email: e.target.value,
                                 })
                               }
+                              readOnly
                               placeholder="john.doe@example.com"
                             />
                           </div>
@@ -195,6 +209,21 @@ export default function Distributordetails() {
                                   firstname: e.target.value,
                                 })
                               }
+                              readOnly
+                            />
+                          </div>
+                          <div className="mb-3 col-md-6">
+                            <label
+                              className="form-label float-start"
+                              for="country "
+                            >
+                              State
+                            </label>
+                            <input
+                              type="text"
+                              className="form-control"
+                              readOnly
+                              value={state}
                             />
                           </div>
                           <div className="mb-3 col-md-6">
@@ -216,6 +245,7 @@ export default function Distributordetails() {
                                   pincode: e.target.value,
                                 })
                               }
+                              readOnly
                               placeholder="231465"
                               maxlength="6"
                             />
@@ -239,6 +269,7 @@ export default function Distributordetails() {
                                   city: e.target.value,
                                 })
                               }
+                              readOnly
                               placeholder="City"
                             />
                           </div>
@@ -260,6 +291,7 @@ export default function Distributordetails() {
                                   area: e.target.value,
                                 })
                               }
+                              readOnly
                               name="Area"
                               placeholder="Area"
                             />
@@ -272,42 +304,12 @@ export default function Distributordetails() {
                             >
                               Distributor Code
                             </label>
-                            <select
-                              id="country"
-                              className="select2 form-select"
-                            >
-                              <option value="">{distributorcode}</option>
-                              <option value="Australia">Australia</option>
-                              <option value="Bangladesh">Bangladesh</option>
-                              <option value="Belarus">Belarus</option>
-                              <option value="Brazil">Brazil</option>
-                              <option value="Canada">Canada</option>
-                              <option value="China">China</option>
-                              <option value="France">France</option>
-                              <option value="Germany">Germany</option>
-                              <option value="India">India</option>
-                              <option value="Indonesia">Indonesia</option>
-                              <option value="Israel">Israel</option>
-                              <option value="Italy">Italy</option>
-                              <option value="Japan">Japan</option>
-                              <option value="Korea">Korea, Republic of</option>
-                              <option value="Mexico">Mexico</option>
-                              <option value="Philippines">Philippines</option>
-                              <option value="Russia">Russian Federation</option>
-                              <option value="South Africa">South Africa</option>
-                              <option value="Thailand">Thailand</option>
-                              <option value="Turkey">Turkey</option>
-                              <option value="Ukraine">Ukraine</option>
-                              <option value="United Arab Emirates">
-                                United Arab Emirates
-                              </option>
-                              <option value="United Kingdom">
-                                United Kingdom
-                              </option>
-                              <option value="United States">
-                                United States
-                              </option>
-                            </select>
+                            <input
+                              type="text"
+                              className="form-control"
+                              readOnly
+                              value={distributorcode}
+                            />
                           </div>
                           <div className="mb-3 col-md-6">
                             <label
@@ -316,16 +318,12 @@ export default function Distributordetails() {
                             >
                               Distributor Type
                             </label>
-                            <select
-                              id="language"
-                              className="select2 form-select"
-                            >
-                              <option value="">{distributortype}</option>
-                              <option value="en">English</option>
-                              <option value="fr">French</option>
-                              <option value="de">German</option>
-                              <option value="pt">Portuguese</option>
-                            </select>
+                            <input
+                              type="text"
+                              className="form-control"
+                              readOnly
+                              value={distributortype}
+                            />
                           </div>
                           <div className="mb-3 col-md-6">
                             <label
@@ -339,24 +337,11 @@ export default function Distributordetails() {
                               type="text"
                               id="gst"
                               name="gst"
-                              placeholder="12123323423"
+                              value={gst_number}
+                              readOnly
                             />
                           </div>
-                          <div className="mb-3 col-md-6">
-                            <label
-                              for="timeZones"
-                              className="form-label float-start"
-                            >
-                              Gst img
-                            </label>
-                            <input
-                              className="form-control"
-                              type="text"
-                              id="gst"
-                              name="gst"
-                              placeholder="view/img.jpg"
-                            />
-                          </div>
+
                           <div className="mb-3 col-md-6">
                             <label
                               for="timeZones"
@@ -369,7 +354,8 @@ export default function Distributordetails() {
                               type="text"
                               id="gst"
                               name="gst"
-                              placeholder="12123323423"
+                              value={pannumber || "NA"}
+                              readOnly
                             />
                           </div>
                           <div className="mb-3 col-md-6">
@@ -377,15 +363,102 @@ export default function Distributordetails() {
                               for="timeZones"
                               className="form-label float-start"
                             >
-                              Pan img
+                              Account Number
                             </label>
                             <input
                               className="form-control"
                               type="text"
-                              id="gst"
-                              name="gst"
-                              placeholder="view/img.jpg"
+                              value={account_number || "NA"}
+                              readOnly
                             />
+                          </div>
+                          <div className="mb-3 col-md-6">
+                            <label
+                              for="timeZones"
+                              className="form-label float-start"
+                            >
+                              Bank Name
+                            </label>
+                            <input
+                              className="form-control"
+                              type="text"
+                              value={bank_name || "NA"}
+                              readOnly
+                            />
+                          </div>
+                          <div className="mb-3 col-md-6">
+                            <label
+                              for="timeZones"
+                              className="form-label float-start"
+                            >
+                              Benificary Name
+                            </label>
+                            <input
+                              className="form-control"
+                              type="text"
+                              value={benificiary_name || "NA"}
+                              readOnly
+                            />
+                          </div>
+                          <div className="mb-3 col-md-6">
+                            <label
+                              for="timeZones"
+                              className="form-label float-start"
+                            >
+                              Drug Licence
+                            </label>
+                            <input
+                              className="form-control"
+                              type="text"
+                              value={drug_licence || "NA"}
+                              readOnly
+                            />
+                          </div>
+                          <div className="mb-3 col-md-6">
+                            <label
+                              for="timeZones"
+                              className="form-label float-start"
+                            >
+                              Ifsc Code
+                            </label>
+                            <input
+                              className="form-control"
+                              type="text"
+                              value={ifsc_code || "NA"}
+                              readOnly
+                            />
+                          </div>
+                          <div className="mb-3 col-md-6">
+                            <label
+                              for="timeZones"
+                              className="form-label float-start"
+                            >
+                              Password
+                            </label>
+                            <input
+                              className="form-control"
+                              type="text"
+                              value={password || "NA"}
+                              readOnly
+                            />
+                          </div>
+                          <div className="mb-3 col-md-6">
+                            <label
+                              for="timeZones"
+                              className="form-label float-start"
+                            >
+                              Image
+                            </label>
+                            <img src={image} alt="img" />
+                          </div>
+                          <div className="mb-3 col-md-6">
+                            <label
+                              for="timeZones"
+                              className="form-label float-start"
+                            >
+                              Gst img
+                            </label>
+                            <img src={gst_file} alt="gstimg" />
                           </div>
                         </div>
                         <div className="mt-2"></div>

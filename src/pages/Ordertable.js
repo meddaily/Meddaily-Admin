@@ -22,37 +22,56 @@ export default function Ordertable() {
       const response = await axios.get("http://api.meddaily.in/all_order");
       if (response.status === 200) {
         setOrderList(response?.data?.message);
-        console.log(response)
+        console.log(response);
       }
     } catch (error) {
       console.error(error);
     }
   };
 
-  async function deleteOrder(event, orderId) {
-    event.preventDefault();
-    console.log(orderId);
-    await axios
-      .delete(`${config.backendURL}/orders/delete-order`, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        data: {
-          orderId: orderId,
-        },
-      })
-      .then((res) => {
-        if (res.status === 200) {
-          toastr.success(res.data.message);
-          // getAllOrders();
-          handleOrders();
+  // async function deleteOrder(event, orderId) {
+  //   event.preventDefault();
+  //   console.log(orderId);
+  //   await axios
+  //     .delete(`${config.backendURL}/orders/delete-order`, {
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       data: {
+  //         orderId: orderId,
+  //       },
+  //     })
+  //     .then((res) => {
+  //       if (res.status === 200) {
+  //         toastr.success(res.data.message);
+  //         // getAllOrders();
+  //         handleOrders();
+  //       }
+  //     })
+  //     .catch((err) => {
+  //       toastr.error(err.response.data.message);
+  //       console.log(err);
+  //     });
+  // }
+  const handleDelivery = async (orderid) => {
+    debugger;
+    try {
+      const response = await axios.post(
+        "http://api.meddaily.in/order_status_change",
+        {
+          order_id: orderid,
+          status: 3,
         }
-      })
-      .catch((err) => {
-        toastr.error(err.response.data.message);
-        console.log(err);
-      });
-  }
+      );
+      if (response.status === 200) {
+        toastr.success("Order status updated successfully");
+        handleOrders(); // Refresh the order list after status change
+      }
+    } catch (error) {
+      toastr.error("Error updating order status");
+      console.error(error);
+    }
+  };
 
   const order =
     orderList &&
@@ -65,8 +84,9 @@ export default function Ordertable() {
           userType={item.retailer_name}
           userId={item.distributor_name}
           price={item.price}
+          status={item.order_status}
           details={"View Full details"}
-          deleteOrder={deleteOrder}
+          delivered={handleDelivery}
         />
       );
     });
@@ -104,7 +124,6 @@ export default function Ordertable() {
                       </Link>
                     </li>
                     <li>
-                     
                       <Link to="/orderdisid" className="dropdown-item">
                         Distributor id
                       </Link>
@@ -125,6 +144,7 @@ export default function Ordertable() {
                             <th>Retailer name</th>
                             <th>Distributor Name</th>
                             <th>Total Price</th>
+                            <th>Status</th>
                             <th>Details</th>
                           </tr>
                         </thead>

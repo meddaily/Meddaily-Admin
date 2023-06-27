@@ -62,6 +62,7 @@ export default function Retailerdetailsr() {
         { ...formData, id: id }
       );
       setFormData(response?.data?.data);
+      console.log(response);
     } catch (error) {
       console.error(error);
     }
@@ -81,6 +82,11 @@ export default function Retailerdetailsr() {
     gstimg,
     panno,
     panimg,
+    address,
+    password,
+    pharname,
+    pharphone,
+    state,
   } = formData;
   return (
     <>
@@ -120,6 +126,7 @@ export default function Retailerdetailsr() {
                               id="firstName"
                               name="firstName"
                               defaultValue={ownername}
+                              readOnly
                             />
                           </div>
                           <div className="mb-3 col-md-6">
@@ -135,6 +142,7 @@ export default function Retailerdetailsr() {
                               name="lastName"
                               id="lastName"
                               defaultValue={businessname}
+                              readOnly
                             />
                           </div>
                           <div className="mb-3 col-md-6">
@@ -150,6 +158,7 @@ export default function Retailerdetailsr() {
                               id="organization"
                               name="organization"
                               defaultValue={businesstype}
+                              readOnly
                             />
                           </div>
                           <div className="mb-3 col-md-6">
@@ -168,6 +177,7 @@ export default function Retailerdetailsr() {
                                 className="form-control"
                                 placeholder="202 555 0111"
                                 defaultValue={phonenumber}
+                                readOnly
                               />
                             </div>
                           </div>
@@ -185,9 +195,9 @@ export default function Retailerdetailsr() {
                               name="email"
                               defaultValue={email}
                               placeholder="john.doe@example.com"
+                              readOnly
                             />
                           </div>
-
                           <div className="mb-3 col-md-6">
                             <label
                               for="zipCode"
@@ -203,6 +213,7 @@ export default function Retailerdetailsr() {
                               placeholder="231465"
                               maxlength="6"
                               defaultValue={pincode}
+                              readOnly
                             />
                           </div>
                           <div className="mb-3 col-md-6">
@@ -219,6 +230,21 @@ export default function Retailerdetailsr() {
                               name="City"
                               placeholder="City"
                               defaultValue={city}
+                              readOnly
+                            />
+                          </div>
+                          <div className="mb-3 col-md-6">
+                            <label
+                              for="address"
+                              className="form-label float-start"
+                            >
+                              State
+                            </label>
+                            <input
+                              type="text"
+                              className="form-control"
+                              defaultValue={state}
+                              readOnly
                             />
                           </div>
                           <div className="mb-3 col-md-6">
@@ -235,9 +261,64 @@ export default function Retailerdetailsr() {
                               name="Area"
                               placeholder="Area"
                               defaultValue={area}
+                              readOnly
                             />
                           </div>
-
+                          <div className="mb-3 col-md-6">
+                            <label
+                              for="state"
+                              className="form-label float-start"
+                            >
+                              Address
+                            </label>
+                            <input
+                              className="form-control"
+                              type="text"
+                              defaultValue={address}
+                              readOnly
+                            />
+                          </div>
+                          <div className="mb-3 col-md-6">
+                            <label
+                              for="state"
+                              className="form-label float-start"
+                            >
+                              Password
+                            </label>
+                            <input
+                              className="form-control"
+                              type="text"
+                              defaultValue={password}
+                              readOnly
+                            />
+                          </div>
+                          <div className="mb-3 col-md-6">
+                            <label
+                              for="state"
+                              className="form-label float-start"
+                            >
+                              Pharma Name
+                            </label>
+                            <input
+                              className="form-control"
+                              placeholder="Area"
+                              defaultValue={pharname}
+                              readOnly
+                            />
+                          </div>
+                          <div className="mb-3 col-md-6">
+                            <label
+                              for="state"
+                              className="form-label float-start"
+                            >
+                              Pharma Phone
+                            </label>
+                            <input
+                              className="form-control"
+                              defaultValue={pharphone}
+                              readOnly
+                            />
+                          </div>
                           <div className="mb-3 col-md-6">
                             <label
                               for="timeZones"
@@ -252,6 +333,7 @@ export default function Retailerdetailsr() {
                               name="gst"
                               placeholder="12123323423"
                               defaultValue={licenseno}
+                              readOnly
                             />
                           </div>
                           <div className="mb-3 col-md-6">
@@ -261,14 +343,7 @@ export default function Retailerdetailsr() {
                             >
                               Drug Licence img
                             </label>
-                            <input
-                              className="form-control"
-                              type="text"
-                              id="gst"
-                              name="gst"
-                              placeholder="view/img.jpg"
-                              defaultValue={licenseimage}
-                            />
+                            <img src={licenseimage} alt="img" />
                           </div>
                           <div className="mb-3 col-md-6">
                             <label
@@ -284,6 +359,7 @@ export default function Retailerdetailsr() {
                               name="gst"
                               placeholder="12123323423"
                               defaultValue={gstno}
+                              readOnly
                             />
                           </div>
                           <div className="mb-3 col-md-6">
@@ -293,14 +369,15 @@ export default function Retailerdetailsr() {
                             >
                               Gst img
                             </label>
-                            <input
+                            <img src={gstimg} alt="img" />
+                            {/* <input
                               className="form-control"
                               type="text"
                               id="gst"
                               name="gst"
                               placeholder="view/img.jpg"
                               defaultValue={gstimg}
-                            />
+                            /> */}
                           </div>
                           <div className="mb-3 col-md-6">
                             <label
@@ -316,6 +393,7 @@ export default function Retailerdetailsr() {
                               name="gst"
                               placeholder="12123323423"
                               defaultValue={panno}
+                              readOnly
                             />
                           </div>
                           <div className="mb-3 col-md-6">
@@ -325,14 +403,15 @@ export default function Retailerdetailsr() {
                             >
                               Pan img
                             </label>
-                            <input
+                            {/* <input
                               className="form-control"
                               type="text"
                               id="gst"
                               name="gst"
                               placeholder="view/img.jpg"
                               defaultValue={panimg}
-                            />
+                            /> */}
+                            <img src={panimg} alt="panimg" />
                           </div>
                         </div>
                         <div className="mt-2"></div>
