@@ -2,6 +2,19 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 export default function Ordertbody(props) {
+  const renderAction = () => {
+    if (props.status === 0) {
+      return <p>Cancel Delivery</p>;
+    } else if (props.status === 1) {
+      return <p>On Delivery</p>;
+    } else if (props.status === 3) {
+      return <p>Complete Delivery</p>;
+    } else if (props.status === 4) {
+      return <p>Place Delivery</p>;
+    } else {
+      return null;
+    }
+  };
   return (
     <>
       <tbody className="table-border-bottom-0">
@@ -13,7 +26,7 @@ export default function Ordertbody(props) {
           <td>{props.userType ? props.userType : "NA"}</td>
           <td>{props.userId ? props.userId : "NA"}</td>
           <td>{props.price}</td>
-          <td>{props.status}</td>
+          <td>{renderAction()}</td>
           <td style={{ padding: ".625rem 5.25rem" }}>
             <div className="card-header d-flex justify-content-between align-items-center">
               <h5 className="mb-0"></h5>
