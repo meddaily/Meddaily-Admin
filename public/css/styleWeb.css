@@ -1,0 +1,409 @@
+/* -------------------------- */
+/* Design and Coding by Devendra Panwar */
+/* © Core Techies             */
+/* -------------------------- */
+
+@font-face {
+    font-family: 'Roboto-Light';
+    src: url('../fonts/Roboto/Roboto-Light.ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Roboto-Regular';
+    src: url('../fonts/Roboto/Roboto-Regular.ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Roboto-Medium';
+    src: url('../fonts/Roboto/Roboto-Medium.ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Roboto-Bold';
+    src: url('../fonts/Roboto/Roboto-Bold.ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Roboto-Black';
+    src: url('../fonts/Roboto/Roboto-Black.ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+:root {
+    --azure-blue: #0080FF; 
+    --olympic-blue : #008ECC;
+    --light-grey-txt : #999999;
+}
+
+* {
+    margin: 0px;
+    padding: 0px;
+    outline: none
+}
+
+body, html {
+    min-height: 100%;
+    font-size: 14px;
+    color: #333;
+    font-family: 'Roboto-Regular';
+}
+
+body, a, button {
+    outline: none !important;
+
+}
+
+body {
+    background: #fff;
+    color: #333;
+    line-height: 1.5;
+    font-size: 14px;
+}
+
+a {
+    text-decoration: none;
+    transition: all 300ms linear;
+    color: inherit;
+    margin-bottom: 0px;
+}
+
+a:hover, a:focus, a:active {
+    text-decoration: none;
+    outline: none;
+    box-shadow: none;
+    /*color: #8daae5;*/
+    color: var(--olympic-blue);
+}
+.btn.focus, .btn:focus{ box-shadow: none;}
+h1, h2, h3, h4, h5 {
+    margin: 0px;
+    font-family: 'Roboto-Black';
+}
+
+ul {
+    margin: 0px;
+    list-style: none;
+    padding: 0px;
+}
+
+
+/*Help CSS*/
+.padding-0{ padding: 0px !important;}
+.padding-right-0{ padding-right: 0px !important;}
+.padding-5{ padding: 5px !important;}
+.bg-white{ background: #ffffff;}
+.text-sm{ font-size: 12px;}
+.text-md{ font-size: 14px;}
+.text-bold{font-family: 'Roboto-Bold';}
+.text-link{color: var(--olympic-blue);}
+.sticky{ position: sticky; top:15px;}
+.bg-grey{ background-color: #f9f9f9;}
+.bg-red{ background-color: #ff6564;}
+
+/*.d-flex{ display: flex; height: 100%; }
+.align-items-center{  align-items: center; }
+.d-justify-content{  justify-content: center;}*/
+.h-100{ height: 100%;}
+button{ background: transparent;}
+.text-white{ color: #fff;}
+
+.default-block{ padding-top: 30px; padding-bottom: 30px;}
+
+#header {
+    height: 60px; 
+    background: #fff;
+    /*box-shadow: 0px 1px 2px rgba(0,0,0,0.06);*/
+    position: fixed; 
+    z-index: 20;
+    left: 0px;
+    top: 0px;
+    right: 0px;
+}
+#header.onscroll{
+    /*box-shadow: 0px 1px 2px rgba(0,0,0,0.06);*/
+    border-bottom: 1px solid #eaeaea;
+}
+#header.onscroll .logo img{
+    height: 35px;
+}
+
+.logo{ width: 250px;}
+.logo img{ height: 40px; transition: all 300ms linear;}
+.topMenu{ width:calc(250% - 50px); text-align: right; }
+.topMenu>ul{display: inline-block; }
+.topMenu>ul>li{display: inline-block; }
+.topMenu>ul>li>a{ color: var(--light-grey-txt); border:none;}
+.userBtn { width:35px; height: 35px; padding: 0px;}
+.userBtn:hover , .userBtn:focus , .userBtn:active{background: transparent !important;}
+.userBtn img{ width:35px; height: 35px;}
+
+
+.btn{ margin-bottom: 0px;  }
+.btn , .form-control{  border-radius: 0px !important;}
+[class^="flaticon-"]:before, [class*=" flaticon-"]:before, [class^="flaticon-"]:after, [class*=" flaticon-"]:after {margin-left: 0px; font-size: 18px;}
+
+.section{ padding-top: 30px; padding-bottom: 30px; height: 100vh;}
+
+#banner{ background-image: url(../images/banner.svg); background-repeat: no-repeat; background-position: right center; background-size: 100vh;}
+#banner h1{ margin-bottom: 25px;}
+#banner p{ margin-top: 25px; font-size: 18px; color: #666;}
+
+#community_section{ background-image: url(../images/community.svg); background-repeat: no-repeat; background-position: 6% center; background-size: 90vh;}
+/*#community_section{height: 92vh; }*/
+
+.title{ margin-bottom: 15px;}
+
+.box .box-header{  height: 50px; margin-bottom: 25px;}
+.box .box-body{  height: calc(100% - 50px);}
+
+.blocks{ display: flex;  margin: -10px;}
+.blocks .block{ padding: 10px;}
+.blocks .block .heading{ font-size: 18px; margin-bottom: 15px ;}
+.blocks .block .icon {margin-bottom: 25px;}
+.blocks .block .icon img{ width: auto; height: 150px;}
+
+.blocks.block_3 .block{ width:calc(100%/3);}
+
+/* #footer{ padding-top: 60px; padding-bottom: 60px; background: #fff;}
+#footer .logo{width:100px; display: block; margin: 0 auto; margin-bottom: 15px;}
+#footer ul{ padding: 0px; margin-bottom: 10px;}
+#footer ul li{display: inline-block;}
+#footer ul li a{display: block; padding: 5px;}
+
+.copyright{ color: #999; font-size: 12px;} */
+
+#footer{
+    background: #2b2b2b;
+    padding: 25px 15px;
+    text-align: center;
+    color:#fff;
+    
+}
+
+.mainFooter ul{
+    padding: 0px;
+}
+.mainFooter ul li{
+    display: inline-block;
+}
+.mainFooter ul li a{
+    padding: 8px 10px;
+    display: block;
+    font-size: 14px;
+}
+.copyright{
+    font-size: 11px;
+    color:#999;
+}
+
+
+
+.fullModal{
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width:100%;
+    height: 100%;
+    padding: 0px !important;
+    overflow: hidden !important;
+}
+.fullModal .modal-dialog{
+    max-width: 100%;
+    margin: 0px;
+    height: 100%;
+}
+.fullModal .modal-dialog .modal-content{
+    height: 100%;
+    border-radius: 0px;
+}
+.fullModal .modal-dialog .modal-content .modal-body{
+    padding: 0px ;   
+}
+.loginModalContainer{
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    padding: 25px;
+}
+.loginModalContainer>div{
+    width:50%;
+}
+.loginModalContainer .leftSide{
+    padding: 4% 10%;
+    height: 100vh;
+    overflow: auto;
+}
+.loginModalContainer .rightSide{
+    display:none;
+    background-color: #f9f9f9;
+    /*background-color: #ff9d00;*/
+    /*background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25' viewBox='0 0 1600 800'%3E%3Cg stroke='%23000' stroke-width='100' stroke-opacity='0' %3E%3Ccircle fill='%23ff9d00' cx='0' cy='0' r='1800'/%3E%3Ccircle fill='%23fb8d17' cx='0' cy='0' r='1700'/%3E%3Ccircle fill='%23f47d24' cx='0' cy='0' r='1600'/%3E%3Ccircle fill='%23ed6e2d' cx='0' cy='0' r='1500'/%3E%3Ccircle fill='%23e35f34' cx='0' cy='0' r='1400'/%3E%3Ccircle fill='%23d85239' cx='0' cy='0' r='1300'/%3E%3Ccircle fill='%23cc453e' cx='0' cy='0' r='1200'/%3E%3Ccircle fill='%23be3941' cx='0' cy='0' r='1100'/%3E%3Ccircle fill='%23b02f43' cx='0' cy='0' r='1000'/%3E%3Ccircle fill='%23a02644' cx='0' cy='0' r='900'/%3E%3Ccircle fill='%23901e44' cx='0' cy='0' r='800'/%3E%3Ccircle fill='%23801843' cx='0' cy='0' r='700'/%3E%3Ccircle fill='%236f1341' cx='0' cy='0' r='600'/%3E%3Ccircle fill='%235e0f3d' cx='0' cy='0' r='500'/%3E%3Ccircle fill='%234e0c38' cx='0' cy='0' r='400'/%3E%3Ccircle fill='%233e0933' cx='0' cy='0' r='300'/%3E%3Ccircle fill='%232e062c' cx='0' cy='0' r='200'/%3E%3Ccircle fill='%23210024' cx='0' cy='0' r='100'/%3E%3C/g%3E%3C/svg%3E");
+      background-attachment: fixed;
+      background-size: cover;*/
+}
+.loginModalContainer .leftSide .inner .logo{
+    /*margin-bottom: 25px;*/
+    margin-bottom: 10px;
+    width: 150px;
+}
+.subTitle{
+    font-size: 14px;
+    color:#333;
+    margin-bottom: 15px;
+}
+.btn-facebook{
+    background: #3b5998;
+    color: #fff;
+}
+.btn-google{
+    background: #CC3333;
+    color: #fff;
+}
+.socialBtns a:hover , .socialBtns a:focus, .socialBtns a:active{
+    color: #fff !important;
+}
+.btn{
+    transition: 300ms linear all;
+}
+.btn:hover{
+    box-shadow: 0px 1px 2px rgba(0,0,0,0.2);
+}
+.socialBtns a + a{
+    margin-left: 15px;
+}
+.btn-gradient{
+    background: rgb(46,171,238);
+    background: linear-gradient(295deg, rgba(46,171,238,1) 0%, rgba(255,102,102,1) 100%);
+    color:#fff !important;
+}
+.hasPlaceholder {
+    display: block;
+    margin: 0px 0;
+    padding: 15px 0;
+    position: relative;
+    width: 100%;
+    font-size: 16px;
+}
+.hasPlaceholder input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px;
+    outline: none;
+    border: none;
+    border-bottom: 1px solid;
+    font-size: inherit;
+}
+.hasPlaceholder input:placeholder-shown {
+    border-color: #a0deff;
+}
+.hasPlaceholder input ~ span span,
+.hasPlaceholder input:placeholder-shown:focus ~ span span {
+    transform: scale(0.8);
+    transform-origin: left top;
+    color: #999;
+    position: absolute;
+    left: 0;
+    top: 0;
+    transition: all 0.3s;
+    pointer-events: none;
+    /*font-weight: bold;*/
+}
+.hasPlaceholder input:placeholder-shown ~ span span {
+    transform: translate(10px, 25px);
+    color: #666;
+}
+.hasPlaceholder input ~ span:after {
+    content: "";
+    width: 100%;
+    height: 2px;
+    position: relative;
+    top: -2px;
+    background: #2eabee;
+    display: block;
+    transform: scale(0, 1);
+    transition: transform 0.3s;
+}
+.hasPlaceholder input:focus ~ span:after {
+    transform: none;
+}
+
+.align-items-center{
+    align-items: center;
+}
+.justify-content-between{
+    justify-content: space-between;
+}
+.dividerDiv{
+    position: relative;
+    border: 0.5px dotted #dedede;
+    height: 1px;
+    width: 100%;
+    margin: 25px 0px;
+}
+.dividerDiv>span{
+    position: absolute;
+    margin: 0 auto;
+    top: -12px;
+    left: 0px;
+    right: 0px;
+    display: inline-block;
+    width:30px;
+    height: 30px;
+    text-align: center;
+    line-height: 30px;
+    background: #fff;
+}
+.link{
+    color:#2eabee;
+}
+.btn-close{
+    z-index: 5;
+    position: absolute;
+    width:30px;
+    height: 30px;
+    text-align: center;
+    line-height: 30px;
+    right: 0px;
+    top: 0px;
+}
+
+
+/*CSS For Edge Browser*/
+.edgeLoginBg{
+    background: url(../images/loginBg.png) no-repeat;
+    background-size: cover;
+}
+
+.edgeloginModalContainer .hasPlaceholder > span{
+    position: absolute;
+    left: 0;
+    bottom:12px;
+    width:100%;
+}
+.edgeloginModalContainer .hasPlaceholder >span>span{
+    position: absolute;
+    top:-55px;
+    left:12px;
+    font-size: 12px;
+    color:#999;
+}
+
+
+
+@media only screen and (max-width: 1536px) {
+    .loginModalContainer .leftSide {
+        padding: 1% 8%;
+        height: 100vh;
+        overflow: auto;
+    }
+}

@@ -15003,6 +15003,7 @@ html:not(.layout-menu-fixed) .menu-inner-shadow {
 }
 
 .menu-link {
+  cursor: pointer;
   position: relative;
   display: flex;
   align-items: center;

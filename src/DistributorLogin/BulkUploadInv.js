@@ -18,13 +18,7 @@ export default function Addbul() {
   }
   return (
     <>
-      <div className="layout-wrapper layout-content-navbar">
-        <div className="layout-container">
-          <Sidebar />
-
-          <div className="layout-page">
-            <Navbar />
-
+    
             <div className="content-wrapper">
               <div className="container-xxl flex-grow-1 container-p-y">
                 <div className="row">
@@ -64,7 +58,7 @@ export default function Addbul() {
                               <button className="btn btn-primary me-2">
                                 <a
                                   href="https://www.google.co.in/"
-                                  target={"_blank"}
+                                  target={"_blank"} rel="noreferrer"
                                 >
                                   {" "}
                                   Download sample file
@@ -96,11 +90,7 @@ export default function Addbul() {
                 <div className="content-backdrop fade"></div>
               </div>
             </div>
-          </div>
-
-          <div className="layout-overlay layout-menu-toggle"></div>
-        </div>
-      </div>
+         
     </>
   );
 }

@@ -1,10 +1,4 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import Dropdown from "react-bootstrap/Dropdown";
-
-export default function Sidebar(props) {
-  return (
-    <aside id="layout-menu" className="layout-menu menu-vertical menu bg-menu-theme" >
+<aside id="layout-menu" className="layout-menu menu-vertical menu bg-menu-theme" >
             <div className="app-brand demo">
               <Link to="/" className="app-brand-link">
           <img
@@ -19,7 +13,7 @@ export default function Sidebar(props) {
 
       <ul className="menu-inner py-1">
         <li className="menu-item ">
-          <div onClick={()=>props.sideMenuClick('dashbord')} className="menu-link">
+          <div onClick={()=>sideMenuClick('dashbord')} className="menu-link">
             <i className="menu-icon tf-icons bx bx-home-circle"></i>
             <div data-i18n="Analytics">Dashboard</div>
           </div>
@@ -27,7 +21,7 @@ export default function Sidebar(props) {
 
         {/* Orgders */}
         <li className="menu-item ">
-          <div onClick={()=>props.sideMenuClick('orders')} className="menu-link">
+          <div onClick={()=>sideMenuClick('orders')} className="menu-link">
               <i className="menu-icon tf-icons bx bx-box"></i>
               <div data-i18n="Analytics">Orders</div>
             </div>
@@ -45,22 +39,22 @@ export default function Sidebar(props) {
 
             <Dropdown.Menu>
               <li className="menu-item active">
-                <div onClick={()=>props.sideMenuClick('myinventory')} className="menu-link">
+                <div onClick={()=>sideMenuClick('myinventory')} className="menu-link">
                   <div data-i18n="Without menu">My Inventory</div>
                 </div>
               </li>
               <li className="menu-item">
-                <div onClick={()=>props.sideMenuClick('bulkuploadinv')} className="menu-link">
+                <div onClick={()=>sideMenuClick('bulkuploadinv')} className="menu-link">
                   <div data-i18n="Without navbar">Update Bulk</div>
                 </div>
               </li>
               <li className="menu-item">
-                <div onClick={()=>props.sideMenuClick('listnewinv')} className="menu-link">
+                <div onClick={()=>sideMenuClick('listnewinv')} className="menu-link">
                   <div data-i18n="Without navbar">List New products To Inventory</div>
                 </div>
               </li>
               <li className="menu-item">
-                <div onClick={()=>props.sideMenuClick('addnewinv')} className="menu-link">
+                <div onClick={()=>sideMenuClick('addnewinv')} className="menu-link">
                   <div data-i18n="Without navbar">Request To Add New</div>
                 </div>
               </li>
@@ -70,7 +64,7 @@ export default function Sidebar(props) {
 
         {/* Banners */}
         <li className="menu-item ">
-          <div onClick={()=>props.sideMenuClick('Payouttable')} className="menu-link">
+          <div onClick={()=>sideMenuClick('Payouttable')} className="menu-link">
             <i className="menu-icon tf-icons bx bx-box"></i>
             <div data-i18n="Analytics">Payments</div>
           </div>
@@ -78,7 +72,7 @@ export default function Sidebar(props) {
 
         {/* Offers */}
         <li className="menu-item ">
-        <div onClick={()=>props.sideMenuClick('offers')} className="menu-link">
+        <div onClick={()=>sideMenuClick('offers')} className="menu-link">
           <i className="menu-icon tf-icons bx bx-box"></i>
               <div data-i18n="Layouts">Offers</div>
               </div>
@@ -87,7 +81,7 @@ export default function Sidebar(props) {
        
         {/*Returns  */}
         <li className="menu-item ">
-          <div onClick={()=>props.sideMenuClick('distreturn')} className="menu-link">
+          <div onClick={()=>sideMenuClick('orders')} className="menu-link">
             <i className="menu-icon tf-icons bx bx-box"></i>
             <div data-i18n="Analytics">Returns</div>
           </div>
@@ -106,17 +100,17 @@ export default function Sidebar(props) {
 
             <Dropdown.Menu>
               <li className="menu-item active">
-                <div onClick={()=>props.sideMenuClick('Banner')} className="menu-link">
+                <div onClick={()=>sideMenuClick('Banner')} className="menu-link">
                   <div data-i18n="Without menu">Websites Banner</div>
                 </div>
               </li>
               <li className="menu-item">
-                <div onClick={()=>props.sideMenuClick('Banner')} className="menu-link">
+                <div onClick={()=>sideMenuClick('Banner')} className="menu-link">
                   <div data-i18n="Without navbar">App Banner</div>
                 </div>
               </li>
               <li className="menu-item">
-                <div onClick={()=>props.sideMenuClick('EditBanner')} className="menu-link">
+                <div onClick={()=>sideMenuClick('orders')} className="menu-link">
                   <div data-i18n="Without navbar">profile Setting</div>
                 </div>
               </li>
@@ -126,5 +120,3 @@ export default function Sidebar(props) {
         </li>
       </ul>
     </aside>
-  );
-}
