@@ -37,30 +37,38 @@ export default function OrderList() {
   const MAX_DESCRIPTION_LENGTH = 50;
 
   return (
-    <> 
+    <>
+      <div className="layout-wrapper layout-content-navbar">
+        <div className="layout-container">
+          <Sidebar />
+          <div className="layout-page">
+            <Navbar />
 
-                   
+            <div className="content-wrapper">
+              <div className="container-xxl flex-grow-1 container-p-y">
+                <div className="row">
+                  <div className="card mb-12">
+                    <div className="card-header d-flex justify-content-between align-items-center"></div>
+
+                    <hr className="my-0" />
                     <div className="card-body">
                       <div className="container-xxl flex-grow-1 container-p-y">
                         <div className="row">
                           <div className="card">
-                            <h2 className="card-header float-start">
+                            <h5 className="card-header float-start">
                               Order Table
-                            </h2>
-                            <hr className="my-0" />
-                            <div className="card-header d-flex justify-content-between align-items-center"></div>
+                            </h5>
                             <div className="table-responsive text-nowrap">
                               <table className="table">
                                 <thead>
                                   <tr>
-                                    <th>ORDER ID</th>
-                                    <th>RETAILER NAME</th>
-                                    <th>PAYMENT TYPE</th>
-                                    <th>PRICE</th>
-                                    <th>ACTION</th>
+                                    <th>Name</th>
+                                    <th>Id</th>
+                                    <th>img</th>
+                                    <th>Describtion</th>
                                   </tr>
                                 </thead>
-                                {/* {orderDetails && orderDetails.length > 0 ? (
+                                {orderDetails && orderDetails.length > 0 ? (
                                   orderDetails.map((order, i) => {
                                     return (
                                       <>
@@ -94,7 +102,7 @@ export default function OrderList() {
                                       </td>
                                     </tr>
                                   </tbody>
-                                )} */}
+                                )}
                               </table>
                             </div>
                           </div>
@@ -103,7 +111,17 @@ export default function OrderList() {
                         <div className="content-backdrop fade"></div>
                       </div>
                     </div>
-                
+                  </div>
+                </div>
+
+                <div className="content-backdrop fade"></div>
+              </div>
+            </div>
+          </div>
+
+          <div className="layout-overlay layout-menu-toggle"></div>
+        </div>
+      </div>
     </>
   );
 }

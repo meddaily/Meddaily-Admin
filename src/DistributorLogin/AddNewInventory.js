@@ -4,11 +4,16 @@ import Navbar from "./Navbar";
 import { useState } from "react";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 
-const AddNewInventory = () => {
+const MyInventory = () => {
   const [distributorList, setDistributorList] = useState("");
   return (
     <>
-     
+      <div className="layout-wrapper layout-content-navbar">
+        <div className="layout-container">
+          <Sidebar />
+
+          <div className="layout-page">
+            <Navbar />
             <div className="content-wrapper">
               <div className="container-xxl flex-grow-1 container-p-y">
                 <div className="row">
@@ -68,9 +73,11 @@ const AddNewInventory = () => {
                 </div>
               </div>
             </div>
-         
+          </div>
+        </div>
+      </div>
     </>
   );
 };
 
-export default AddNewInventory;
+export default MyInventory;

@@ -9,18 +9,12 @@ export default function Login() {
 
   const [email, setEmail] = useState("");
   const [password, setpassword] = useState("");
-  const [showPass, setshowPass] = useState(false);
 
   const handleChangeEmail = (e) => {
     setEmail(e.target.value);
   };
-
   const handleChangePassword = (e) => {
     setpassword(e.target.value);
-  };
-
-  const togglePassword = (e) => {
-    setshowPass(!showPass);
   };
 
   async function login() {
@@ -31,7 +25,7 @@ export default function Login() {
       return toastr.warning("Please enter credentials");
     }
     const reqBody = {
-      phone: email,
+      email: email,
       password: password,
     };
     const axiosConfig = {
@@ -40,13 +34,10 @@ export default function Login() {
       },
     };
     await axios
-      // .post(`https://api.meddaily.in/login`, reqBody, axiosConfig)
-      
-      .post(`https://api.meddaily.in/distributor_login`, reqBody, axiosConfig)
+      .post(`http://api.meddaily.in/login`, reqBody, axiosConfig)
       .then((res) => {
-        console.log(res,'res');
         if (res.data.status === true) {
-          localStorage.setItem("authToken", JSON.stringify(res?.data?.token));
+          localStorage.setItem("authToken", res?.data?.token);
           history.push("/");
           window.location.reload();
         } else {
@@ -82,7 +73,7 @@ export default function Login() {
                 <div id="formAuthentication" className="mb-3">
                   <div className="mb-3">
                     <label htmlFor="email" className="form-label float-start">
-                      Email or Username /DISTRIBUTOR LOGIN
+                      Email or Username
                     </label>
                     <input
                       type="text"
@@ -102,7 +93,7 @@ export default function Login() {
                     </div>
                     <div className="input-group input-group-merge">
                       <input
-                        type={showPass ? "text" : "password"}
+                        type="password"
                         id="password"
                         className="form-control"
                         name="password"
@@ -111,7 +102,7 @@ export default function Login() {
                         aria-describedby="password"
                       />
                       <span className="input-group-text cursor-pointer">
-                        <i className={showPass ? "bx bx-show" :"bx bx-hide"} onClick={togglePassword}></i>
+                        <i className="bx bx-hide"></i>
                       </span>
                     </div>
                   </div>
@@ -124,7 +115,7 @@ export default function Login() {
                       />
                       <label className="form-check-label" htmlFor="remember-me">
                         {" "}
-                      Remember Me{" "}
+                        Remember Me{" "}
                       </label>
                     </div>
                   </div>

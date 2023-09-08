@@ -13,9 +13,9 @@ const EditBanner = () => {
   });
   const history = useHistory();
   const location = useLocation();
-  const { id } = location.state!==undefined  ? location.state :'';
+  const { id } = location.state;
   useEffect(() => {
-    // getEditBanner();
+    getEditBanner();
   }, [id]);
   const getEditBanner = async () => {
     try {
@@ -59,7 +59,12 @@ const EditBanner = () => {
   };
 
   return (
-   
+    <div className="layout-wrapper layout-content-navbar">
+      <div className="layout-container">
+        <Sidebar />
+
+        <div className="layout-page">
+          <Navbar />
 
           <div className="content-wrapper">
             <div className="container-xxl flex-grow-1 container-p-y">
@@ -138,7 +143,9 @@ const EditBanner = () => {
               </div>
             </div>
           </div>
-      
+        </div>
+      </div>
+    </div>
   );
 };
 
