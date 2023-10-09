@@ -29,7 +29,7 @@ const AddNewBan = () => {
     formData.append("image", addBanner.image);
     try {
       const res = await axios.post(
-        `http://api.meddaily.in/addbanner`,
+        `https://api.meddaily.in/addbanner`,
         formData
       );
       if (res.status === 200) {

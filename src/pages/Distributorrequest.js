@@ -12,7 +12,7 @@ export default function Distributorrequest() {
   const handleDistReq = async () => {
     try {
       const response = await axios.get(
-        "http://api.meddaily.in/distributor_request"
+        "https://api.meddaily.in/distributor_request"
       );
       setDistReq(response?.data?.data);
       console.log(response)

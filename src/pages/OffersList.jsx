@@ -14,7 +14,7 @@ const OffersList = () => {
 
   const getAllOffers = async () => {
     try {
-      const res = await axios.get(`http://api.meddaily.in/getoffer`);
+      const res = await axios.get(`https://api.meddaily.in/getoffer`);
       if (res.status === 200) {
         setOffers(res?.data?.data);
       }

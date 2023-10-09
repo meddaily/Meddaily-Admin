@@ -34,7 +34,7 @@ export default function Login() {
       },
     };
     await axios
-      .post(`http://api.meddaily.in/login`, reqBody, axiosConfig)
+      .post(`https://api.meddaily.in/login`, reqBody, axiosConfig)
       .then((res) => {
         if (res.data.status === true) {
           localStorage.setItem("authToken", res?.data?.token);

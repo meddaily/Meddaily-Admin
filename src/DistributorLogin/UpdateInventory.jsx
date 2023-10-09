@@ -20,7 +20,7 @@ const UpdateInventory = () => {
 
   useEffect(() => {
     axios
-      .get(`http://api.meddaily.in/editproduct/${productId}`)
+      .get(`https://api.meddaily.in/editproduct/${productId}`)
       .then((response) => {
         setEdit(response?.data?.data[0]);
       })

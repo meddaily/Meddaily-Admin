@@ -20,7 +20,7 @@ const OrderDates = () => {
   // const handleOrderDates = async () => {
   //   try {
   //     const res = await axios.get(
-  //       `http://api.meddaily.in/all_order?from=${fromDate}&to=${toDate}`
+  //       `https://api.meddaily.in/all_order?from=${fromDate}&to=${toDate}`
   //     );
   //     if (res.status === 200) {
   //       setOrderDates(res?.data?.message);
@@ -32,7 +32,7 @@ const OrderDates = () => {
   const handleOrderDates = async () => {
     try {
       const res = await axios.get(
-        `http://api.meddaily.in/all_order?createdAt[$gte]=${fromDate}&createdAt[$lte]=${toDate}`
+        `https://api.meddaily.in/all_order?createdAt[$gte]=${fromDate}&createdAt[$lte]=${toDate}`
       );
       if (res.status === 200) {
         setOrderDates(res?.data?.message);

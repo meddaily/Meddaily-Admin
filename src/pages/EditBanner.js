@@ -19,7 +19,7 @@ const EditBanner = () => {
   }, [id]);
   const getEditBanner = async () => {
     try {
-      const res = await axios.get(`http://api.meddaily.in/editbanner/${id}`);
+      const res = await axios.get(`https://api.meddaily.in/editbanner/${id}`);
       setEditBannerData(res?.data?.data?.[0]);
     } catch (error) {
       console.log(error);
@@ -38,7 +38,7 @@ const EditBanner = () => {
     };
     try {
       const res = await axios.post(
-        `http://api.meddaily.in/updatebanner`,
+        `https://api.meddaily.in/updatebanner`,
         reqbody,
         axiosConfig
       );

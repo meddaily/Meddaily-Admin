@@ -40,7 +40,7 @@ export default function Distributordetailsr() {
 
     try {
       const res = await axios.post(
-        `http://api.meddaily.in/distributor_approve`,
+        `https://api.meddaily.in/distributor_approve`,
         { id },
         axiosConfig
       );
@@ -52,12 +52,34 @@ export default function Distributordetailsr() {
       console.log(error);
     }
   };
+  const handleCancel = async (event) => {
+    event.preventDefault();
+    const axiosConfig = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+
+    try {
+      const res = await axios.post(
+        `https://api.meddaily.in/distributor_rejected`,
+        { distributorId:id },
+        axiosConfig
+      );
+      if (res.status === 200) {
+        toastr.success("Distributor Rejected");
+        history.push("./distributorlist");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const handleDistDetails = async (e) => {
     try {
       const response = await axios.post(
-        "http://api.meddaily.in/distributor_detail",
-        { ...formData, id: id }
+        "https://api.meddaily.in/distributor_detail",
+        { ...formData, id: id , distributorId:id}
       );
       setFormData(response?.data?.data);
     } catch (error) {
@@ -83,6 +105,7 @@ export default function Distributordetailsr() {
     image,
     gst_number,
     password,
+    distributorId,
   } = formData;
   return (
     <>
@@ -566,6 +589,18 @@ export default function Distributordetailsr() {
                           onClick={handleSubmit}
                         >
                           Approve
+                        </button>
+                        <button
+                          type="button"
+                          className="btn btn-danger"
+                          style={{
+                            backgroundColor: "red",
+                            border: "red",
+                            marginLeft:"10px"
+                          }}
+                          onClick={handleCancel}
+                        >
+                          Cancel
                         </button>
                       </div>
                     </div>

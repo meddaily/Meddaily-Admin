@@ -18,7 +18,7 @@ export default function CategoryList() {
 
   async function getCategoryList() {
     try {
-      const res = await axios.get(`http://api.meddaily.in/getcategory`);
+      const res = await axios.get(`https://api.meddaily.in/getcategory`);
       if (res.status === 200) {
         setCategoryList(res?.data?.data);
       }
@@ -30,7 +30,7 @@ export default function CategoryList() {
   const handleDel = async (id) => {
     try {
       const res = await axios.delete(
-        `http://api.meddaily.in/deletecategory/${id}`
+        `https://api.meddaily.in/deletecategory/${id}`
       );
       if (res.status === 200) {
         toastr.success(res?.data?.message);

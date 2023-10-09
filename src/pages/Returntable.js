@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
 import config from "../appConfig";
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
 
 export default function Returntable() {
   const authToken = localStorage.getItem("authToken");
@@ -12,6 +14,13 @@ export default function Returntable() {
   const [returnList, setReturnList] = useState([]);
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [itemValue,setItemValue]=useState();
+
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   useEffect(() => {
     if (fromDate && toDate) {
@@ -22,7 +31,7 @@ export default function Returntable() {
   async function getAllReturns() {
     try {
       const response = await axios.get(
-        `http://api.meddaily.in/get_return_admin?from=${fromDate}&to=${toDate}`
+        `https://api.meddaily.in/get_return_admin?from=${fromDate}&to=${toDate}`
       );
       if (response.status === 200) {
         console.log(response.data.data);
@@ -118,7 +127,12 @@ export default function Returntable() {
                                 <td>{item.payment_type || "NA"}</td>
                                 <td>
                                   <div className="dropdown">
-                                    <Link className="dropdown-item" to="#">
+                                    <Link className="dropdown-item" to="#"  onClick={(e) => {
+                                        handleShow()
+                                        setItemValue(item)
+                                        // openModal(item)
+                                        console.log("respond", item.order_id);
+                                      }}>
                                       {" "}
                                       View Full Details
                                     </Link>
@@ -147,6 +161,77 @@ export default function Returntable() {
           <div className="layout-overlay layout-menu-toggle"></div>
         </div>
       </div>
+
+      {/* modal */}
+
+      <Modal show={show} onHide={handleClose} >
+        {/* <Modal.Header closeButton>
+          <Modal.Title>Return Item Details</Modal.Title>
+        </Modal.Header> */}
+        <Modal.Body>
+        <div>
+       <h3>
+         Product Details
+       </h3>
+       <p >
+         Order Id: {itemValue?.order_id}
+       </p>
+       <p >
+         Expiry Date: {itemValue?.exp_date}
+       </p>
+       <p >
+         Price : {itemValue?.price}
+       </p>
+       <p >
+           Distributer and Retailer Details
+       </p>
+       <>
+         Distributer Name : {itemValue?.distributor_name}
+       </>
+       <p>
+         Retailer Name : {itemValue?.retailer_name}
+       </p>
+       <hr />
+       <p>
+           Payment Details
+       </p>
+       <p>
+         Payment Status : {itemValue?.payment_status}
+       </p>
+       <p>
+         Payment Type : {itemValue?.payment_type}
+       </p>
+       <p>
+         Order Status: {itemValue?.order_status}
+       </p>
+       <p>
+           Payment Details
+       </p>
+       <p>
+         Return Reason: {itemValue?.return_reason}
+       </p>
+       <p>
+         Return Message: {itemValue?.return_message}
+       </p>
+       <p>
+         Return Quantity: {itemValue?.return_quantity}
+       </p>
+       <p>
+         Return Status: {itemValue?.return_status}
+       </p>
+       
+       
+     </div>
+        </Modal.Body>
+        {/* <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleClose}>
+            Save Changes
+          </Button>
+        </Modal.Footer> */}
+      </Modal>
     </>
   );
 }

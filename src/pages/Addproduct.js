@@ -39,7 +39,7 @@ export default function Addproduct() {
 
     try {
       const response = await axios.post(
-        `http://api.meddaily.in/addProduct`,
+        `https://api.meddaily.in/addProduct`,
         reqBody,
         axiosConfig
       );

@@ -28,7 +28,7 @@ export default function Updateproduct() {
 
   useEffect(() => {
     axios
-      .get(`http://api.meddaily.in/editproduct/${id}`)
+      .get(`https://api.meddaily.in/editproduct/${id}`)
       .then((response) => {
         setEdit(response.data.data[0]);
         console.log("object", response);
@@ -52,7 +52,7 @@ export default function Updateproduct() {
 
     try {
       const response = await axios.post(
-        "http://api.meddaily.in/updateproduct",
+        "https://api.meddaily.in/updateproduct",
         reqbody
       );
       console.log(response);

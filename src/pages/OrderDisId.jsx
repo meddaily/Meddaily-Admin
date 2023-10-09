@@ -11,7 +11,7 @@ const OrderDisId = () => {
 
   const handleOrderSearch = async () => {
     try {
-      const res = await axios.get(`http://api.meddaily.in/all_order`);
+      const res = await axios.get(`https://api.meddaily.in/all_order`);
       if (res.status === 200) {
         const filteredOrders = res.data.message.filter(
           (item) => item.distributor_id === distributorId

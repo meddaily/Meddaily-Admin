@@ -19,7 +19,7 @@ const EditBanner = () => {
   }, [id]);
   const getEditCategory = async () => {
     try {
-      const res = await axios.get(`http://api.meddaily.in/editcategory/${id}`);
+      const res = await axios.get(`https://api.meddaily.in/editcategory/${id}`);
       setEditCategoryData(res?.data?.data?.[0]);
     } catch (error) {
       console.log(error);
@@ -38,7 +38,7 @@ const EditBanner = () => {
     };
     try {
       const res = await axios.post(
-        `http://api.meddaily.in/updatecategory`,
+        `https://api.meddaily.in/updatecategory`,
         reqbody,
         axiosConfig
       );

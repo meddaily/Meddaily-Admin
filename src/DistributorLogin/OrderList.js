@@ -18,7 +18,7 @@ export default function OrderList() {
   async function getOrderDetails() {
     try {
       const response = await axios.get(
-        `http://api.meddaily.in/distributor_get_product`,
+        `https://api.meddaily.in/distributor_get_product`,
         {
           headers: {
             token: `${authToken}`,

@@ -19,7 +19,7 @@ export default function UpdateOrder() {
 
   async function getOrderDetails(orderId) {
     await axios
-      .get(`http://api.meddaily.in/cancel_order_admin?order_id=${orderId}`, {
+      .get(`https://api.meddaily.in/cancel_order_admin?order_id=${orderId}`, {
         headers: {
           "Content-Type": "application/json",
         },

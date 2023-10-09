@@ -18,7 +18,7 @@ export default function Distributorlist() {
 
   async function getAllDistributors() {
     await axios
-      .get(`http://api.meddaily.in/distributor_list`)
+      .get(`https://api.meddaily.in/distributor_list`)
       .then((res) => {
         if (res.status === 200) {
           setDistributorList(res?.data?.data);

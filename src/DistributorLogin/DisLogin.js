@@ -31,10 +31,11 @@ export default function Login() {
     const axiosConfig = {
       headers: {
         "Content-Type": "application/json",
+        
       },
     };
     await axios
-      .post(`http://api.meddaily.in/distributor_login`, reqBody, axiosConfig)
+      .post(`https://api.meddaily.in/distributor_login`, reqBody, axiosConfig)
       .then((res) => {
         if (res.data.status === true) {
           const distributorId = res.data.data._id; // Get the _id from the response data object

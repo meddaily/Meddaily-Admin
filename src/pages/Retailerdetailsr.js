@@ -22,7 +22,7 @@ export default function Retailerdetailsr() {
     licenseimage: "",
     pincode: "",
     gstno: "",
-    gstimg: "",
+    gstimage: "",
     panno: "",
     panimg: "",
   };
@@ -38,8 +38,30 @@ export default function Retailerdetailsr() {
     };
     try {
       const response = await axios.post(
-        `http://api.meddaily.in/retailer_approve`,
+        `https://api.meddaily.in/retailer_approve`,
         { id },
+        axiosConfig
+      );
+      if (response.status == 200) {
+        toastr.success(response.data.message);
+        setFormData("");
+        history.push("/retailerlist");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async function handleCancel() {
+    const axiosConfig = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    try {
+      const response = await axios.post(
+        `https://api.meddaily.in/retailer_rejected`,
+        { retailerId:id },
         axiosConfig
       );
       if (response.status == 200) {
@@ -58,7 +80,7 @@ export default function Retailerdetailsr() {
   const handleRetailerDetails = async (e) => {
     try {
       const response = await axios.post(
-        "http://api.meddaily.in/retailer_detail",
+        "https://api.meddaily.in/retailer_detail",
         { ...formData, id: id }
       );
       setFormData(response?.data?.data);
@@ -79,7 +101,7 @@ export default function Retailerdetailsr() {
     licenseimage,
     pincode,
     gstno,
-    gstimg,
+    gstimage,
     panno,
     panimg,
     address,
@@ -369,7 +391,7 @@ export default function Retailerdetailsr() {
                             >
                               Gst img
                             </label>
-                            <img src={gstimg} alt="img" />
+                            <img src={gstimage} alt="img" />
                             {/* <input
                               className="form-control"
                               type="text"
@@ -429,6 +451,19 @@ export default function Retailerdetailsr() {
                           onClick={handleclick}
                         >
                           Approve
+                        </button>
+
+                        <button
+                          type="button"
+                          className="btn btn-danger"
+                          style={{
+                            backgroundColor: "red",
+                            border: "red",
+                            marginLeft:"20px"
+                          }}
+                          onClick={handleCancel}
+                        >
+                          Cancel
                         </button>
                       </div>
                     </div>

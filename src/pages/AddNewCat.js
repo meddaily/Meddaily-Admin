@@ -16,7 +16,7 @@ const AddNewCat = () => {
     };
     try {
       const response = await axios.post(
-        "http://api.meddaily.in/addcategory",
+        "https://api.meddaily.in/addcategory",
         reqbody,
         {
           headers: {

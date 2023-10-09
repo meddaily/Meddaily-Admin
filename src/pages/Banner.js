@@ -16,7 +16,7 @@ const Banner = () => {
 
   const getBanner = async () => {
     try {
-      const response = await axios.get(`http://api.meddaily.in/getbanner`);
+      const response = await axios.get(`https://api.meddaily.in/getbanner`);
       if (response.status === 200) {
         setBanner(response?.data?.data);
       }
@@ -28,7 +28,7 @@ const Banner = () => {
   const handleDel = async (id) => {
     try {
       const res = await axios.delete(
-        `http://api.meddaily.in/deletebanner/${id}`
+        `https://api.meddaily.in/deletebanner/${id}`
       );
       if (res.status === 200) {
         toastr.success(res?.data?.message);

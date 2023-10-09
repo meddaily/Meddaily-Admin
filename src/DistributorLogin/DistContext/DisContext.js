@@ -16,7 +16,7 @@ export const ApiProvider = ({ children }) => {
     async function getOrderDetails() {
       try {
         const response = await axios.get(
-          `http://api.meddaily.in/distributor_get_product`,
+          `https://api.meddaily.in/distributor_get_product`,
           {
             headers: {
               token: `${authToken}`,
@@ -39,7 +39,7 @@ export const ApiProvider = ({ children }) => {
   // admin add product
   const getCategory = async () => {
     try {
-      const response = await axios.get(`http://api.meddaily.in/getCategory`);
+      const response = await axios.get(`https://api.meddaily.in/getCategory`);
       setCategory(response?.data?.data);
     } catch (error) {
       console.log(error);

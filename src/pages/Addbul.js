@@ -58,7 +58,7 @@ export default function Addbul() {
 
     try {
       const response = await axios.post(
-        "http://api.meddaily.in/bulkupload",
+        "https://api.meddaily.in/bulkupload",
         formData
       );
       if (response.status === 200) {

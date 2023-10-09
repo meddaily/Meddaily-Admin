@@ -29,7 +29,7 @@ export default function Distributordetails() {
   const handleViewDetails = async (e) => {
     try {
       const response = await axios.post(
-        "http://api.meddaily.in/distributor_detail",
+        "https://api.meddaily.in/distributor_detail",
         { ...formData, id: id }
       );
       setFormData(response?.data?.data);
@@ -40,7 +40,7 @@ export default function Distributordetails() {
 
   const handleOrders = async () => {
     try {
-      const response = await axios.get("http://api.meddaily.in/all_order");
+      const response = await axios.get("https://api.meddaily.in/all_order");
       setOrder(response?.data?.message);
     } catch (error) {
       console.error(error);

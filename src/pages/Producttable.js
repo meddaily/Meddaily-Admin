@@ -20,7 +20,7 @@ export default function Producttable() {
   }, [authToken, selectedMedicineType]);
 
   async function getAllProducts() {
-    const apiUrl = `http://api.meddaily.in/getproduct?medicineType=${selectedMedicineType}`;
+    const apiUrl = `https://api.meddaily.in/getproduct?medicineType=${selectedMedicineType}`;
     await axios
       .get(apiUrl)
       .then((res) => {
@@ -42,7 +42,7 @@ export default function Producttable() {
   //del fun
   async function deleteProduct(productId) {
     await axios
-      .delete(`http://api.meddaily.in/deleteproduct/${productId}`, {
+      .delete(`https://api.meddaily.in/deleteproduct/${productId}`, {
         headers: {
           "Content-Type": "application/json",
         },

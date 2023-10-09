@@ -38,7 +38,7 @@ export default function Distributordetails() {
 
     try {
       const res = await axios.post(
-        `http://api.meddaily.in/distributor_approve`,
+        `https://api.meddaily.in/distributor_approve`,
         {id},
         axiosConfig
       );

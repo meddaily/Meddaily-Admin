@@ -225,7 +225,7 @@ console.log(typeOfBusiness,businessAddress,businessName,ownerName,pinCode,city,s
 
     try {
       const response = await axios.post(
-        "http://api.meddaily.in/retailer_register",
+        "https://api.meddaily.in/retailer_register",
         formData
       );
       if (response.status === 200) {

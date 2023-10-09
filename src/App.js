@@ -7,6 +7,9 @@ import AuthRoute from "./pages/AuthRoute";
 import { useEffect, useState } from "react";
 // import Ham from "./Ham/Ham";
 
+
+
+
 function App() {
   let history = useHistory();
 

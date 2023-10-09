@@ -14,7 +14,7 @@ export default function OrderDetails() {
   }, [authToken]);
   async function getOrderDetails(orderid) {
     await axios
-      .get(`http://api.meddaily.in/order_details_admin?order_id=${id}`, {
+      .get(`https://api.meddaily.in/order_details_admin?order_id=${id}`, {
         headers: {
           "Content-Type": "application/json",
           token: localStorage.getItem("authToken"),
@@ -29,6 +29,29 @@ export default function OrderDetails() {
         toastr.error(err?.response?.data?.message);
         console.log(err);
       });
+  }
+
+  function getPaymentType(code) {
+    if (code === 1) {
+      return "COD";
+    } else if (code === 2) {
+      return "On Credit";
+    } else if (code === 3) {
+      return "Prepaid";
+    }
+  }
+
+  function getOrderStatus(code) {
+    if (code === 0) {
+      return "Cancelled";
+    } else if (code === 1) {
+      return "Shipped";
+    } else if (code === 3) {
+      return "Delivered";
+    } 
+      else if (code === 4) {
+      return "Order Placed";
+    }
   }
 
   console.log(orderDetails);
@@ -69,13 +92,13 @@ export default function OrderDetails() {
                           <div className="col-md-6">
                             <p>
                               <strong>Order Status:</strong>{" "}
-                              {orderDetails.order_status}
+                              {getOrderStatus(orderDetails.payment_status)}
                             </p>
                           </div>
                           <div className="col-md-6">
                             <p>
                               <strong>Payment Type:</strong>{" "}
-                              {orderDetails.payment_type}
+                              {getPaymentType(orderDetails.payment_type)}
                             </p>
                           </div>
                           <div className="col-md-6">
@@ -83,12 +106,12 @@ export default function OrderDetails() {
                               <strong>Total Price:</strong> {orderDetails.price}
                             </p>
                           </div>
-                          <div className="col-md-6">
+                          {/* <div className="col-md-6">
                             <p>
                               <strong>Payment Status:</strong>{" "}
                               {orderDetails.payment_status}
                             </p>
-                          </div>
+                          </div> */}
                           <div className="col-md-6">
                             <p>
                                <strong>Retailor-Address:</strong>{" "}

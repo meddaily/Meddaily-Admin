@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
 // admin login
 import Login from "./Login";
 // dis login
@@ -10,6 +10,9 @@ export default function Routerpage() {
     <>
       <Router>
         <Switch>
+        <Route exact path="/">
+    <Redirect to="/login" />
+     </Route>
           <Route exact path="/login" component={Login} />
           <Route exact path="/distributorlogin" component={DistLogin} />
         </Switch>
