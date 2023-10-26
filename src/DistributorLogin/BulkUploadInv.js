@@ -55,6 +55,7 @@ export default function Addbul() {
                                 placeholder="enter pharmacist name"
                                 value={bul.csvFile}
                                 onChange={handle}
+                                accept=".xlsx, .xls .csv"
                               />
                             </div>
                           </div>

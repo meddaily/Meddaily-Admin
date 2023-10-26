@@ -7,16 +7,16 @@ import Sidebar from "./Sidebar";
 import config from "../appConfig";
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
+import { MDBDataTable } from 'mdbreact';
 
 export default function Returntable() {
-  const authToken = localStorage.getItem("authToken");
+  const authToken = localStorage.getItem('authToken');
 
   const [returnList, setReturnList] = useState([]);
-  const [fromDate, setFromDate] = useState("");
-  const [toDate, setToDate] = useState("");
+  const [fromDate, setFromDate] = useState('');
+  const [toDate, setToDate] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [itemValue,setItemValue]=useState();
-
+  const [itemValue, setItemValue] = useState();
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -52,6 +52,65 @@ export default function Returntable() {
   const handleToDateChange = (event) => {
     setToDate(event.target.value);
   };
+
+  const columns = [
+    {
+      label: 'Order ID',
+      field: 'order_id',
+      sort: 'asc',
+    },
+    {
+      label: 'Vendor Name',
+      field: 'name',
+      sort: 'asc',
+    },
+    {
+      label: 'Return Amount',
+      field: 'price',
+      sort: 'asc',
+    },
+    {
+      label: 'Quantity',
+      field: 'order_status',
+      sort: 'asc',
+    },
+    {
+      label: 'Payment Type',
+      field: 'payment_type',
+      sort: 'asc',
+    },
+    {
+      label: 'View More',
+      field: 'view_more',
+    },
+  ];
+
+  const rows = returnList.map((item, i) => ({
+    order_id: (
+      <>
+        <i className="fab fa-angular fa-lg text-danger me-3"></i>{' '}
+        {item.order_id || 'NA'}
+      </>
+    ),
+    name: item.name || 'NA',
+    price: item.price || 0,
+    order_status: item.order_status || 0,
+    payment_type: item.payment_type || 'NA',
+    view_more: (
+      <div className="dropdown">
+        <Link
+          className="dropdown-item"
+          to="#"
+          onClick={(e) => {
+            setItemValue(item);
+            handleShow();
+          }}
+        >
+          View Full Details
+        </Link>
+      </div>
+    ),
+  }));
 
   return (
     <>
@@ -102,53 +161,14 @@ export default function Returntable() {
                       </div>
                     </div>
                     <div className="table-responsive text-nowrap">
-                      <table className="table">
-                        <thead>
-                          <tr>
-                            <th>Order ID</th>
-                            <th>Vendor Name</th>
-                            <th>Return Amount</th>
-                            <th>Quantity</th>
-                            <th>Payment Type</th>
-                            <th>View More</th>
-                          </tr>
-                        </thead>
-                        <tbody className="table-border-bottom-0">
-                          {returnList && returnList.length > 0 ? (
-                            returnList.map((item, i) => (
-                              <tr key={i}>
-                                <td>
-                                  <i className="fab fa-angular fa-lg text-danger me-3"></i>{" "}
-                                  {item.order_id || "NA"}
-                                </td>
-                                <td>{item.name || "NA"}</td>
-                                <td>{item.price || 0}</td>
-                                <td>{item.order_status || 0}</td>
-                                <td>{item.payment_type || "NA"}</td>
-                                <td>
-                                  <div className="dropdown">
-                                    <Link className="dropdown-item" to="#"  onClick={(e) => {
-                                        handleShow()
-                                        setItemValue(item)
-                                        // openModal(item)
-                                        console.log("respond", item.order_id);
-                                      }}>
-                                      {" "}
-                                      View Full Details
-                                    </Link>
-                                  </div>
-                                </td>
-                              </tr>
-                            ))
-                          ) : (
-                            <tr>
-                              <td colSpan="6" className="text-center">
-                                No data available
-                              </td>
-                            </tr>
-                          )}
-                        </tbody>
-                      </table>
+                      <MDBDataTable
+                        striped
+                        bordered
+                        hover
+                        data={{ columns, rows }}
+                        responsive
+                        noBottomColumns={true}
+                      />
                     </div>
                   </div>
                 </div>
@@ -163,74 +183,28 @@ export default function Returntable() {
       </div>
 
       {/* modal */}
-
-      <Modal show={show} onHide={handleClose} >
-        {/* <Modal.Header closeButton>
-          <Modal.Title>Return Item Details</Modal.Title>
-        </Modal.Header> */}
+      <Modal show={show} onHide={handleClose}>
         <Modal.Body>
-        <div>
-       <h3>
-         Product Details
-       </h3>
-       <p >
-         Order Id: {itemValue?.order_id}
-       </p>
-       <p >
-         Expiry Date: {itemValue?.exp_date}
-       </p>
-       <p >
-         Price : {itemValue?.price}
-       </p>
-       <p >
-           Distributer and Retailer Details
-       </p>
-       <>
-         Distributer Name : {itemValue?.distributor_name}
-       </>
-       <p>
-         Retailer Name : {itemValue?.retailer_name}
-       </p>
-       <hr />
-       <p>
-           Payment Details
-       </p>
-       <p>
-         Payment Status : {itemValue?.payment_status}
-       </p>
-       <p>
-         Payment Type : {itemValue?.payment_type}
-       </p>
-       <p>
-         Order Status: {itemValue?.order_status}
-       </p>
-       <p>
-           Payment Details
-       </p>
-       <p>
-         Return Reason: {itemValue?.return_reason}
-       </p>
-       <p>
-         Return Message: {itemValue?.return_message}
-       </p>
-       <p>
-         Return Quantity: {itemValue?.return_quantity}
-       </p>
-       <p>
-         Return Status: {itemValue?.return_status}
-       </p>
-       
-       
-     </div>
+          <div>
+            <h3>Product Details</h3>
+            <p>Order Id: {itemValue?.order_id}</p>
+            <p>Expiry Date: {itemValue?.exp_date}</p>
+            <p>Price: {itemValue?.price}</p>
+            <p>Distributor and Retailer Details</p>
+            <p>Distributor Name: {itemValue?.distributor_name}</p>
+            <p>Retailer Name: {itemValue?.retailer_name}</p>
+            <hr />
+            <p>Payment Details</p>
+            <p>Payment Status: {itemValue?.payment_status}</p>
+            <p>Payment Type: {itemValue?.payment_type}</p>
+            <p>Order Status: {itemValue?.order_status}</p>
+            <p>Payment Details</p>
+            <p>Return Reason: {itemValue?.return_reason}</p>
+            <p>Return Message: {itemValue?.return_message}</p>
+            <p>Return Quantity: {itemValue?.return_quantity}</p>
+            <p>Return Status: {itemValue?.return_status}</p>
+          </div>
         </Modal.Body>
-        {/* <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={handleClose}>
-            Save Changes
-          </Button>
-        </Modal.Footer> */}
       </Modal>
     </>
   );

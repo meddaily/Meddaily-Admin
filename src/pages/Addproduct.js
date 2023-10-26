@@ -16,6 +16,10 @@ export default function Addproduct() {
   // contextapi
   const { category } = useContext(ApiContext);
 
+
+  console.log("category", category)
+  
+
   const postData = async (e) => {
     e.preventDefault();
     if (title === "") {

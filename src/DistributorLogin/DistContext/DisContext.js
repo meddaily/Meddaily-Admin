@@ -40,6 +40,7 @@ export const ApiProvider = ({ children }) => {
   const getCategory = async () => {
     try {
       const response = await axios.get(`https://api.meddaily.in/getCategory`);
+      console.log('response?.data?.data', response?.data?.data)
       setCategory(response?.data?.data);
     } catch (error) {
       console.log(error);

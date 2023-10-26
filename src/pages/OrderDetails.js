@@ -5,7 +5,8 @@ import Sidebar from "./Sidebar";
 import { useParams } from "react-router-dom";
 import Navbar from "./Navbar";
 
-export default function OrderDetails() {
+export default function OrderDetails(props) {
+  console.log("is coming",props)
   const authToken = localStorage.getItem("authToken");
   const [orderDetails, setOrderDetails] = useState([]);
   const { id } = useParams();
@@ -54,22 +55,16 @@ export default function OrderDetails() {
     }
   }
 
-  console.log(orderDetails);
+  console.log(props.orderId.price);
   return (
     <>
-      <div className="layout-wrapper layout-content-navbar">
-        <div className="layout-container">
-          <Sidebar />
-          <div className="layout-page">
-            <Navbar />
+      
 
             <div className="content-wrapper">
               <div className="container-xxl flex-grow-1 container-p-y">
                 <div className="row">
                   <div className="card mb-12">
-                    <div className="card-header d-flex justify-content-between align-items-center">
-                      <h5 className="mb-0">Order Details</h5>
-                    </div>
+                    
                     <hr className="my-0" />
                     <div className="card-body">
                       <div className="container mt-4">
@@ -78,32 +73,32 @@ export default function OrderDetails() {
                         <div className="row justify-content-center">
                           <div className="col-md-6">
                             <p>
-                              <strong>Order ID:</strong> {orderDetails.order_id}
+                              <strong>Order ID:</strong> {props.orderId.order_id}
                             </p>
                           </div>
                           <div className="col-md-6">
                             <p>
                               <strong>Order Date:</strong>{" "}
                               {new Date(
-                                orderDetails.createdAt
+                                props.orderId.createdAt
                               ).toLocaleString()}
                             </p>
                           </div>
                           <div className="col-md-6">
                             <p>
                               <strong>Order Status:</strong>{" "}
-                              {getOrderStatus(orderDetails.payment_status)}
+                              {getOrderStatus(props.orderId.payment_status)}
                             </p>
                           </div>
                           <div className="col-md-6">
                             <p>
                               <strong>Payment Type:</strong>{" "}
-                              {getPaymentType(orderDetails.payment_type)}
+                              {getPaymentType(props.orderId.payment_type)}
                             </p>
                           </div>
                           <div className="col-md-6">
                             <p>
-                              <strong>Total Price:</strong> {orderDetails.price}
+                              <strong>Total Price:</strong> {props.orderId.price}
                             </p>
                           </div>
                           {/* <div className="col-md-6">
@@ -114,14 +109,14 @@ export default function OrderDetails() {
                           </div> */}
                           <div className="col-md-6">
                             <p>
-                               <strong>Retailor-Address:</strong>{" "}
-                               {orderDetails.retailer_address}
+                               <strong>Retailor-Name:</strong>{" "}
+                               {props.orderId.retailer_name}
                             </p>
                           </div>
                           <div className="col-md-6">
                             <p>
-                               <strong>Distributor-Address:</strong>{" "}
-                               {orderDetails.distributor_address}
+                               <strong>Distributor-Name:</strong>{" "}
+                               {props.orderId.distributor_name}
                             </p>
                           </div>
                         </div>
@@ -139,14 +134,14 @@ export default function OrderDetails() {
                               </tr>
                             </thead>
                             <tbody>
-                              {orderDetails &&
-                                orderDetails.products &&
-                                orderDetails.products.length > 0 &&
-                                orderDetails.products.map((product, index) => (
+                              {props &&
+                                props.orderId.products &&
+                                props.orderId.products.length > 0 &&
+                                props.orderId.products.map((product, index) => (
                                   <tr key={index}>
                                     <td>{product.name}</td>
                                     <td>{product.quantity}</td>
-                                    <td>{product.price.upDatePrice}</td>
+                                    <td>{product.price}</td>
                                   </tr>
                                 ))}
                             </tbody>
@@ -160,12 +155,7 @@ export default function OrderDetails() {
 
               <div className="content-backdrop fade"></div>
             </div>
-          </div>
-        </div>
-
-        <div className="layout-overlay layout-menu-toggle"></div>
-      </div>
-      {/* </div> */}
+         
     </>
   );
 }

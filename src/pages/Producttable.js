@@ -6,14 +6,13 @@ import Sidebar from "./Sidebar";
 // import productdata from './productdata'
 import Producttbody from "./Producttbody";
 // import config from '../appConfig';
+import { MDBDataTable } from 'mdbreact';
 
 export default function Producttable() {
-  const authToken = localStorage.getItem("authToken");
+  const authToken = localStorage.getItem('authToken');
 
   const [productList, setProductList] = useState([]);
-
-  const [selectedMedicineType, setSelectedMedicineType] = useState("");
-  // console.log(productList);
+  const [selectedMedicineType, setSelectedMedicineType] = useState('');
 
   useEffect(() => {
     getAllProducts();
@@ -21,68 +20,74 @@ export default function Producttable() {
 
   async function getAllProducts() {
     const apiUrl = `https://api.meddaily.in/getproduct?medicineType=${selectedMedicineType}`;
-    await axios
-      .get(apiUrl)
-      .then((res) => {
-        if (res.status === 200) {
-          setProductList(res.data.data);
-        }
-      })
-      .catch((err) => {
-        toastr.error(err.response.data.message);
-        console.log(err);
-      });
-  }
-  // handle medicine type
-  function handleMedicineTypeChange(type) {
-    setSelectedMedicineType(type);
-    getAllProducts();
+    try {
+      const response = await axios.get(apiUrl);
+      if (response.status === 200) {
+        setProductList(response.data.data);
+      }
+    } catch (err) {
+      toastr.error(err.response.data.message);
+      console.error(err);
+    }
   }
 
-  //del fun
+  function handleMedicineTypeChange(type) {
+    setSelectedMedicineType(type);
+  }
+
   async function deleteProduct(productId) {
-    await axios
-      .delete(`https://api.meddaily.in/deleteproduct/${productId}`, {
+    try {
+      await axios.delete(`https://api.meddaily.in/deleteproduct/${productId}`, {
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         data: {
           productId: productId,
         },
-      })
-      .then((res) => {
-        if (res.status === 200) {
-          toastr.success(res?.data?.message);
-          getAllProducts();
-        }
-      })
-      .catch((err) => {
-        toastr.error(err.response.data.message);
-        console.log(err);
       });
+      toastr.success('Product deleted successfully');
+      getAllProducts();
+    } catch (err) {
+      toastr.error(err.response.data.message);
+      console.error(err);
+    }
   }
-  const product =
-    productList && productList.length > 0 ? (
-      productList.map((item, i) => {
-        return (
-          <Producttbody
-            key={i}
-            deleteProduct={() => deleteProduct(item._id)}
-            productId={item._id}
-            describtion={item.description}
-            productname={item.title}
-            mnfname={item.sub_title}
-            medicinetype={item.category_id ? item.category_id : "N/A"}
-            // medicinetype={item.selectedMedicineType ? item.category_id : "N/A"}
-            delete={"Action"}
-          />
-        );
-      })
-    ) : (
-      <tr>
-        <td colSpan="4">No products found</td>
-      </tr>
-    );
+
+  const columns = [
+    {
+      label: 'Product Name',
+      field: 'productname',
+      sort: 'asc',
+    },
+    {
+      label: 'Mnf Name',
+      field: 'mnfname',
+      sort: 'asc',
+    },
+    {
+      label: 'Medicine Type',
+      field: 'medicinetype',
+      sort: 'asc',
+    },
+    {
+      label: 'Action',
+      field: 'delete',
+    },
+  ];
+
+  const rows = productList.map((item, i) => ({
+    productname: item.title,
+    mnfname: item.sub_title,
+    medicinetype: item.category_id || 'N/A',
+    delete: (
+      <button
+        className="btn btn-danger"
+        onClick={() => deleteProduct(item._id)}
+      >
+        Delete
+      </button>
+    ),
+  }));
 
   return (
     <>
@@ -106,14 +111,14 @@ export default function Producttable() {
                     data-bs-toggle="dropdown"
                     aria-expanded="false"
                   >
-                    Mediciane type
+                    Medicine Type
                   </button>
                   <ul className="dropdown-menu">
                     <li>
                       <a
                         className="dropdown-item"
                         href="javascript:void(0);"
-                        onClick={() => handleMedicineTypeChange("Genric")}
+                        onClick={() => handleMedicineTypeChange('Genric')}
                       >
                         Genric
                       </a>
@@ -122,7 +127,7 @@ export default function Producttable() {
                       <a
                         className="dropdown-item"
                         href="javascript:void(0);"
-                        onClick={() => handleMedicineTypeChange("OTC")}
+                        onClick={() => handleMedicineTypeChange('OTC')}
                       >
                         OTC
                       </a>
@@ -131,7 +136,7 @@ export default function Producttable() {
                       <a
                         className="dropdown-item"
                         href="javascript:void(0);"
-                        onClick={() => handleMedicineTypeChange("Branded")}
+                        onClick={() => handleMedicineTypeChange('Branded')}
                       >
                         Branded
                       </a>
@@ -145,25 +150,14 @@ export default function Producttable() {
                   <div className="card">
                     <h5 className="card-header">Product Table</h5>
                     <div className="table-responsive text-nowrap">
-                      <table className="table">
-                        <thead>
-                          <tr>
-                            <th style={{ padding: ".625rem 1.25rem" }}>
-                              Product Name
-                            </th>
-                            <th style={{ padding: ".625rem 1.25rem" }}>
-                              Mnf Name
-                            </th>
-                            <th style={{ padding: ".625rem 1.25rem" }}>
-                              Medicine Type
-                            </th>
-                            <th style={{ padding: ".625rem 1.25rem" }}>
-                              Action
-                            </th>
-                          </tr>
-                        </thead>
-                        {product}
-                      </table>
+                      <MDBDataTable
+                        striped
+                        bordered
+                        hover
+                        data={{ columns, rows }}
+                        responsive
+                        noBottomColumns={true}
+                      />
                     </div>
                   </div>
                 </div>
@@ -179,3 +173,4 @@ export default function Producttable() {
     </>
   );
 }
+

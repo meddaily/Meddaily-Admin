@@ -116,7 +116,7 @@ export default function Sidebar() {
               </li>
               <li className="menu-item">
                 <Link to="/addbul" className="menu-link">
-                  <div data-i18n="Container">Bul Add</div>
+                  <div data-i18n="Container">Bulk Add</div>
                 </Link>
               </li>
             </Dropdown.Menu>

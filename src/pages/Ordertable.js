@@ -6,14 +6,19 @@ import Sidebar from "./Sidebar";
 import Ordertbody from "./Ordertbody";
 import config from "../appConfig";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
+import { MDBDataTable } from "mdbreact";
+import OrderDetails from "./OrderDetails";
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
 
 export default function Ordertable() {
+  const [isDetailsModalOpen, setDetailsModalOpen] = useState(false);
+  const [selectedOrderID, setSelectedOrderID] = useState(null);
   const authToken = localStorage.getItem("authToken");
 
   const [orderList, setOrderList] = useState([]);
 
   useEffect(() => {
-    // getAllOrders();
     handleOrders();
   }, [authToken]);
 
@@ -29,32 +34,7 @@ export default function Ordertable() {
     }
   };
 
-  // async function deleteOrder(event, orderId) {
-  //   event.preventDefault();
-  //   console.log(orderId);
-  //   await axios
-  //     .delete(`${config.backendURL}/orders/delete-order`, {
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       data: {
-  //         orderId: orderId,
-  //       },
-  //     })
-  //     .then((res) => {
-  //       if (res.status === 200) {
-  //         toastr.success(res.data.message);
-  //         // getAllOrders();
-  //         handleOrders();
-  //       }
-  //     })
-  //     .catch((err) => {
-  //       toastr.error(err.response.data.message);
-  //       console.log(err);
-  //     });
-  // }
   const handleDelivery = async (orderid) => {
-    debugger;
     try {
       const response = await axios.post(
         "https://api.meddaily.in/order_status_change",
@@ -72,24 +52,76 @@ export default function Ordertable() {
       console.error(error);
     }
   };
+  const handleViewModal = async (item) => {
+    setSelectedOrderID(item);
+    setDetailsModalOpen(true);
+  };
 
-  const order =
-    orderList &&
-    orderList.length > 0 &&
-    orderList.map((item, i) => {
-      return (
-        <Ordertbody
-          id={item._id}
-          orderId={item.order_id}
-          userType={item.retailer_name}
-          userId={item.distributor_name}
-          price={item.price}
-          status={item.order_status}
-          details={"View Full details"}
-          delivered={handleDelivery}
-        />
-      );
-    });
+  const columns = [
+    {
+      label: "Order ID",
+      field: "orderId",
+      sort: "asc",
+    },
+    {
+      label: "Retailer Name",
+      field: "userType",
+      sort: "asc",
+    },
+    {
+      label: "Distributor Name",
+      field: "userId",
+      sort: "asc",
+    },
+    {
+      label: "Total Price",
+      field: "price",
+      sort: "asc",
+    },
+    {
+      label: "Status",
+      field: "status",
+      sort: "asc",
+    },
+    {
+      label: "Details",
+      field: "details",
+    },
+    {
+      label: "Mark Delivered",
+      field: "markDelivered",
+    },
+  ];
+
+  const rows = orderList.map((item, i) => ({
+    orderId: item._id,
+    userType: item.retailer_name,
+    userId: item.distributor_name,
+    price: item.price,
+    status: item.order_status,
+    details: (
+      <button
+        className="btn btn-primary"
+        onClick={() => {
+          handleViewModal(item);
+          setDetailsModalOpen(true)
+        }}
+      >
+        View Details
+      </button>
+    ),
+    markDelivered: (
+      <button
+        className="btn btn-primary"
+        onClick={() => {
+          handleDelivery(item.order_id);
+        }}
+      >
+        Mark Delivered
+      </button>
+    ),
+  }));
+
   return (
     <>
       <div className="layout-wrapper layout-content-navbar">
@@ -137,19 +169,17 @@ export default function Ordertable() {
                   <div className="card">
                     <h5 className="card-header float-start">Order Table</h5>
                     <div className="table-responsive text-nowrap">
-                      <table className="table">
-                        <thead>
-                          <tr>
-                            <th>Order id</th>
-                            <th>Retailer name</th>
-                            <th>Distributor Name</th>
-                            <th>Total Price</th>
-                            <th>Status</th>
-                            <th>Details</th>
-                          </tr>
-                        </thead>
-                        {order}
-                      </table>
+                      <MDBDataTable
+                        striped
+                        bordered
+                        hover
+                        data={{ columns, rows }}
+                        responsive
+                        noBottomColumns={true}
+                      />
+                      
+                        
+                     
                     </div>
                   </div>
                 </div>
@@ -162,6 +192,23 @@ export default function Ordertable() {
           <div className="layout-overlay layout-menu-toggle"></div>
         </div>
       </div>
+      {/* <Button variant="primary" onClick={handleShow}>
+        View Order Details 
+      </Button> */}
+
+{isDetailsModalOpen && (
+  <Modal show={isDetailsModalOpen} onHide={() => setDetailsModalOpen(false)}>
+    <Modal.Header closeButton>
+      <Modal.Title>Order Details</Modal.Title>
+    </Modal.Header>
+    <Modal.Body><OrderDetails orderId={selectedOrderID} /></Modal.Body>
+    <Modal.Footer>
+      <Button variant="secondary" onClick={() => setDetailsModalOpen(false)}>
+        Close
+      </Button>
+    </Modal.Footer>
+  </Modal>
+)}
     </>
   );
 }

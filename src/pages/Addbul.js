@@ -105,7 +105,7 @@ export default function Addbul() {
                                 type="file"
                                 id="csvFile"
                                 name="csvFile"
-                                accept=".xlsx, .xls"
+                                accept=".xlsx, .xls .csv"
                                 onChange={handleFileChange}
                               />
                             </div>
