@@ -1,8 +1,9 @@
-import React from "react";
-import { Link } from "react-router-dom";
+/* eslint-disable jsx-a11y/heading-has-content */
+import React from 'react';
+import { Link } from 'react-router-dom';
 
 export default function Ordertbody(props) {
-  const renderAction = () => {
+  const renderStatus = () => {
     if (props.status === 0) {
       return <p>Cancel Delivery</p>;
     } else if (props.status === 1) {
@@ -15,19 +16,20 @@ export default function Ordertbody(props) {
       return null;
     }
   };
+  console.log('status', props.status === 1 && 'YES ');
   return (
     <>
       <tbody className="table-border-bottom-0">
         <tr key={props.id}>
           <td>
-            <i className="fab fa-angular fa-lg text-danger me-3"></i>{" "}
+            <i className="fab fa-angular fa-lg text-danger me-3"></i>{' '}
             {props.orderId}
           </td>
-          <td>{props.userType ? props.userType : "NA"}</td>
-          <td>{props.userId ? props.userId : "NA"}</td>
+          <td>{props.userType ? props.userType : 'NA'}</td>
+          <td>{props.userId ? props.userId : 'NA'}</td>
           <td>{props.price}</td>
-          <td>{renderAction()}</td>
-          <td style={{ padding: ".625rem 5.25rem" }}>
+          <td>{renderStatus()}</td>
+          <td style={{ padding: '.625rem 5.25rem' }}>
             <div className="card-header d-flex justify-content-between align-items-center">
               <h5 className="mb-0"></h5>
               <div className="btn-group">
@@ -37,7 +39,7 @@ export default function Ordertbody(props) {
                   data-bs-toggle="dropdown"
                   aria-expanded="false"
                 >
-                  Action
+                  Action ({Number(props.status)})
                 </button>
                 <ul className="dropdown-menu">
                   <li>
@@ -53,11 +55,11 @@ export default function Ordertbody(props) {
                       className="dropdown-item"
                       to={`/updateorder/${props.orderId}`}
                     >
-                      cancel
+                      Cancel
                     </Link>
                   </li>
 
-                  {props.status !== 3 && (
+                  {Number(props.status) !== 3 && (
                     <li>
                       <Link
                         id={props.key}

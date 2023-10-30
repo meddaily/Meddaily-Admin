@@ -1,14 +1,11 @@
-import { useHistory } from "react-router-dom";
-import "./App.css";
+import { useHistory } from 'react-router-dom';
+import './App.css';
 // import Ham from './Ham/Ham';
 
-import Routerpage from "./pages/Routerpage";
-import AuthRoute from "./pages/AuthRoute";
-import { useEffect, useState } from "react";
+import Routerpage from './pages/Routerpage';
+import AuthRoute from './pages/AuthRoute';
+import { useEffect, useState } from 'react';
 // import Ham from "./Ham/Ham";
-
-
-
 
 function App() {
   let history = useHistory();
@@ -28,25 +25,25 @@ function App() {
   // }
 
   const checkAuth = () => {
-    const loginAuthToken = localStorage.getItem("authToken"); // admin login token
-    const distributorAuthToken = localStorage.getItem("disToken"); // Distributor login token
+    const loginAuthToken = localStorage.getItem('authToken'); // admin login token
+    const distributorAuthToken = localStorage.getItem('disToken'); // Distributor login token
     // const authToken = localStorage.getItem("authToken");
     const currentPath = history.location.pathname;
 
     if (loginAuthToken) {
       setIsLoggedIn(true);
-      if (currentPath !== "/login") {
-        history.push("/");
+      if (currentPath !== '/login') {
+        history.push('/');
       }
     } else if (distributorAuthToken) {
       setIsLoggedIn(true);
-      if (currentPath !== "/distributorlogin") {
-        history.push("/distdashboard");
+      if (currentPath !== '/distributorlogin') {
+        history.push('/distdashboard');
       }
     } else {
       setIsLoggedIn(false);
-      if (currentPath !== "/distributorlogin") {
-        history.push("/login");
+      if (currentPath !== '/distributorlogin') {
+        history.push('/login');
       }
     }
   };
