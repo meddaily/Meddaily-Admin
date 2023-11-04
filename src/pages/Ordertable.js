@@ -98,7 +98,7 @@ export default function Ordertable() {
     userType: item.retailer_name,
     userId: item.distributor_name,
     price: item.price,
-    status: item.order_status,
+    status: item.order_status==4?'Order Placed':"" || item.order_status==1?'Order Shipped':"" || item.order_status==3?'Order Delivered':"" || item.order_status==0?'Order Cancel':"",
     details: (
       <button
         className="btn btn-primary"

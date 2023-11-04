@@ -13,6 +13,8 @@ export default function Addproduct() {
   const [sub_title, setSubTitle] = useState("");
   const [categoryId, setCategoryId] = useState("");
   const [description, setDescription] = useState("");
+  const [applicableTax, setApplicableTax] = useState("");
+
   // contextapi
   const { category } = useContext(ApiContext);
 
@@ -34,6 +36,7 @@ export default function Addproduct() {
       sub_title: sub_title,
       category_id: categoryId,
       description: description,
+      applicable_tax:applicableTax
     };
     const axiosConfig = {
       headers: {
@@ -168,6 +171,24 @@ export default function Addproduct() {
                               value={description}
                               onChange={(e) => setDescription(e.target.value)}
                               placeholder={"Enter discription"}
+                            />
+                          </div>
+
+                          <div className="mb-3 col-md-6">
+                            <label
+                              htmlFor="applicable_tax"
+                              className="form-label float-start"
+                            >
+                              Applicable Tax
+                            </label>
+                            <input
+                              className="form-control"
+                              type="text"
+                              name="applicable_tax"
+                              id="applicable_tax"
+                              value={description}
+                              onChange={(e) => setApplicableTax(e.target.value)}
+                              placeholder={"Enter Tax"}
                             />
                           </div>
                         </div>

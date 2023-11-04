@@ -4,6 +4,7 @@ import toastr from "toastr";
 import { Link } from "react-router-dom";
 import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
+import { MDBDataTable } from 'mdbreact';
 // import Distributordata from "./Distributordata";
 // import config from "../appConfig";
 
@@ -21,7 +22,7 @@ export default function Distributorlist() {
       .get(`https://api.meddaily.in/distributor_list`)
       .then((res) => {
         if (res.status === 200) {
-          setDistributorList(res?.data?.data);
+          setDistributorList(res?.data?.data.reverse());
         }
       })
       .catch((err) => {
@@ -29,6 +30,52 @@ export default function Distributorlist() {
         console.log(err);
       });
   }
+  const columns = [
+    {
+      label: 'Name',
+      field: 'name',
+      sort: 'asc',
+    },
+    {
+      label: 'Business Name',
+      field: 'bname',
+      sort: 'asc',
+    },
+    {
+      label: 'Address',
+      field: 'address',
+      sort: 'asc',
+    },
+    {
+      label: 'Phone',
+      field: 'phone',
+      sort: 'asc',
+    },
+    {
+      label: 'Details',
+      field: 'details',
+    },
+  ];
+
+  const rows = distributorList.map((item, i) => ({
+    name: item.firstname+' '+item.lastname,
+    bname: item.distributorCode? item.distributorCode:'N/A',
+    address: item.area+ ' '+item.city+' ',
+    phone: item.phonenumber,
+    details: (
+      <Link
+      className="dropdown-item"
+      // to="/distributordetails"
+      to={{
+        pathname: "/distributordetails",
+        state: { id: item._id },
+      }}
+    >
+      {" "}
+      View Full Details
+    </Link>
+    ),
+  }));
   return (
     <>
       <div className="layout-wrapper layout-content-navbar">
@@ -45,7 +92,7 @@ export default function Distributorlist() {
                     <h5 className="card-header float-start">
                       Distributor List
                     </h5>
-                    <div className="table-responsive text-nowrap">
+                    {/* <div className="table-responsive text-nowrap">
                       <table className="table">
                         <thead>
                           <tr>
@@ -94,6 +141,17 @@ export default function Distributorlist() {
                             ])}
                         </tbody>
                       </table>
+                    </div> */}
+
+                    <div className="table-responsive text-nowrap">
+                      <MDBDataTable
+                        striped
+                        bordered
+                        hover
+                        data={{ columns, rows }}
+                        responsive
+                        noBottomColumns={true}
+                      />
                     </div>
                   </div>
                 </div>

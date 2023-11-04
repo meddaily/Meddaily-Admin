@@ -23,9 +23,9 @@ export default function Returntable() {
   const handleShow = () => setShow(true);
 
   useEffect(() => {
-    if (fromDate && toDate) {
+    // if (fromDate && toDate) {
       getAllReturns();
-    }
+    // }
   }, [fromDate, toDate]);
 
   async function getAllReturns() {
@@ -95,7 +95,7 @@ export default function Returntable() {
     name: item.name || 'NA',
     price: item.price || 0,
     order_status: item.order_status || 0,
-    payment_type: item.payment_type || 'NA',
+    payment_type: item.payment_type ==1? 'COD':"" || item.payment_type ==2? 'On Credit':"" || item.payment_type ==0? 'Prepaid':"",
     view_more: (
       <div className="dropdown">
         <Link
@@ -196,13 +196,13 @@ export default function Returntable() {
             <hr />
             <p>Payment Details</p>
             <p>Payment Status: {itemValue?.payment_status}</p>
-            <p>Payment Type: {itemValue?.payment_type}</p>
-            <p>Order Status: {itemValue?.order_status}</p>
+            <p>Payment Type: {itemValue?.payment_type == 1?"COD":''} {itemValue?.payment_type == 2?"On Credit":''} {itemValue?.payment_type == 0?"Prepaid":''}</p>
+            <p>Order Status: {itemValue?.order_status==4?"Order Placed":""} {itemValue?.order_status==1?"Order Shipped":""} {itemValue?.order_status==3?"Order Delivered":""}</p>
             <p>Payment Details</p>
             <p>Return Reason: {itemValue?.return_reason}</p>
             <p>Return Message: {itemValue?.return_message}</p>
             <p>Return Quantity: {itemValue?.return_quantity}</p>
-            <p>Return Status: {itemValue?.return_status}</p>
+            <p>Return Status: {itemValue?.return_status==1?"Not Accepted":""} {itemValue?.return_status==2?"Accepted":""}</p>
           </div>
         </Modal.Body>
       </Modal>

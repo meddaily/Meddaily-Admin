@@ -6,6 +6,8 @@ import Sidebar from "./Sidebar";
 import { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
+import { MDBDataTable } from 'mdbreact';
+
 export default function Distributorrequest() {
   const [distReq, setDistReq] = useState([]);
 
@@ -14,7 +16,7 @@ export default function Distributorrequest() {
       const response = await axios.get(
         "https://api.meddaily.in/distributor_request"
       );
-      setDistReq(response?.data?.data);
+      setDistReq(response?.data?.data.reverse());
       console.log(response)
     } catch (error) {
       console.error(error);
@@ -23,6 +25,53 @@ export default function Distributorrequest() {
   useEffect(() => {
     handleDistReq();
   }, []);
+
+  const columns = [
+    {
+      label: 'Name',
+      field: 'name',
+      sort: 'asc',
+    },
+    {
+      label: 'Business Name',
+      field: 'bname',
+      sort: 'asc',
+    },
+    {
+      label: 'Address',
+      field: 'address',
+      sort: 'asc',
+    },
+    {
+      label: 'Phone',
+      field: 'phone',
+      sort: 'asc',
+    },
+    {
+      label: 'Details',
+      field: 'details',
+    },
+  ];
+
+  const rows = distReq.map((item, i) => ({
+    name: item.firstname+' '+item.lastname,
+    bname: item.distributorCode? item.distributorCode:'N/A',
+    address: item.area+ ' '+item.city+' ',
+    phone: item.phonenumber,
+    details: (
+      <Link
+      className="dropdown-item"
+      // to="/distributordetails"
+      to={{
+        pathname: "/distributordetails",
+        state: { id: item._id },
+      }}
+    >
+      {" "}
+      View Full Details
+    </Link>
+    ),
+  }));
 
   return (
     <>
@@ -38,12 +87,12 @@ export default function Distributorrequest() {
                 <div className="row">
                   <div className="card">
                     <h5 className="card-header">Distributor request</h5>
-                    <div className="table-responsive text-nowrap">
+                    {/* <div className="table-responsive text-nowrap">
                       <table className="table">
                         <thead>
                           <tr>
                             <th>Name</th>
-                            <th>Business name</th>
+                            {/* <th>Business name</th> 
                             <th>Address</th>
                             <th>Phone</th>
                             <th>Details</th>
@@ -63,7 +112,7 @@ export default function Distributorrequest() {
                                       firstname || ""
                                     } ${lastname}`}</strong>
                                   </td>
-                                  <td>{distributorCode || "NA"}</td>
+                                  <td>{city || "NA"}</td>
                                   <td>
                                   {`${area || ""}, ${city || ""}`}
                                   </td>
@@ -88,6 +137,16 @@ export default function Distributorrequest() {
                             })}
                         </tbody>
                       </table>
+                    </div> */}
+                     <div className="table-responsive text-nowrap">
+                      <MDBDataTable
+                        striped
+                        bordered
+                        hover
+                        data={{ columns, rows }}
+                        responsive
+                        noBottomColumns={true}
+                      />
                     </div>
                   </div>
                 </div>

@@ -10,12 +10,13 @@ export default function OrderDetails(props) {
   const authToken = localStorage.getItem("authToken");
   const [orderDetails, setOrderDetails] = useState([]);
   const { id } = useParams();
+  
   useEffect(() => {
-    getOrderDetails(id);
+    getOrderDetails(props.orderId.order_id);
   }, [authToken]);
   async function getOrderDetails(orderid) {
     await axios
-      .get(`https://api.meddaily.in/order_details_admin?order_id=${id}`, {
+      .get(`https://api.meddaily.in/order_details_admin?order_id=${orderid}`, {
         headers: {
           "Content-Type": "application/json",
           token: localStorage.getItem("authToken"),
@@ -37,7 +38,7 @@ export default function OrderDetails(props) {
       return "COD";
     } else if (code === 2) {
       return "On Credit";
-    } else if (code === 3) {
+    } else if (code === 0) {
       return "Prepaid";
     }
   }
@@ -55,7 +56,7 @@ export default function OrderDetails(props) {
     }
   }
 
-  console.log(props.orderId.price);
+  // console.log(orderDetails.price);
   return (
     <>
       
@@ -73,32 +74,32 @@ export default function OrderDetails(props) {
                         <div className="row justify-content-center">
                           <div className="col-md-6">
                             <p>
-                              <strong>Order ID:</strong> {props.orderId.order_id}
+                              <strong>Order ID:</strong> {orderDetails?.order_id}
                             </p>
                           </div>
                           <div className="col-md-6">
                             <p>
                               <strong>Order Date:</strong>{" "}
                               {new Date(
-                                props.orderId.createdAt
+                                orderDetails?.createdAt
                               ).toLocaleString()}
                             </p>
                           </div>
                           <div className="col-md-6">
                             <p>
                               <strong>Order Status:</strong>{" "}
-                              {getOrderStatus(props.orderId.payment_status)}
+                              {getOrderStatus(orderDetails?.order_status)}
                             </p>
                           </div>
                           <div className="col-md-6">
                             <p>
                               <strong>Payment Type:</strong>{" "}
-                              {getPaymentType(props.orderId.payment_type)}
+                              {getPaymentType(orderDetails?.payment_type)}
                             </p>
                           </div>
                           <div className="col-md-6">
                             <p>
-                              <strong>Total Price:</strong> {props.orderId.price}
+                              <strong>Total Price:</strong> {orderDetails?.price}
                             </p>
                           </div>
                           {/* <div className="col-md-6">
@@ -110,13 +111,25 @@ export default function OrderDetails(props) {
                           <div className="col-md-6">
                             <p>
                                <strong>Retailor-Name:</strong>{" "}
-                               {props.orderId.retailer_name}
+                               {orderDetails?.retailer_name}
+                            </p>
+                          </div>
+                          <div className="col-md-6">
+                            <p>
+                               <strong>Retailor-Address:</strong>{" "}
+                               {orderDetails?.retailer_address}
                             </p>
                           </div>
                           <div className="col-md-6">
                             <p>
                                <strong>Distributor-Name:</strong>{" "}
-                               {props.orderId.distributor_name}
+                               {orderDetails?.distributor_name}
+                            </p>
+                          </div>
+                          <div className="col-md-6">
+                            <p>
+                               <strong>Distributor-Address:</strong>{" "}
+                               {orderDetails?.distributor_address}
                             </p>
                           </div>
                         </div>
@@ -135,15 +148,18 @@ export default function OrderDetails(props) {
                             </thead>
                             <tbody>
                               {props &&
-                                props.orderId.products &&
-                                props.orderId.products.length > 0 &&
-                                props.orderId.products.map((product, index) => (
+                                orderDetails?.products &&
+                                orderDetails?.products.length > 0 &&
+                  
+                                orderDetails?.products.map((product, index) => (
+
                                   <tr key={index}>
-                                    <td>{product.name}</td>
-                                    <td>{product.quantity}</td>
-                                    <td>{product.price}</td>
+                                    <td>{product?.name}</td>
+                                    <td>{product?.quantity}</td>
+                                    <td>{product?.price}</td>
                                   </tr>
                                 ))}
+                                
                             </tbody>
                           </table>
                         </div>

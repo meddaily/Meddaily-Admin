@@ -185,13 +185,13 @@ export default function Sidebar() {
         {/* Settings */}
         <li className="menu-item ">
           <Dropdown>
-            <Dropdown.Toggle
+            {/* <Dropdown.Toggle
               variant="success"
               className="menu-link menu-toggle"
             >
               <i className="menu-icon tf-icons bx bx-box"></i>
               <div data-i18n="Layouts">Settings</div>
-            </Dropdown.Toggle>
+            </Dropdown.Toggle> */}
 
             <Dropdown.Menu>
               <li className="menu-item active">

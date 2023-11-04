@@ -6,7 +6,7 @@ import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
 // import config from "../appConfig";
 // import { Button } from "react-bootstrap";
-
+import { MDBDataTable } from 'mdbreact';
 
 export default function Retailerlist() {
   const authToken = localStorage.getItem("authToken");
@@ -22,7 +22,7 @@ export default function Retailerlist() {
       .get(`https://api.meddaily.in/retailer_list`)
       .then((res) => {
         if (res.status === 200) {
-          setRetailerList(res.data.data);
+          setRetailerList(res.data.data.reverse());
         }
       })
       .catch((err) => {
@@ -30,6 +30,54 @@ export default function Retailerlist() {
         console.log(err);
       });
   };
+
+
+  const columns = [
+    {
+      label: 'Name',
+      field: 'name',
+      sort: 'asc',
+    },
+    {
+      label: 'Business Name',
+      field: 'bname',
+      sort: 'asc',
+    },
+    {
+      label: 'Address',
+      field: 'address',
+      sort: 'asc',
+    },
+    {
+      label: 'Phone',
+      field: 'phone',
+      sort: 'asc',
+    },
+    {
+      label: 'Details',
+      field: 'details',
+    },
+  ];
+
+  const rows = retailerList.map((item, i) => ({
+    name: item.ownername,
+    bname: item.businessname? item.businessname:'N/A',
+    address: item.area+' '+item.city+' ',
+    phone: item.phonenumber,
+    details: (
+      <Link
+      className="dropdown-item"
+      // to="/distributordetails"
+      to={{
+        pathname: "/retailerdetails",
+        state: { id: item._id },
+      }}
+    >
+      {" "}
+      View Full Details
+    </Link>
+    ),
+  }));
   return (
     <>
       <div className="layout-wrapper layout-content-navbar">
@@ -44,7 +92,7 @@ export default function Retailerlist() {
                 <div className="row">
                   <div className="card">
                     <h5 className="card-header">Retailer List</h5>
-                    <div className="table-responsive text-nowrap">
+                    {/* <div className="table-responsive text-nowrap">
                       <table className="table">
                         <thead>
                           <tr>
@@ -88,6 +136,17 @@ export default function Retailerlist() {
                           }
                         </tbody>
                       </table>
+                    </div> */}
+
+<div className="table-responsive text-nowrap">
+                      <MDBDataTable
+                        striped
+                        bordered
+                        hover
+                        data={{ columns, rows }}
+                        responsive
+                        noBottomColumns={true}
+                      />
                     </div>
                   </div>
                 </div>

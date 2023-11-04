@@ -120,7 +120,7 @@ export default function Producttable() {
                         href="javascript:void(0);"
                         onClick={() => handleMedicineTypeChange('Genric')}
                       >
-                        Genric
+                        Generic
                       </a>
                     </li>
                     <li>
