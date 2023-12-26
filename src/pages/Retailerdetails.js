@@ -25,12 +25,36 @@ export default function Retailerdetails() {
     panimg: "",
   };
   const [formData, setFormData] = useState(defaultFormData);
+  // const [data,setData]=useState()
   const location = useLocation();
   const { id } = location.state;
 
   useEffect(() => {
     handleRetailerDetails();
   }, []);
+
+  let history = useHistory();
+  const hanndleApprove = async ()=>{
+    try {
+    await axios.post("https://api.meddaily.in/retailer_approve",
+    {id:id}
+    )
+      history.push("/retailerlist");
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  const hanndleReject = async ()=>{
+    try {
+    await axios.post("https://api.meddaily.in/retailer_rejected",
+    {id:id}
+    )
+      history.push("/retailerlist");
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   const handleRetailerDetails = async (e) => {
     try {
@@ -308,7 +332,7 @@ export default function Retailerdetails() {
                             >
                               Drug Licence img
                             </label>
-                           <img src={licenseimage} alt="img" />
+                           <img width={"100%"} src={licenseimage} alt="img" />
                           </div>
                           <div className="mb-3 col-md-6">
                             <label
@@ -425,7 +449,7 @@ export default function Retailerdetails() {
                             />
                           </div>
 
-                          <div className="mb-3 col-md-6">
+                          {/* <div className="mb-3 col-md-6">
                             <label
                               for="timeZones"
                               className="form-label float-start"
@@ -433,7 +457,7 @@ export default function Retailerdetails() {
                               Pan img
                             </label>
                             <img src={panimg} alt="panimg" />
-                          </div>
+                          </div> */}
                           <div className="mb-3 col-md-6">
                             <label
                               for="timeZones"
@@ -441,7 +465,7 @@ export default function Retailerdetails() {
                             >
                               Gst img
                             </label>
-                            <img src={gstimage} alt="gstimg" />
+                            <img width={"100%"} src={gstimage} alt="gstimg" />
                           </div>
                         </div>
                         <div className="mt-2"></div>
@@ -464,6 +488,61 @@ export default function Retailerdetails() {
                     </div>
                   </div>
                 </div>
+                <div className="card-header d-flex justify-content-between align-items-center">
+                    <h5 className="mb-0"></h5>
+                    <div class="btn-group d-flex">
+                    <button
+                          type="button"
+                          class="btn btn-secondary "
+                          style={{
+                            marginRight:"5px",
+                            borderRadius:"5px"
+                          }}
+                          onClick={hanndleApprove}
+                        >
+                          Approve
+                        </button>
+
+                        <button
+                          type="button"
+                          class="btn btn-secondary "
+                          style={{
+                            marginRight:"5px",
+                            borderRadius:"5px"
+                          }}
+                          onClick={hanndleReject}
+                        >
+                          Reject
+                        </button>
+                      <button
+                        type="button"
+                        class="btn btn-secondary dropdown-toggle"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false" style={{
+                          borderRadius:"5px"
+                        }}
+                      >
+                        Filter
+                      </button>
+                      <ul class="dropdown-menu">
+                        <li>
+                          <a class="dropdown-item" href="javascript:void(0);">
+                            Filter By Week
+                          </a>
+                        </li>
+                        <li>
+                          <a class="dropdown-item" href="javascript:void(0);">
+                            Filter By Month
+                          </a>
+                        </li>
+                        <li>
+                          <a class="dropdown-item" href="javascript:void(0);">
+                            Custom Filter
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
 
                 <div className="content-backdrop fade"></div>
               </div>

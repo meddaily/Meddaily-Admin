@@ -5,6 +5,7 @@ import { useLocation } from "react-router-dom";
 import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
 import axios from "axios";
+import { useHistory } from "react-router-dom";
 export default function Distributordetails() {
   const defaultFormData = {
     firstname: "",
@@ -18,6 +19,7 @@ export default function Distributordetails() {
     pincode: "",
   };
   const [formData, setFormData] = useState(defaultFormData);
+  // const [data,setData]=useState()
   const [order, setOrder] = useState("");
   const location = useLocation();
   const { id } = location.state;
@@ -25,6 +27,29 @@ export default function Distributordetails() {
     handleViewDetails();
     handleOrders();
   }, []);
+  let history = useHistory();
+  const hanndleApprove = async ()=>{
+    try {
+     await axios.post("https://api.meddaily.in/distributor_approve",
+    {id:id}
+    )
+      history.push("/distributorlist");
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+
+  const hanndleReject = async ()=>{
+    try {
+     await axios.post("https://api.meddaily.in/distributor_rejected",
+    {id:id}
+    )
+      history.push("/distributorlist");
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   const handleViewDetails = async (e) => {
     try {
@@ -449,7 +474,7 @@ export default function Distributordetails() {
                             >
                               Image
                             </label>
-                            <img src={image} alt="img" />
+                            <img width={"100%"} src={image} alt="img" />
                           </div>
                           <div className="mb-3 col-md-6">
                             <label
@@ -458,7 +483,7 @@ export default function Distributordetails() {
                             >
                               Gst img
                             </label>
-                            <img src={gst_file} alt="gstimg" />
+                            <img width={"100%"} src={gst_file} alt="gstimg" />
                           </div>
                         </div>
                         <div className="mt-2"></div>
@@ -469,12 +494,37 @@ export default function Distributordetails() {
                   {/* Filter Button  */}
                   <div className="card-header d-flex justify-content-between align-items-center">
                     <h5 className="mb-0"></h5>
-                    <div class="btn-group">
+                    <div class="btn-group d-flex">
+                    <button
+                          type="button"
+                          class="btn btn-secondary "
+                          style={{
+                            marginRight:"5px",
+                            borderRadius:"5px"
+                          }}
+                          onClick={hanndleApprove}
+                        >
+                          Approve
+                        </button>
+                        <button
+                          type="button"
+                          class="btn btn-secondary "
+                          style={{
+                            marginRight:"5px",
+                            borderRadius:"5px"
+                          }}
+                          onClick={hanndleReject}
+                        >
+                          Reject
+                        </button>
                       <button
                         type="button"
                         class="btn btn-secondary dropdown-toggle"
                         data-bs-toggle="dropdown"
                         aria-expanded="false"
+                        style={{
+                          borderRadius:"5px"
+                        }}
                       >
                         Filter
                       </button>
@@ -497,6 +547,7 @@ export default function Distributordetails() {
                       </ul>
                     </div>
                   </div>
+                  
 
                   {/* Total payment */}
 

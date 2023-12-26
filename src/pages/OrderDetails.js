@@ -6,7 +6,6 @@ import { useParams } from "react-router-dom";
 import Navbar from "./Navbar";
 
 export default function OrderDetails(props) {
-  console.log("is coming",props)
   const authToken = localStorage.getItem("authToken");
   const [orderDetails, setOrderDetails] = useState([]);
   const { id } = useParams();
@@ -15,8 +14,10 @@ export default function OrderDetails(props) {
     getOrderDetails(props.orderId.order_id);
   }, [authToken]);
   async function getOrderDetails(orderid) {
+    console.log("is coming",orderid)
     await axios
       .get(`https://api.meddaily.in/order_details_admin?order_id=${orderid}`, {
+      // .get(`http://localhost:8000/order_details_admin?order_id=${orderid}`, {
         headers: {
           "Content-Type": "application/json",
           token: localStorage.getItem("authToken"),
@@ -25,6 +26,7 @@ export default function OrderDetails(props) {
       .then((res) => {
         if (res.status === 200) {
           setOrderDetails(res?.data?.data);
+          console.log(">>>>>>>>>>",res);
         }
       })
       .catch((err) => {

@@ -24,7 +24,7 @@ export default function Returntable() {
 
   useEffect(() => {
     // if (fromDate && toDate) {
-      getAllReturns();
+    getAllReturns();
     // }
   }, [fromDate, toDate]);
 
@@ -34,7 +34,7 @@ export default function Returntable() {
         `https://api.meddaily.in/get_return_admin?from=${fromDate}&to=${toDate}`
       );
       if (response.status === 200) {
-        console.log(response.data.data);
+        console.log("RESpo", response);
         setReturnList(response?.data?.data);
       }
     } catch (err) {
@@ -46,11 +46,26 @@ export default function Returntable() {
   console.log(returnList);
 
   const handleFromDateChange = (event) => {
-    setFromDate(event.target.value);
+    console.log(">>>>", event.target.value);
+    const currentTime = new Date();
+    const hours = currentTime.getUTCHours().toString().padStart(2, '0');
+    const minutes = currentTime.getUTCMinutes().toString().padStart(2, '0');
+    const seconds = currentTime.getUTCSeconds().toString().padStart(2, '0');
+    const milliseconds = currentTime.getUTCMilliseconds().toString().padStart(3, '0');
+    const timeString = `${hours}:${minutes}:${seconds}.${milliseconds}`;
+    const dateTimeString = `${event.target.value}T${timeString}Z`;
+    setFromDate(dateTimeString);
   };
 
   const handleToDateChange = (event) => {
-    setToDate(event.target.value);
+    const currentTime = new Date();
+    const hours = currentTime.getUTCHours().toString().padStart(2, '0');
+    const minutes = currentTime.getUTCMinutes().toString().padStart(2, '0');
+    const seconds = currentTime.getUTCSeconds().toString().padStart(2, '0');
+    const milliseconds = currentTime.getUTCMilliseconds().toString().padStart(3, '0');
+    const timeString = `${hours}:${minutes}:${seconds}.${milliseconds}`;
+    const dateTimeString = `${event.target.value}T${timeString}Z`;
+    setToDate(dateTimeString);
   };
 
   const columns = [
@@ -95,7 +110,7 @@ export default function Returntable() {
     name: item.name || 'NA',
     price: item.price || 0,
     order_status: item.order_status || 0,
-    payment_type: item.payment_type ==1? 'COD':"" || item.payment_type ==2? 'On Credit':"" || item.payment_type ==0? 'Prepaid':"",
+    payment_type: item.payment_type == 1 ? 'COD' : "" || item.payment_type == 2 ? 'On Credit' : "" || item.payment_type == 0 ? 'Prepaid' : "",
     view_more: (
       <div className="dropdown">
         <Link
@@ -139,8 +154,8 @@ export default function Returntable() {
                             type="date"
                             id="fromDate"
                             className="form-control"
-                            value={fromDate}
                             onChange={handleFromDateChange}
+                            value={fromDate.split('T')[0]}
                           />
                         </div>
                         <label
@@ -154,8 +169,8 @@ export default function Returntable() {
                             type="date"
                             id="toDate"
                             className="form-control"
-                            value={toDate}
                             onChange={handleToDateChange}
+                            value={toDate.split('T')[0]  }
                           />
                         </div>
                       </div>
@@ -196,13 +211,13 @@ export default function Returntable() {
             <hr />
             <p>Payment Details</p>
             <p>Payment Status: {itemValue?.payment_status}</p>
-            <p>Payment Type: {itemValue?.payment_type == 1?"COD":''} {itemValue?.payment_type == 2?"On Credit":''} {itemValue?.payment_type == 0?"Prepaid":''}</p>
-            <p>Order Status: {itemValue?.order_status==4?"Order Placed":""} {itemValue?.order_status==1?"Order Shipped":""} {itemValue?.order_status==3?"Order Delivered":""}</p>
+            <p>Payment Type: {itemValue?.payment_type == 1 ? "COD" : ''} {itemValue?.payment_type == 2 ? "On Credit" : ''} {itemValue?.payment_type == 0 ? "Prepaid" : ''}</p>
+            <p>Order Status: {itemValue?.order_status == 4 ? "Order Placed" : ""} {itemValue?.order_status == 1 ? "Order Shipped" : ""} {itemValue?.order_status == 3 ? "Order Delivered" : ""}</p>
             <p>Payment Details</p>
             <p>Return Reason: {itemValue?.return_reason}</p>
             <p>Return Message: {itemValue?.return_message}</p>
             <p>Return Quantity: {itemValue?.return_quantity}</p>
-            <p>Return Status: {itemValue?.return_status==1?"Not Accepted":""} {itemValue?.return_status==2?"Accepted":""}</p>
+            <p>Return Status: {itemValue?.return_status == 1 ? "Not Accepted" : ""} {itemValue?.return_status == 2 ? "Accepted" : ""}</p>
           </div>
         </Modal.Body>
       </Modal>

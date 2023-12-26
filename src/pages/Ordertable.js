@@ -26,7 +26,7 @@ export default function Ordertable() {
     try {
       const response = await axios.get("https://api.meddaily.in/all_order");
       if (response.status === 200) {
-        setOrderList(response?.data?.message);
+        setOrderList(response?.data?.data);
         console.log(response);
       }
     } catch (error) {
@@ -176,10 +176,7 @@ export default function Ordertable() {
                         data={{ columns, rows }}
                         responsive
                         noBottomColumns={true}
-                      />
-                      
-                        
-                     
+                      />                     
                     </div>
                   </div>
                 </div>
