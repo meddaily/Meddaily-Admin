@@ -141,7 +141,8 @@ export default function Sidebar() {
                 </Link>
               </li>
               <li className="menu-item">
-                <Link to="/addorder" className="menu-link">
+              {/* to="/ordertable" */}
+                <Link  className="menu-link">
                   <div data-i18n="Without navbar">Add new Order</div>
                 </Link>
               </li>

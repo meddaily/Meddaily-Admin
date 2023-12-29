@@ -27,22 +27,23 @@ export default function Ordertable() {
       const response = await axios.get("https://api.meddaily.in/all_order");
       if (response.status === 200) {
         setOrderList(response?.data?.data);
-        console.log(response);
+        // console.log(response);
       }
     } catch (error) {
       console.error(error);
     }
   };
 
-  const handleDelivery = async (orderid) => {
+  const handleDelivery = async (_id) => {
     try {
       const response = await axios.post(
         "https://api.meddaily.in/order_status_change",
         {
-          order_id: orderid,
+          order_id:_id,
           status: 3,
         }
       );
+      console.log("NEW",_id);
       if (response.status === 200) {
         toastr.success("Order status updated successfully");
         handleOrders(); // Refresh the order list after status change
@@ -111,14 +112,25 @@ export default function Ordertable() {
       </button>
     ),
     markDelivered: (
+      // <button
+      //   className="btn btn-primary"
+      //   onClick={() => {
+      //     handleDelivery(item._id);
+      //   }}
+      // >
+      //   Mark Delivered
+      // </button>
       <button
-        className="btn btn-primary"
-        onClick={() => {
-          handleDelivery(item.order_id);
-        }}
-      >
-        Mark Delivered
-      </button>
+  className="btn btn-primary"
+  onClick={() => {
+    if (item.order_status === 1) {
+      handleDelivery(item._id);
+    }
+  }}
+  // disabled={item.order_status === 1}
+>
+  Mark Delivered
+</button>
     ),
   }));
 
