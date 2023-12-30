@@ -6,6 +6,7 @@ import Sidebar from "./Sidebar";
 import { useState } from "react";
 import { useContext } from "react";
 import { ApiContext } from "../DistributorLogin/DistContext/DisContext";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 // import config from "../appConfig";
 
 export default function Addproduct() {
@@ -14,6 +15,7 @@ export default function Addproduct() {
   const [categoryId, setCategoryId] = useState("");
   const [description, setDescription] = useState("");
   const [applicableTax, setApplicableTax] = useState("");
+  const history = useHistory();
 
   // contextapi
   const { category } = useContext(ApiContext);
@@ -53,6 +55,7 @@ export default function Addproduct() {
       // debugger;
       if (response.status === 200) {
         toastr.success(response.data.message);
+        history.push("/");
         setTitle("");
         setSubTitle("");
         setDescription("");

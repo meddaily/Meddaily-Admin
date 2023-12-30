@@ -12,7 +12,7 @@ import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 export default function Addbul() {
   const [bul, setBul] = useState({
     csvFile: "",
-    category: "",
+    category_id: "",
   });
   const [categoryId, setCategoryId] = useState("");
   const { category } = useContext(ApiContext);
@@ -46,7 +46,7 @@ export default function Addbul() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    debugger;
+    // debugger;
     if (!bul.csvFile) {
       console.log("Please select an Excel file.");
       return;
@@ -54,14 +54,15 @@ export default function Addbul() {
 
     const formData = new FormData();
     formData.append("file", bul.csvFile);
-    formData.append("category", categoryId);
+    formData.append("category_id", categoryId);
 
     try {
       const response = await axios.post(
-        "https://api.meddaily.in/bulkupload",
+        "http://localhost:8000/bulkupload",
         formData
       );
       if (response.status === 200) {
+          console.log("RESPONSe",response.data);
         toastr.success(response?.data?.message);
         setBul({ csvFile: "", category: "" });
         document.getElementById("csvFile").value = "";
