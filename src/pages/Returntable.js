@@ -75,8 +75,13 @@ export default function Returntable() {
       sort: 'asc',
     },
     {
-      label: 'Vendor Name',
-      field: 'name',
+      label: 'Distributor Name',
+      field: 'distributor_name',
+      sort: 'asc',
+    },
+    {
+      label: 'Retailer Name',
+      field: 'retailer_name',
       sort: 'asc',
     },
     {
@@ -90,8 +95,8 @@ export default function Returntable() {
       sort: 'asc',
     },
     {
-      label: 'Payment Type',
-      field: 'payment_type',
+      label: 'Date',
+      field: 'createdAt',
       sort: 'asc',
     },
     {
@@ -100,32 +105,69 @@ export default function Returntable() {
     },
   ];
 
-  const rows = returnList.map((item, i) => ({
-    order_id: (
-      <>
-        <i className="fab fa-angular fa-lg text-danger me-3"></i>{' '}
-        {item.order_id || 'NA'}
-      </>
-    ),
-    name: item.name || 'NA',
-    price: item.price || 0,
-    order_status: item.order_status || 0,
-    payment_type: item.payment_type == 1 ? 'COD' : "" || item.payment_type == 2 ? 'On Credit' : "" || item.payment_type == 0 ? 'Prepaid' : "",
-    view_more: (
-      <div className="dropdown">
-        <Link
-          className="dropdown-item"
-          to="#"
-          onClick={(e) => {
-            setItemValue(item);
-            handleShow();
-          }}
-        >
-          View Full Details
-        </Link>
-      </div>
-    ),
-  }));
+  // const rows = returnList.map((item, i) => ({
+  //   order_id: (
+  //     <>
+  //       <i className="fab fa-angular fa-lg text-danger me-3"></i>{' '}
+  //       {item.order_id || 'NA'}
+  //     </>
+  //   ),
+  //   distributor_name: item.distributor_name || 'NA',
+  //   retailer_name: item.retailer_name || 'NA',
+  //   price: item.price || 0,
+  //   order_status: item.order_status || 0,
+  //   createdAt:item.createdAt || 0,
+  //   // payment_type: item.payment_type == 1 ? 'COD' : "" || item.payment_type == 2 ? 'On Credit' : "" || item.payment_type == 0 ? 'Prepaid' : "",
+  //   view_more: (
+  //     <div className="dropdown">
+  //       <Link
+  //         className="dropdown-item"
+  //         to="#"
+  //         onClick={(e) => {
+  //           setItemValue(item);
+  //           handleShow();
+  //         }}
+  //       >
+  //         View Full Details
+  //       </Link>
+  //     </div>
+  //   ),
+  // }));
+
+  const rows = returnList.map((item, i) => {
+    const dateObject = new Date(item.createdAt);
+    const formattedDate = dateObject.toISOString().split('T')[0];
+  
+    return {
+      order_id: (
+        <>
+          <i className="fab fa-angular fa-lg text-danger me-3"></i>{' '}
+          {item.order_id || 'NA'}
+        </>
+      ),
+      distributor_name: item.distributor_name || 'NA',
+      retailer_name: item.retailer_name || 'NA',
+      price: item.price || 0,
+      order_status: item.order_status || 0,
+      createdAt: formattedDate || 0,
+      // other properties...
+      view_more: (
+        <div className="dropdown">
+          <Link
+            className="dropdown-item"
+            to="#"
+            onClick={(e) => {
+              setItemValue(item);
+              handleShow();
+            }}
+          >
+            View Full Details
+          </Link>
+        </div>
+      ),
+    };
+  });
+  
 
   return (
     <>

@@ -37,11 +37,11 @@ export default function OrderDetails(props) {
 
   function getPaymentType(code) {
     if (code === 1) {
-      return "COD";
+      return "Cash on delivery";
     } else if (code === 2) {
-      return "On Credit";
-    } else if (code === 0) {
-      return "Prepaid";
+      return "Payment pripaid";
+    } else if (code === 3) {
+      return "Craadit";
     }
   }
 

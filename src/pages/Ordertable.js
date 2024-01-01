@@ -39,11 +39,11 @@ export default function Ordertable() {
       const response = await axios.post(
         "https://api.meddaily.in/order_status_change",
         {
-          order_id:_id,
+          order_id: _id,
           status: 3,
         }
       );
-      console.log("NEW",_id);
+      console.log("NEW", _id);
       if (response.status === 200) {
         toastr.success("Order status updated successfully");
         handleOrders(); // Refresh the order list after status change
@@ -99,7 +99,7 @@ export default function Ordertable() {
     userType: item.retailer_name,
     userId: item.distributor_name,
     price: item.price,
-    status: item.order_status==4?'Order Placed':"" || item.order_status==1?'Order Shipped':"" || item.order_status==3?'Order Delivered':"" || item.order_status==0?'Order Cancel':"",
+    status: item.order_status == 4 ? 'Order Placed' : "" || item.order_status == 1 ? 'Order Shipped' : "" || item.order_status == 3 ? 'Order Delivered' : "" || item.order_status == 0 ? 'Order Cancel' : "",
     details: (
       <button
         className="btn btn-primary"
@@ -111,27 +111,43 @@ export default function Ordertable() {
         View Details
       </button>
     ),
-    markDelivered: (
-      // <button
-      //   className="btn btn-primary"
-      //   onClick={() => {
-      //     handleDelivery(item._id);
-      //   }}
-      // >
-      //   Mark Delivered
-      // </button>
+    markDelivered:(
+      <>
+      {item.order_status === 1 && (
       <button
-  className="btn btn-primary"
-  onClick={() => {
-    if (item.order_status === 1) {
-      handleDelivery(item._id);
-    }
-  }}
-  // disabled={item.order_status === 1}
->
-  Mark Delivered
-</button>
-    ),
+        className="btn btn-primary"
+        onClick={() => {
+          if (item.order_status === 1) {
+            handleDelivery(item._id);
+          }
+        }}
+      >
+        Mark Delivered
+      </button>
+    )}
+    </>
+    )
+    // markDelivered: (
+    //   // <button
+    //   //   className="btn btn-primary"
+    //   //   onClick={() => {
+    //   //     handleDelivery(item._id);
+    //   //   }}
+    //   // >
+    //   //   Mark Delivered
+    //   // </button>
+    //   <button
+    //     className="btn btn-primary"
+    //     onClick={() => {
+    //       if (item.order_status === 1) {
+    //         handleDelivery(item._id);
+    //       }
+    //     }}
+    //   disabled={item.order_status === 3}
+    //   >
+    //     Mark Delivered
+    //   </button>
+    // ),
   }));
 
   return (
@@ -188,7 +204,7 @@ export default function Ordertable() {
                         data={{ columns, rows }}
                         responsive
                         noBottomColumns={true}
-                      />                     
+                      />
                     </div>
                   </div>
                 </div>
@@ -205,19 +221,19 @@ export default function Ordertable() {
         View Order Details 
       </Button> */}
 
-{isDetailsModalOpen && (
-  <Modal show={isDetailsModalOpen} onHide={() => setDetailsModalOpen(false)}>
-    <Modal.Header closeButton>
-      <Modal.Title>Order Details</Modal.Title>
-    </Modal.Header>
-    <Modal.Body><OrderDetails orderId={selectedOrderID} /></Modal.Body>
-    <Modal.Footer>
-      <Button variant="secondary" onClick={() => setDetailsModalOpen(false)}>
-        Close
-      </Button>
-    </Modal.Footer>
-  </Modal>
-)}
+      {isDetailsModalOpen && (
+        <Modal show={isDetailsModalOpen} onHide={() => setDetailsModalOpen(false)}>
+          <Modal.Header closeButton>
+            <Modal.Title>Order Details</Modal.Title>
+          </Modal.Header>
+          <Modal.Body><OrderDetails orderId={selectedOrderID} /></Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={() => setDetailsModalOpen(false)}>
+              Close
+            </Button>
+          </Modal.Footer>
+        </Modal>
+      )}
     </>
   );
 }
