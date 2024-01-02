@@ -218,9 +218,9 @@ console.log(typeOfBusiness,businessAddress,businessName,ownerName,pinCode,city,s
     formData.append("pharname", pharmacistName);
     formData.append("pharphone", pharmacistPhoneNumber);
     formData.append("licenseno", addDrugLicenceNumber);
-    formData.append("image1", addDrugLicenceImage);
+    formData.append("RetailerDrugLicenseImage", addDrugLicenceImage);
     formData.append("gstno", addGstNumber);
-    formData.append("image2", addGstImage);
+    formData.append("RetailerGSTCertificateImage", addGstImage);
     formData.append("panno", panNumber);
 
     try {
