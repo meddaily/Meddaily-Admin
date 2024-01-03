@@ -189,7 +189,7 @@ export default function Addproduct() {
                               type="text"
                               name="applicable_tax"
                               id="applicable_tax"
-                              value={description}
+                              value={applicableTax}
                               onChange={(e) => setApplicableTax(e.target.value)}
                               placeholder={"Enter Tax"}
                             />
