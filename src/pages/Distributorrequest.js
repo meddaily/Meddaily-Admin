@@ -55,7 +55,7 @@ export default function Distributorrequest() {
 
   const rows = distReq.map((item, i) => ({
     name: item.firstname+' '+item.lastname,
-    bname: item.distributorCode? item.distributorCode:'N/A',
+    bname: item.distributorcode? item.distributorcode:'N/A',
     address: item.area+ ' '+item.city+' ',
     phone: item.phonenumber,
     details: (

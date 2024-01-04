@@ -497,10 +497,11 @@ export default function Distributordetails() {
                     <div class="btn-group d-flex">
                     <button
                           type="button"
-                          class="btn btn-secondary "
+                          class="btn btn-success"
                           style={{
                             marginRight:"5px",
-                            borderRadius:"5px"
+                            borderRadius:"5px",
+                            backgroundColor:"#6EAFAB"
                           }}
                           onClick={hanndleApprove}
                         >
@@ -508,16 +509,17 @@ export default function Distributordetails() {
                         </button>
                         <button
                           type="button"
-                          class="btn btn-secondary "
+                          class="btn btn-success "
                           style={{
                             marginRight:"5px",
-                            borderRadius:"5px"
+                            borderRadius:"5px",
+                            backgroundColor:"crimson"
                           }}
                           onClick={hanndleReject}
                         >
                           Reject
                         </button>
-                      <button
+                      {/* <button
                         type="button"
                         class="btn btn-secondary dropdown-toggle"
                         data-bs-toggle="dropdown"
@@ -527,8 +529,8 @@ export default function Distributordetails() {
                         }}
                       >
                         Filter
-                      </button>
-                      <ul class="dropdown-menu">
+                      </button> */}
+                      {/* <ul class="dropdown-menu">
                         <li>
                           <a class="dropdown-item" href="javascript:void(0);">
                             Filter By Week
@@ -544,18 +546,18 @@ export default function Distributordetails() {
                             Custom Filter
                           </a>
                         </li>
-                      </ul>
+                      </ul> */}
                     </div>
                   </div>
                   
 
                   {/* Total payment */}
 
-                  <div className="card">
-                    <h5 className="card-header float-start">Payment Details</h5>
-                    <div className="table-responsive text-nowrap">
-                      <table className="table">
-                        <thead>
+                  {/* <div className="card"> */}
+                    {/* <h5 className="card-header float-start">Payment Details</h5> */}
+                    {/* <div className="table-responsive text-nowrap"> */}
+                      {/* <table className="table"> */}
+                        {/* <thead>
                           <tr>
                             <th>Order ID</th>
                             <th>Retailer name</th>
@@ -563,8 +565,8 @@ export default function Distributordetails() {
 
                             <th>Details</th>
                           </tr>
-                        </thead>
-                        <tbody className="table-border-bottom-0">
+                        </thead> */}
+                        {/* <tbody className="table-border-bottom-0">
                           {order &&
                             order.length > 0 &&
                             order.map((val, i) => {
@@ -582,7 +584,7 @@ export default function Distributordetails() {
                                   <td>{price}</td>
                                   <td>
                                     {/* Render the details or link */}
-                                    <div className="dropdown">
+                                    {/* <div className="dropdown">
                                       <Link
                                         className="dropdown-item"
                                         to="/distributordetails"
@@ -594,7 +596,7 @@ export default function Distributordetails() {
                                 </tr>
                               );
                             })}
-                        </tbody>
+                        </tbody>  */}
 
                         {/* <tbody className="table-border-bottom-0">
                           {order &&
@@ -629,9 +631,9 @@ export default function Distributordetails() {
                               );
                             })}
                         </tbody> */}
-                      </table>
-                    </div>
-                  </div>
+                      {/* </table> */}
+                    {/* </div> */}
+                  {/* </div> */}
                 </div>
                 <div className="content-backdrop fade"></div>
               </div>

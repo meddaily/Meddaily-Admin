@@ -493,10 +493,11 @@ export default function Retailerdetails() {
                     <div class="btn-group d-flex">
                     <button
                           type="button"
-                          class="btn btn-secondary "
+                          class="btn btn-success"
                           style={{
                             marginRight:"5px",
-                            borderRadius:"5px"
+                            borderRadius:"5px",
+                            backgroundColor:"#6EAFAB"
                           }}
                           onClick={hanndleApprove}
                         >
@@ -505,16 +506,17 @@ export default function Retailerdetails() {
 
                         <button
                           type="button"
-                          class="btn btn-secondary "
+                          class="btn btn-success"
                           style={{
                             marginRight:"5px",
-                            borderRadius:"5px"
+                            borderRadius:"5px",
+                            backgroundColor:"crimson"
                           }}
                           onClick={hanndleReject}
                         >
                           Reject
                         </button>
-                      <button
+                      {/* <button
                         type="button"
                         class="btn btn-secondary dropdown-toggle"
                         data-bs-toggle="dropdown"
@@ -540,7 +542,7 @@ export default function Retailerdetails() {
                             Custom Filter
                           </a>
                         </li>
-                      </ul>
+                      </ul> */}
                     </div>
                   </div>
 

@@ -102,7 +102,9 @@ export default function Ordertable() {
     status: item.order_status == 4 ? 'Order Placed' : "" || item.order_status == 1 ? 'Order Shipped' : "" || item.order_status == 3 ? 'Order Delivered' : "" || item.order_status == 0 ? 'Order Cancel' : "",
     details: (
       <button
-        className="btn btn-primary"
+        className="btn btn-success"
+        style={{backgroundColor:"#6EAFAB"}}
+        // variant="success"
         onClick={() => {
           handleViewModal(item);
           setDetailsModalOpen(true)
@@ -115,7 +117,8 @@ export default function Ordertable() {
       <>
       {item.order_status === 1 && (
       <button
-        className="btn btn-primary"
+        className="btn btn-success"
+        style={{backgroundColor:"#6EAFAB"}}
         onClick={() => {
           if (item.order_status === 1) {
             handleDelivery(item._id);
