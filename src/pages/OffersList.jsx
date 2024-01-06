@@ -4,6 +4,7 @@ import Navbar from "./Navbar";
 import { useState } from "react";
 import axios from "axios";
 import { useEffect } from "react";
+import { format } from "date-fns"; 
 
 const OffersList = () => {
   const [offers, setOffers] = useState("");
@@ -43,35 +44,36 @@ const OffersList = () => {
                         <table className="table">
                           <thead>
                             <tr>
-                              <th>Image</th>
-                              <th>Name</th>
+                              <th>Distributor Name</th>
                               <th>Type</th>
+                              <th>Product</th>
                               <th>Created At</th>
                             </tr>
                           </thead>
                           <tbody>
-                            {offers&&offers.length>0&&offers.map((item) => (
+                            {offers&&offers?.length>0&&offers?.map((item) => (
                               <tr key={item._id}>
-                                <td>
-                                  {item.image.startsWith(
+                                {/* <td>
+                                  {item?.image?.startsWith(
                                     "https://meddaily.s3.ap-south-1.amazonaws.com/"
                                   ) ? (
                                     <img
-                                      src={item.image}
+                                      src={item?.image}
                                       alt="Image"
-                                      style={{ maxWidth: "100px" }}
+                                      style={{ maxWidth: "100px" }} 
                                     />
                                   ) : (
                                     <img
-                                      src={item.image}
+                                      src={item?.image}
                                       alt="Image"
                                       style={{ maxWidth: "100px" }}
                                     />
                                   )}
-                                </td>
-                                <td>{item.name}</td>
-                                <td>{item.type}</td>
-                                <td>{item.createdAt}</td>
+                                </td> */}
+                                <td>{item?.distributors?.firstname+" "+item?.distributors?.lastname}</td>
+                                <td>{item?.type}</td>
+                                <td>{item?.products?.title}</td>
+                                <td>{format(new Date(item?.createdAt), 'dd/MM/yyyy')}</td>
                               </tr>
                             ))}
                           </tbody>
