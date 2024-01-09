@@ -1,5 +1,6 @@
 import React from "react";
 // import { Link } from "react-router-dom";
+import config from "../appConfig";
 import toastr from "toastr";
 import axios from "axios";
 import Navbar from "./Navbar";
@@ -30,7 +31,7 @@ export default function Addbul() {
     if (
       file &&
       file.type ===
-        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     ) {
       setBul({ ...bul, csvFile: file });
     } else {
@@ -58,15 +59,38 @@ export default function Addbul() {
 
     try {
       const response = await axios.post(
-        "http://localhost:8000/bulkupload",
+        `${config.backendURL}/bulkupload`,
         formData
       );
       if (response.status === 200) {
-          console.log("RESPONSe",response.data);
+        console.log("RESPONSe", response.data);
         toastr.success(response?.data?.message);
         setBul({ csvFile: "", category: "" });
         document.getElementById("csvFile").value = "";
         history.push("/producttable");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const downloadexcel = async () => {
+    try {
+      const response = await axios.get(
+        `${config.backendURL}/download_inventory`,
+        { responseType: 'blob' } 
+      );
+  
+      if (response.status === 200) {
+        const blob = new Blob([response.data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+  
+        const link = document.createElement('a');
+        link.href = window.URL.createObjectURL(blob);
+        link.download = 'products.xlsx';
+  
+        document.body.appendChild(link);
+        link.click();
+ 
+        document.body.removeChild(link);
       }
     } catch (error) {
       console.log(error);
@@ -88,6 +112,13 @@ export default function Addbul() {
                   <div className="card mb-12">
                     <div className="card-header d-flex justify-content-between align-items-center">
                       <h5 className="mb-0">Upload csv file</h5>
+                      <button
+                        variant="text"
+                        className='btn btn-primary'
+                        onClick={downloadexcel}
+                      >
+                        Download inventory
+                      </button>
                     </div>
                     <hr className="my-0" />
                     <div className="card-body">
