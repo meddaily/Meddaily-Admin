@@ -81,7 +81,9 @@ export default function Producttable() {
     medicinetype: item.category_id || 'N/A',
     delete: (
       <button
-        className="btn btn-danger"
+        className="btn"
+        variant="text"
+        style={{backgroundColor:"#DC143C",color:"white"}}
         onClick={() => deleteProduct(item._id)}
       >
         Delete
@@ -107,7 +109,9 @@ export default function Producttable() {
                 <div className="btn-group">
                   <button
                     type="button"
-                    className="btn btn-secondary dropdown-toggle"
+                    className="btn dropdown-toggle"
+                    variant="text"
+                    style={{backgroundColor:"#6EAFAB",color:"white"}}
                     data-bs-toggle="dropdown"
                     aria-expanded="false"
                   >

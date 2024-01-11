@@ -54,17 +54,20 @@ export default function Retailerrequest() {
     address: item.area+' '+item.city+' ',
     phone: item.phonenumber,
     details: (
+      <button
+      className="btn"
+      variant="text"
+      style={{backgroundColor:"#6EAFAB"}}>
       <Link
-      className="dropdown-item"
-      // to="/distributordetails"
+     style={{color:"white"}}
       to={{
         pathname: "/retailerdetails",
         state: { id: item._id },
       }}
     >
-      {" "}
       View Full Details
     </Link>
+    </button>
     ),
   }));
 

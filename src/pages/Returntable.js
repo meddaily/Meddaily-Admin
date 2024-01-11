@@ -152,9 +152,11 @@ export default function Returntable() {
       createdAt: formattedDate || 0,
       // other properties...
       view_more: (
-        <div className="dropdown">
+        <div className="dropdown" variant="text"
+        style={{backgroundColor:"#6EAFAB",borderRadius:"8px"}} >
           <Link
             className="dropdown-item"
+            style={{color:"white"}}
             to="#"
             onClick={(e) => {
               setItemValue(item);

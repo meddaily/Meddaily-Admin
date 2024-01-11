@@ -5,8 +5,11 @@ import Sidebar from "./Sidebar";
 import Navbar from "./Navbar";
 import { useState } from "react";
 // import config from "../appConfig";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+
 
 export default function Addret() {
+  const history = useHistory();
   // const [retailer,setRetailer] = useState({
   //   typeOfBusiness: "",
   //   businessName: "",
@@ -257,6 +260,10 @@ console.log(typeOfBusiness,businessAddress,businessName,ownerName,pinCode,city,s
       console.error(err);
     }
   };
+
+  const handlecancle =()=>{
+    history.push("/retailerrequest");
+  }
   return (
     <>
       <div className="layout-wrapper layout-content-navbar">
@@ -693,13 +700,18 @@ console.log(typeOfBusiness,businessAddress,businessName,ownerName,pinCode,city,s
                         <div className="mt-2">
                           <button
                             type="submit"
-                            className="btn btn-primary me-2"
+                            className="btn me-2"
+                            variant="text"
+                            style={{backgroundColor:"#6EAFAB",color:"white"}}
                           >
                             Save
                           </button>
                           <button
                             type="reset"
-                            className="btn btn-outline-secondary"
+                            className="btn"
+                            variant="text"
+                            style={{backgroundColor:"#DC143C",color:"white"}}
+                            onClick={handlecancle}
                           >
                             Cancel
                           </button>

@@ -59,17 +59,21 @@ export default function Distributorrequest() {
     address: item.area+ ' '+item.city+' ',
     phone: item.phonenumber,
     details: (
-      <Link
-      className="dropdown-item"
-      // to="/distributordetails"
-      to={{
-        pathname: "/distributordetails",
-        state: { id: item._id },
-      }}
-    >
-      {" "}
-      View Full Details
-    </Link>
+      <button
+      className="btn"
+      variant="text"
+      style={{backgroundColor:"#6EAFAB"}}>
+
+        <Link
+       style={{color:"white"}}
+        to={{
+          pathname: "/distributordetails",
+          state: { id: item._id },
+        }}
+      >
+        View Full Details
+      </Link>
+      </button>
     ),
   }));
 

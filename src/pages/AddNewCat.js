@@ -3,10 +3,13 @@ import Sidebar from "./Sidebar";
 import Navbar from "./Navbar";
 import axios from "axios";
 import toastr from "toastr";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+
 
 const AddNewCat = () => {
   const [name, setName] = useState("");
   const [image, setImage] = useState(null);
+  const history = useHistory();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -28,6 +31,7 @@ const AddNewCat = () => {
 
       setName("");
       setImage("");
+      history.push("/");
       console.log(response.data);
     } catch (error) {
       console.error(error);
@@ -35,6 +39,7 @@ const AddNewCat = () => {
   };
   const handleCancel = (e) => {
     e.preventDefault();
+    history.push("/");
     setName("");
     setImage("");
   };
@@ -95,11 +100,18 @@ const AddNewCat = () => {
                         </div>
 
                         <div>
-                          <button type="submit" className="btn btn-primary">
+                          <button 
+                          type="submit" 
+                          className="btn"
+                          variant="text"
+                          style={{backgroundColor:"#6EAFAB",color:"white"}}
+                          >
                             Add Category
                           </button>
                           <button
-                            className="btn btn-outline-secondary mx-3"
+                            className="btn mx-3"
+                            variant="text"
+                            style={{backgroundColor:"#DC143C",color:"white"}}
                             onClick={handleCancel}
                           >
                             Cancel

@@ -169,7 +169,9 @@ export default function Ordertable() {
                 <div className="btn-group">
                   <button
                     type="button"
-                    className="btn btn-secondary dropdown-toggle"
+                    className="btn dropdown-toggle"
+                    variant="text"
+                    style={{backgroundColor:"#6EAFAB",color:"white"}}
                     data-bs-toggle="dropdown"
                     aria-expanded="false"
                   >

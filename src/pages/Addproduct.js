@@ -71,6 +71,7 @@ export default function Addproduct() {
     setSubTitle("");
     setDescription("");
     setCategoryId("");
+    history.push("/");
   };
   return (
     <>
@@ -198,14 +199,18 @@ export default function Addproduct() {
                         <div className="mt-2">
                           <button
                             onClick={(event) => postData(event)}
-                            className="btn btn-primary me-2"
+                            className="btn  me-2"
+                            variant="text"
+                            style={{backgroundColor:"#6EAFAB",color:"white"}}
                           >
                             Add
                           </button>
                           <button
                             type="reset"
-                            className="btn btn-outline-secondary"
+                            className="btn "
                             onClick={handleCancel}
+                            variant="text"
+                            style={{backgroundColor:"#DC143C",color:"white"}}
                           >
                             Cancel
                           </button>

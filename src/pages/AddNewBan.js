@@ -106,12 +106,14 @@ const AddNewBan = () => {
                             </div>
                           </div>
                           <div>
-                            <button type="submit" className="btn btn-primary">
+                            <button type="submit" className="btn"  style={{backgroundColor:"#6EAFAB",color:"white"}}>
                               Add
                             </button>
                             <button
                               type="reset"
-                              className="btn btn-secondary mx-3"
+                              className="btn mx-3"
+                              
+                            style={{backgroundColor:"#DC143C",color:"white"}}
                               onClick={(e)=>setBanner("")}
                             >
                               Cancel

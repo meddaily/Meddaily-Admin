@@ -25,6 +25,7 @@ export default function Addbul() {
 
   const handleCancel = () => {
     setBul({ csvFile: "", category: "" });
+    history.push("/producttable");
   };
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -114,8 +115,9 @@ export default function Addbul() {
                       <h5 className="mb-0">Upload csv file</h5>
                       <button
                         variant="text"
-                        className='btn btn-primary'
+                        className='btn '
                         onClick={downloadexcel}
+                        style={{backgroundColor:"#6EAFAB",color:"white"}}
                       >
                         Download inventory
                       </button>
@@ -185,7 +187,9 @@ export default function Addbul() {
                         <div className="mt-2">
                           <button
                             type="submit"
-                            className="btn btn-primary me-2"
+                            className="btn  me-2"
+                            variant="text"
+                            style={{backgroundColor:"#6EAFAB",color:"white"}}
                           >
                             Save
                           </button>
@@ -193,6 +197,8 @@ export default function Addbul() {
                             type="reset"
                             className="btn btn-outline-secondary"
                             onClick={handleCancel}
+                            variant="text"
+                            style={{backgroundColor:"#DC143C",color:"white"}}
                           >
                             Cancel
                           </button>

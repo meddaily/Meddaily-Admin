@@ -63,7 +63,7 @@ const Banner = () => {
                           <div className="col-md-12 d-flex justify-content-between">
                             <h3 className="text-muted">Listing All Banners</h3>
                             <Link to="/addnewban">
-                              <button className="btn btn-primary">
+                              <button className="btn "  style={{backgroundColor:"#6EAFAB",color:"white"}}>
                                 Add New Banner
                               </button>
                             </Link>

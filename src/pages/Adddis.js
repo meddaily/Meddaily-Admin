@@ -5,6 +5,8 @@ import Sidebar from "./Sidebar";
 import { useState } from "react";
 // import config from "../appConfig";
 import axios from "axios";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+
 
 export default function Adddis() {
   const [distributor, setDistributor] = useState({
@@ -23,6 +25,7 @@ export default function Adddis() {
     distributorCode: "",
     distributorType: "",
   });
+  const history = useHistory();
 
   let name, value;
   function handle(e) {
@@ -123,6 +126,7 @@ export default function Adddis() {
       .then((res) => {
         if (res.status === 200) {
           toastr.success(res.data.message);
+          history.push("/distributorrequest");
           setDistributor({
             firstName: "",
             lastName: "",
@@ -146,6 +150,9 @@ export default function Adddis() {
         console.log(err);
       });
   };
+  const handlecancle =()=>{
+    history.push("/distributorrequest");
+  }
   return (
     <>
       <div className="layout-wrapper layout-content-navbar">
@@ -466,13 +473,18 @@ export default function Adddis() {
                         <div className="mt-2">
                           <button
                             onClick={(event) => postData(event)}
-                            className="btn btn-primary me-2"
+                            className="btn me-2"
+                            variant="text"
+                            style={{backgroundColor:"#6EAFAB",color:"white"}}
                           >
                             Save
                           </button>
                           <button
                             type="reset"
-                            className="btn btn-outline-secondary"
+                            className="btn"
+                            variant="text"
+                            style={{backgroundColor:"#DC143C",color:"white"}}
+                            onClick={handlecancle}
                           >
                             Cancel
                           </button>
