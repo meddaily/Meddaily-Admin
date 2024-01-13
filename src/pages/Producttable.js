@@ -7,6 +7,7 @@ import Sidebar from "./Sidebar";
 import Producttbody from "./Producttbody";
 // import config from '../appConfig';
 import { MDBDataTable } from 'mdbreact';
+import { Link } from "react-router-dom/cjs/react-router-dom.min";
 
 export default function Producttable() {
   const authToken = localStorage.getItem('authToken');
@@ -26,7 +27,7 @@ export default function Producttable() {
         setProductList(response.data.data);
       }
     } catch (err) {
-      toastr.error(err.response.data.message);
+      toastr.error(err.response?.data?.message);
       console.error(err);
     }
   }
@@ -70,6 +71,10 @@ export default function Producttable() {
       sort: 'asc',
     },
     {
+      label:'Edit',
+      field:'edit'
+    },
+    {
       label: 'Action',
       field: 'delete',
     },
@@ -87,6 +92,20 @@ export default function Producttable() {
         onClick={() => deleteProduct(item._id)}
       >
         Delete
+      </button>
+    ),
+    edit: (
+      <button
+        className="btn"
+        variant="text"
+        style={{backgroundColor:"#6EAFAB"}}
+       
+      >
+        <Link
+        style={{color:"white"}} 
+        to={`/productedit/${item._id}`}>
+        Edit
+        </Link>
       </button>
     ),
   }));

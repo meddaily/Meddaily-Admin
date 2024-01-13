@@ -95,7 +95,7 @@ export default function Ordertable() {
   ];
 
   const rows = orderList.map((item, i) => ({
-    orderId: item._id,
+    orderId: item.order_id,
     userType: item.retailer_name,
     userId: item.distributor_name,
     price: item.price,

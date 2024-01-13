@@ -43,6 +43,7 @@ import OrderIdFilter from "./OrderIdFilter";
 import OrderDisId from "./OrderDisId";
 import OffersList from "./OffersList";
 import EditCategory from "./EditCategory";
+import Productedit from "./Productedit"
 
 export default function Routerpage() {
   return (
@@ -55,6 +56,7 @@ export default function Routerpage() {
           {/* admin */}
           <Route path="/adddis" component={Adddis} />
           <Route path="/addret" component={Addret} />
+          <Route path="/productedit/:id" component={Productedit} />
           <Route path="/distributordetails" component={Distributordetails} />
           <Route path="/distributordetailsr" component={Distributordetailsr} />
           <Route path="/distributorlist" component={Distributorlist} />

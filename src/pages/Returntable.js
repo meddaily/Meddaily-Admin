@@ -169,7 +169,30 @@ export default function Returntable() {
       ),
     };
   });
+
   
+  const handleDelivery = async () => {
+    console.log("1111111111111111111111111111111111111111",itemValue._id );
+    try {
+      const response = await axios.post(
+        "https://api.meddaily.in/order_status_change",
+        {
+          
+          order_id:itemValue._id,
+          status: 3,
+        }
+      );
+      // console.log("NEW", _id);
+      if (response.status === 200) {
+        toastr.success("Order status updated successfully");
+      }
+    } catch (error) {
+      console.log("vruti>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", error);
+      toastr.error("Error updating order status");
+      console.error(error);
+    }
+  };
+ 
 
   return (
     <>
@@ -262,6 +285,16 @@ export default function Returntable() {
             <p>Return Message: {itemValue?.return_message}</p>
             <p>Return Quantity: {itemValue?.return_quantity}</p>
             <p>Return Status: {itemValue?.return_status == 1 ? "Not Accepted" : ""} {itemValue?.return_status == 2 ? "Accepted" : ""}</p>
+            <div>
+            <button
+              variant="text"
+              className=" btn"
+              style={{backgroundColor:"#6EAFAB",color:"white",borderRadius:"8px",marginTop: '20px'}}
+              onClick={handleDelivery}
+            >
+              Mark As Delivered
+            </button>
+            </div>
           </div>
         </Modal.Body>
       </Modal>
