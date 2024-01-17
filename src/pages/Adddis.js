@@ -75,11 +75,51 @@ export default function Adddis() {
       image2
     } = distributor;
 
-    if (password !== confirmPassword) {
-      toastr.error("Password and confirm password do not match.");
-      return;
+    if (firstName === "") {
+      return toastr.warning("firstname cannot be empty !");
     }
-
+    if (lastName === "") {
+      return toastr.warning("lastname cannot be empty !");
+    }
+    if (phoneNumber === "") {
+      return toastr.warning("phonenumber cannot be empty !");
+    }
+    if (email === "") {
+      return toastr.warning("email cannot be empty !");
+    }
+    if (city === "") {
+      return toastr.warning("city cannot be empty !");
+    }
+    if (area === "") {
+      return toastr.warning("area cannot be empty !");
+    }
+    if (pinCode === "") {
+      return toastr.warning("pincode cannot be empty !");
+    }
+    if (state === "") {
+      return toastr.warning("state cannot be empty !");
+    }
+    if (businessName === "") {
+      return toastr.warning("businessname cannot be empty !");
+    }
+    if (companyName === "") {
+      return toastr.warning("company cannot be empty !");
+    }
+    if (password === "") {
+      return toastr.warning("password cannot be empty !");
+    }
+    if (confirmPassword === "") {
+      return toastr.warning("confirmpassword cannot be empty !");
+    }
+    if (password !== confirmPassword) {
+      return toastr.warning("Password and Confirm Password must match!");
+    }
+    if (distributorCode === "") {
+      return toastr.warning("distributorcode cannot be empty !");
+    }
+    if (distributorType === "") {
+      return toastr.warning("distributortype  cannot be empty !");
+    }
     const formData = new FormData();
 
     formData.append("firstname", firstName);
@@ -147,7 +187,7 @@ export default function Adddis() {
         });
       }
     } catch (err) {
-      toastr.error(err.response.data.message);
+      toastr.warning(err.response.data.message);
       console.log(err);
     }
   };
