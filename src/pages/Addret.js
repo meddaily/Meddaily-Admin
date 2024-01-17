@@ -251,6 +251,7 @@ export default function Addret() {
       );
       if (response.status === 200) {
         toastr.success(response.data.message);
+        history.push("/retailerrequest");
         // setRetailer({
         //   typeOfBusiness: "",
         //   businessName: "",
