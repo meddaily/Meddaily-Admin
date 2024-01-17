@@ -4,8 +4,8 @@ import axios from "axios";
 import Sidebar from "./Sidebar";
 import Navbar from "./Navbar";
 import { useState } from "react";
-// import config from "../appConfig";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import config from "../appConfig";
 
 
 export default function Addret() {
@@ -33,10 +33,10 @@ export default function Addret() {
   // });
   // console.log(retailer);
   //  add sep usestate
-  const [typeOfBusiness, setTypeOfBusiness] = useState("");
-  const [businessName, setBusinessName] = useState("");
-  const [ownerName, setOwnerName] = useState("");
-  const [businessAddress, setBusinessAddress] = useState("");
+  const [businesstype, setTypeOfBusiness] = useState("");
+  const [businessname, setBusinessName] = useState("");
+  const [OwnerName, setOwnerName] = useState("");
+  const [address, setBusinessAddress] = useState("");
   const [pinCode, setPinCode] = useState("");
   const [city, setCity] = useState("");
   const [area, setArea] = useState("");
@@ -46,16 +46,16 @@ export default function Addret() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [email, setEmail] = useState("");
   const [pharmacistName, setPharmacistName] = useState("");
-  const [pharmacistPhoneNumber, setPharmacistPhoneNumber] = useState("");
-  const [addDrugLicenceNumber, setAddDrugLicenceNumber] = useState("");
+  const [PharmacistPhoneNo, setPharmacistPhoneNumber] = useState("");
+  const [LisenceDetails, setAddDrugLicenceNumber] = useState("");
   const [addDrugLicenceImage, setAddDrugLicenceImage] = useState("");
-  const [addGstNumber, setAddGstNumber] = useState("");
+  const [GSTINNumber, setAddGstNumber] = useState("");
   const [addGstImage, setAddGstImage] = useState("");
-  const [panNumber, setPanNumber] = useState("");
+  const [PanNumber, setPanNumber] = useState("");
 
 
 
-console.log(typeOfBusiness,businessAddress,businessName,ownerName,pinCode,city,state,phoneNumber,password,confirmPassword,area,email,pharmacistName,pharmacistPhoneNumber,addDrugLicenceImage,addDrugLicenceNumber,addGstNumber,addGstImage,panNumber)
+// console.log(businesstype,businessAddress,businessname,ownerName,pinCode,city,state,phoneNumber,password,confirmPassword,area,email,pharmacistName,pharmacistPhoneNumber,addDrugLicenceImage,addDrugLicenceNumber,addGstNumber,addGstImage,panNumber)
 
 
   // let name, value;
@@ -90,19 +90,19 @@ console.log(typeOfBusiness,businessAddress,businessName,ownerName,pinCode,city,s
     //   panNumber,
     // } = retailer;
 
-    if (!typeOfBusiness) {
+    if (!businesstype) {
       toastr.warning("Please select a business type!");
       return;
     }
-    if (!businessName) {
+    if (!businessname) {
       toastr.warning("Business name cannot be empty!");
       return;
     }
-    if (!ownerName) {
+    if (!OwnerName) {
       toastr.warning("Owner name cannot be empty!");
       return;
     }
-    if (!businessAddress) {
+    if (!address) {
       toastr.warning("Business address cannot be empty!");
       return;
     }
@@ -146,89 +146,107 @@ console.log(typeOfBusiness,businessAddress,businessName,ownerName,pinCode,city,s
       toastr.warning("Pharmacist name cannot be empty!");
       return;
     }
-    if (!pharmacistPhoneNumber) {
+    if (!PharmacistPhoneNo) {
       toastr.warning("Pharmacist phone number cannot be empty!");
       return;
     }
-    if (!addDrugLicenceNumber) {
+    if (!LisenceDetails) {
       toastr.warning("Drug licence number cannot be empty!");
       return;
     }
 
-    if (!addGstNumber) {
+    if (!GSTINNumber) {
       toastr.warning("GST number cannot be empty!");
       return;
     }
 
-    if (!panNumber) {
+    if (!PanNumber) {
       toastr.warning("PAN number cannot be empty!");
       return;
     }
 
-    const reqBody = {
-      // businesstype: businesstype,
-      // businessname: businessname,
-      // ownername: ownername,
-      // address: address,
-      // pincode: pincode,
-      // city: city,
-      // area: area,
-      // state: state,
-      // phonenumber: phonenumber,
-      // password: password,
-      // confirmpassword: confirmpassword,
-      // email: email,
-      // pharname: pharname,
-      // pharphone: pharphone,
-      // licenseno: licenseno,
-      // image1: image1,
-      // gstno: gstno,
-      // image2: image2,
-      // panno: panno,
-      businesstype: typeOfBusiness,
-      businessname: businessName,
-      ownername: ownerName,
-      address: businessAddress,
-      pincode: pinCode,
-      city: city,
-      area: area,
-      state: state,
-      phonenumber: phoneNumber,
-      password: password,
-      confirmpassword: confirmPassword,
-      email: email,
-      pharname: pharmacistName,
-      pharphone: pharmacistPhoneNumber,
-      licenseno: addDrugLicenceNumber,
-      image1: addDrugLicenceImage,
-      gstno: addGstNumber,
-      image2: addGstImage,
-      panno: panNumber,
-    };
+    // const reqBody = {
+    //   // businesstype: businesstype,
+    //   // businessname: businessname,
+    //   // ownername: ownername,
+    //   // address: address,
+    //   // pincode: pincode,
+    //   // city: city,
+    //   // area: area,
+    //   // state: state,
+    //   // phonenumber: phonenumber,
+    //   // password: password,
+    //   // confirmpassword: confirmpassword,
+    //   // email: email,
+    //   // pharname: pharname,
+    //   // pharphone: pharphone,
+    //   // licenseno: licenseno,
+    //   // image1: image1,
+    //   // gstno: gstno,
+    //   // image2: image2,
+    //   // panno: panno,
+    //   businesstype: businesstype,
+    //   businessname: businessname,
+    //   ownername: ownerName,
+    //   address: businessAddress,
+    //   pincode: pinCode,
+    //   city: city,
+    //   area: area,
+    //   state: state,
+    //   phonenumber: phoneNumber,
+    //   password: password,
+    //   confirmpassword: confirmPassword,
+    //   email: email,
+    //   pharname: pharmacistName,
+    //   pharphone: pharmacistPhoneNumber,
+    //   licenseno: addDrugLicenceNumber,
+    //   image1: addDrugLicenceImage,
+    //   gstno: addGstNumber,
+    //   image2: addGstImage,
+    //   panno: panNumber,
+    // };
     const formData = new FormData();
-    formData.append("businesstype", typeOfBusiness);
-    formData.append("businessname", businessName);
-    formData.append("ownername", ownerName);
-    formData.append("address", businessAddress);
+    formData.append("typeOfBusiness", businesstype);
+    formData.append("businessName", businessname);
+    formData.append("ownerName", OwnerName);
+    formData.append("businessAddress", address);
     formData.append("pincode", pinCode);
     formData.append("city", city);
     formData.append("area", area);
     formData.append("state", state);
-    formData.append("phonenumber", phoneNumber);
+    formData.append("phone", phoneNumber);
     formData.append("password", password);
     formData.append("confirmpassword", confirmPassword);
     formData.append("email", email);
-    formData.append("pharname", pharmacistName);
-    formData.append("pharphone", pharmacistPhoneNumber);
-    formData.append("licenseno", addDrugLicenceNumber);
+    formData.append("pharmacistName", pharmacistName);
+    formData.append("PharmacistPhoneNo", PharmacistPhoneNo);
+    formData.append("licenseNumber", LisenceDetails);
     formData.append("RetailerDrugLicenseImage", addDrugLicenceImage);
-    formData.append("gstno", addGstNumber);
+    formData.append("gstInNumber", GSTINNumber);
     formData.append("RetailerGSTCertificateImage", addGstImage);
-    formData.append("panno", panNumber);
+    formData.append("panNumber", PanNumber);
+
+    
+    // formdata.append('typeOfBusiness', values.businesstype);
+    // formdata.append('businessName', values.businessname);
+    // formdata.append('ownerName', values.OwnerName);
+    // formdata.append('businessAddress', values.address);
+    // formdata.append('email', values.email);
+    // formdata.append('area', values.address);
+    // formdata.append('pincode', values.pinCode);
+    // formdata.append('city', values.city);
+    // formdata.append('state', values.state);
+    // formdata.append('phone', values.phoneNumber);
+    // formdata.append('password', values.password);
+    // formdata.append('pharmacistName', values.PharmacistName);
+    // formdata.append('PharmacistPhoneNo', values.PharmacistPhoneNo);
+    // formdata.append('licenseNumber', values.LisenceDetails);
+    // formdata.append('gstInNumber', values.GSTINNumber);
+    // formdata.append('panNumber', values.PanNumber);
 
     try {
       const response = await axios.post(
-        "https://api.meddaily.in/retailer_register",
+        `${config.backendURL}/retailer_register`,
         formData
       );
       if (response.status === 200) {
@@ -294,7 +312,7 @@ console.log(typeOfBusiness,businessAddress,businessName,ownerName,pinCode,city,s
                             <select
                               id="typeOfBusiness"
                               name="typeOfBusiness"
-                              value={typeOfBusiness}
+                              value={businesstype}
                               onChange={(e) =>
                                 setTypeOfBusiness(e.target.value)
                               }
@@ -320,7 +338,7 @@ console.log(typeOfBusiness,businessAddress,businessName,ownerName,pinCode,city,s
                               type="text"
                               name="businessName"
                               id="businessName"
-                              value={businessName}
+                              value={businessname}
                               onChange={(e) => setBusinessName(e.target.value)}
                               placeholder={"Enter business name"}
                             />
@@ -338,7 +356,7 @@ console.log(typeOfBusiness,businessAddress,businessName,ownerName,pinCode,city,s
                               id="ownerName"
                               name="ownerName"
                               placeholder="Owner name"
-                              value={ownerName}
+                              value={OwnerName}
                               onChange={(e) => setOwnerName(e.target.value)}
                               autofocus
                             />
@@ -355,7 +373,7 @@ console.log(typeOfBusiness,businessAddress,businessName,ownerName,pinCode,city,s
                               className="form-control"
                               id="businessAddress"
                               name="businessAddress"
-                              value={businessAddress}
+                              value={address}
                               onChange={(e) =>
                                 setBusinessAddress(e.target.value)
                               }
@@ -580,7 +598,7 @@ console.log(typeOfBusiness,businessAddress,businessName,ownerName,pinCode,city,s
                                 id="pharmacistPhoneNumber"
                                 name="pharmacistPhoneNumber"
                                 placeholder="phone numberF"
-                                value={pharmacistPhoneNumber}
+                                value={PharmacistPhoneNo}
                                 onChange={(e) =>
                                   setPharmacistPhoneNumber(e.target.value)
                                 }
@@ -602,7 +620,7 @@ console.log(typeOfBusiness,businessAddress,businessName,ownerName,pinCode,city,s
                                 id="addDrugLicenceNumber"
                                 name="addDrugLicenceNumber"
                                 placeholder="add drug licence number"
-                                value={addDrugLicenceNumber}
+                                value={LisenceDetails}
                                 onChange={(e) =>
                                   setAddDrugLicenceNumber(e.target.value)
                                 }
@@ -645,7 +663,7 @@ console.log(typeOfBusiness,businessAddress,businessName,ownerName,pinCode,city,s
                                 id="addGstNumber"
                                 name="addGstNumber"
                                 placeholder="add gst number"
-                                value={addGstNumber}
+                                value={GSTINNumber}
                                 onChange={(e) =>
                                   setAddGstNumber(e.target.value)
                                 }
@@ -691,7 +709,7 @@ console.log(typeOfBusiness,businessAddress,businessName,ownerName,pinCode,city,s
                                 id="panNumber"
                                 name="panNumber"
                                 placeholder="pan number"
-                                value={panNumber}
+                                value={PanNumber}
                                 onChange={(e) => setPanNumber(e.target.value)}
                               />
                             </div>
