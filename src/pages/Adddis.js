@@ -69,10 +69,16 @@ export default function Adddis() {
       bankName, // New field
       beneficiaryName, // New field
       accountNumber, // New field
-      ifscCode, // New field
+      ifscCode, 
+      confirmPassword,// New field
       image1,
       image2
     } = distributor;
+
+    if (password !== confirmPassword) {
+      toastr.error("Password and confirm password do not match.");
+      return;
+    }
 
     const formData = new FormData();
 
@@ -89,14 +95,15 @@ export default function Adddis() {
     formData.append("password", password);
     formData.append("distributorcode", distributorCode);
     formData.append("distributortype", distributorType);
-    formData.append("gst_number", gstNumber); // New field
+    formData.append("gst_number", gstNumber); 
+    formData.append("confirmpassword", confirmPassword);
     formData.append("image1", image1);
-    formData.append("drug_licence", drugLicence); // New field
+    formData.append("drug_licence", drugLicence); 
     formData.append("image2", image2);
-    formData.append("bank_name", bankName); // New field
-    formData.append("benificiary_name", beneficiaryName); // New field
-    formData.append("account_number", accountNumber); // New field
-    formData.append("ifsc_code", ifscCode); // New field
+    formData.append("bank_name", bankName); 
+    formData.append("benificiary_name", beneficiaryName); 
+    formData.append("account_number", accountNumber); 
+    formData.append("ifsc_code", ifscCode); 
 
     const axiosConfig = {
       headers: {
