@@ -5,8 +5,8 @@ import { Link } from "react-router-dom";
 import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
 import { MDBDataTable } from 'mdbreact';
+import config from "../appConfig";
 // import Distributordata from "./Distributordata";
-// import config from "../appConfig";
 
 export default function Distributorlist() {
   const authToken = localStorage.getItem("authToken");
@@ -19,7 +19,7 @@ export default function Distributorlist() {
 
   async function getAllDistributors() {
     await axios
-      .get(`https://api.meddaily.in/distributor_list`)
+      .get(`${config.backendURL}/distributor_list`)
       .then((res) => {
         if (res.status === 200) {
           setDistributorList(res?.data?.data.reverse());

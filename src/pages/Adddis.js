@@ -3,7 +3,7 @@ import toastr from "toastr";
 import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
 import { useState } from "react";
-// import config from "../appConfig";
+import config from "../appConfig";
 import axios from "axios";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
@@ -64,13 +64,13 @@ export default function Adddis() {
       password,
       distributorCode,
       distributorType,
-      gstNumber, // New field
-      drugLicence, // New field
-      bankName, // New field
-      beneficiaryName, // New field
-      accountNumber, // New field
+      gstNumber, 
+      drugLicence, 
+      bankName, 
+      beneficiaryName, 
+      accountNumber, 
       ifscCode, 
-      confirmPassword,// New field
+      confirmPassword,
       image1,
       image2
     } = distributor;
@@ -153,7 +153,7 @@ export default function Adddis() {
 
     try {
       const res = await axios.post(
-        "https://api.meddaily.in/distributor_register",
+        `${config.backendURL}/distributor_register`,
         formData,
         axiosConfig
       );
