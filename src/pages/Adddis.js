@@ -536,6 +536,7 @@ export default function Adddis() {
                               className="form-control"
                               id="gstNumber"
                               name="gstNumber"
+                              placeholder="Enter gst number"
                               value={distributor.gstNumber}
                               onChange={handle}
                             />
@@ -564,6 +565,7 @@ export default function Adddis() {
                               className="form-control"
                               id="drugLicence"
                               name="drugLicence"
+                              placeholder="Enter drugLicence number"
                               value={distributor.drugLicence}
                               onChange={handle}
                             />
@@ -577,6 +579,7 @@ export default function Adddis() {
                               className="form-control"
                               id="bankName"
                               name="bankName"
+                              placeholder="Enter Bank Name"
                               value={distributor.bankName}
                               onChange={handle}
                             />
@@ -590,6 +593,7 @@ export default function Adddis() {
                               className="form-control"
                               id="beneficiaryName"
                               name="beneficiaryName"
+                              placeholder="Enter Beneficiary Name"
                               value={distributor.beneficiaryName}
                               onChange={handle}
                             />
@@ -603,6 +607,7 @@ export default function Adddis() {
                               className="form-control"
                               id="accountNumber"
                               name="accountNumber"
+                              placeholder="Enter Account Number"
                               value={distributor.accountNumber}
                               onChange={handle}
                             />
@@ -616,6 +621,7 @@ export default function Adddis() {
                               className="form-control"
                               id="ifscCode"
                               name="ifscCode"
+                              placeholder="Enter Ifsc Code"
                               value={distributor.ifscCode}
                               onChange={handle}
                             />
