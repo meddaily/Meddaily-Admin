@@ -91,7 +91,7 @@ export default function Distributordetails() {
     drug_licence,
     ifsc_code,
     image,
-    pannumber,
+    // pannumber,
   } = formData;
 
   return (
@@ -367,7 +367,7 @@ export default function Distributordetails() {
                             />
                           </div>
 
-                          <div className="mb-3 col-md-6">
+                          {/* <div className="mb-3 col-md-6">
                             <label
                               for="timeZones"
                               className="form-label float-start"
@@ -382,7 +382,7 @@ export default function Distributordetails() {
                               value={pannumber || "NA"}
                               readOnly
                             />
-                          </div>
+                          </div> */}
                           <div className="mb-3 col-md-6">
                             <label
                               for="timeZones"

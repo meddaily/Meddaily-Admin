@@ -21,10 +21,18 @@ export default function Adddis() {
     businessName: "",
     companyName: "",
     password: "",
-    confirmPassword: "",
     distributorCode: "",
     distributorType: "",
+    gstNumber: "", // New field
+    drugLicence: "", // New field
+    bankName: "", // New field
+    beneficiaryName: "", // New field
+    accountNumber: "", // New field
+    ifscCode: "", // New field
+    image1: "",
+    image2: ""
   });
+
   const history = useHistory();
 
   let name, value;
@@ -34,9 +42,14 @@ export default function Adddis() {
     setDistributor({ ...distributor, [name]: value });
   }
 
-  //data send in backend by using async function postData
+  const handleFileChange = (e, name) => {
+    const file = e.target.files[0];
+    setDistributor({ ...distributor, [name]: file });
+  };
+
   const postData = async (e) => {
     e.preventDefault();
+
     const {
       firstName,
       lastName,
@@ -49,110 +62,92 @@ export default function Adddis() {
       businessName,
       companyName,
       password,
-      confirmPassword,
       distributorCode,
       distributorType,
+      gstNumber, // New field
+      drugLicence, // New field
+      bankName, // New field
+      beneficiaryName, // New field
+      accountNumber, // New field
+      ifscCode, // New field
+      image1,
+      image2
     } = distributor;
-    if (firstName === "") {
-      return toastr.warning("firstname cannot be empty !");
-    }
-    if (lastName === "") {
-      return toastr.warning("lastname cannot be empty !");
-    }
-    if (phoneNumber === "") {
-      return toastr.warning("phonenumber cannot be empty !");
-    }
-    if (email === "") {
-      return toastr.warning("email cannot be empty !");
-    }
-    if (city === "") {
-      return toastr.warning("city cannot be empty !");
-    }
-    if (area === "") {
-      return toastr.warning("area cannot be empty !");
-    }
-    if (pinCode === "") {
-      return toastr.warning("pincode cannot be empty !");
-    }
-    if (state === "") {
-      return toastr.warning("state cannot be empty !");
-    }
-    if (businessName === "") {
-      return toastr.warning("businessname cannot be empty !");
-    }
-    if (companyName === "") {
-      return toastr.warning("company cannot be empty !");
-    }
-    if (password === "") {
-      return toastr.warning("password cannot be empty !");
-    }
-    if (confirmPassword === "") {
-      return toastr.warning("confirmpassword cannot be empty !");
-    }
-    if (password !== confirmPassword) {
-      return toastr.warning("Password and Confirm Password must match!");
-    }
-    if (distributorCode === "") {
-      return toastr.warning("distributorcode cannot be empty !");
-    }
-    if (distributorType === "") {
-      return toastr.warning("distributortype  cannot be empty !");
-    }
 
-    const reqBody = {
-      firstname: firstName,
-      lastname: lastName,
-      phonenumber: phoneNumber,
-      email: email,
-      pinCode: pinCode,
-      city: city,
-      area: area,
-      state: state,
-      businessname: businessName,
-      companyname: companyName,
-      password: password,
-      confirmPassword: confirmPassword,
-      distributorcode: distributorCode,
-      distributortype: distributorType,
-    };
+    const formData = new FormData();
+
+    formData.append("firstname", firstName);
+    formData.append("lastname", lastName);
+    formData.append("phonenumber", phoneNumber);
+    formData.append("email", email);
+    formData.append("pincode", pinCode);
+    formData.append("city", city);
+    formData.append("area", area);
+    formData.append("state", state);
+    formData.append("businessname", businessName);
+    formData.append("companyname", companyName);
+    formData.append("password", password);
+    formData.append("distributorcode", distributorCode);
+    formData.append("distributortype", distributorType);
+    formData.append("gst_number", gstNumber); // New field
+    formData.append("image1", image1);
+    formData.append("drug_licence", drugLicence); // New field
+    formData.append("image2", image2);
+    formData.append("bank_name", bankName); // New field
+    formData.append("benificiary_name", beneficiaryName); // New field
+    formData.append("account_number", accountNumber); // New field
+    formData.append("ifsc_code", ifscCode); // New field
+
     const axiosConfig = {
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "multipart/form-data",
       },
     };
 
-    await axios
-      .post(`https://api.meddaily.in/distributor_register`, reqBody, axiosConfig)
-      .then((res) => {
-        if (res.status === 200) {
-          toastr.success(res.data.message);
-          history.push("/distributorrequest");
-          setDistributor({
-            firstName: "",
-            lastName: "",
-            phoneNumber: "",
-            email: "",
-            pinCode: "",
-            city: "",
-            area: "",
-            state: "",
-            businessName: "",
-            companyName: "",
-            password: "",
-            confirmPassword: "",
-            distributorCode: "",
-            distributorType: "",
-          });
-        }
-      })
-      .catch((err) => {
-        toastr.error(err.response.data.message);
-        console.log(err);
-      });
+    try {
+      const res = await axios.post(
+        "https://api.meddaily.in/distributor_register",
+        formData,
+        axiosConfig
+      );
+
+      if (res.status === 200) {
+        toastr.success(res.data.message);
+        history.push("/distributorrequest");
+        setDistributor({
+          // Reset all fields to empty values
+          firstName: "",
+          lastName: "",
+          phoneNumber: "",
+          email: "",
+          pinCode: "",
+          city: "",
+          area: "",
+          state: "",
+          businessName: "",
+          companyName: "",
+          password: "",
+          distributorCode: "",
+          distributorType: "",
+          gstNumber: "",
+          drugLicence: "",
+          bankName: "",
+          beneficiaryName: "",
+          accountNumber: "",
+          ifscCode: "",
+          image1: "",
+          image2: "",
+        });
+      }
+    } catch (err) {
+      toastr.error(err.response.data.message);
+      console.log(err);
+    }
   };
-  const handlecancle =()=>{
+
+  const handlecancle = () => {
     history.push("/distributorrequest");
-  }
+  };
   return (
     <>
       <div className="layout-wrapper layout-content-navbar">
@@ -469,13 +464,122 @@ export default function Adddis() {
                               </option>
                             </select>
                           </div>
+                          <div className="mb-3 col-md-6">
+                            <label className="form-label float-start" htmlFor="addGstImage">
+                              Add GST Image
+                            </label>
+                            <div className="input-group input-group-merge">
+                              <input
+                                type="file"
+                                className="form-control"
+                                id="addGstImage"
+                                name="image1"
+                                accept="image/*"  // Add this to restrict file types to images
+                                onChange={(e) => handleFileChange(e, "image1")} // New function to handle file changes
+                              />
+                            </div>
+                          </div>
+
+                          <div className="mb-3 col-md-6">
+                            <label htmlFor="gstNumber" className="form-label float-start">
+                              GST Number
+                            </label>
+                            <input
+                              type="text"
+                              className="form-control"
+                              id="gstNumber"
+                              name="gstNumber"
+                              value={distributor.gstNumber}
+                              onChange={handle}
+                            />
+                          </div>
+                          <div className="mb-3 col-md-6">
+                            <label className="form-label float-start" htmlFor="addDrugImage">
+                              Add Drug Image
+                            </label>
+                            <div className="input-group input-group-merge">
+                              <input
+                                type="file"
+                                className="form-control"
+                                id="addDrugImage"
+                                name="image2"
+                                accept="image/*"  // Add this to restrict file types to images
+                                onChange={(e) => handleFileChange(e, "image2")} // New function to handle file changes
+                              />
+                            </div>
+                          </div>
+                          <div className="mb-3 col-md-6">
+                            <label htmlFor="drugLicence" className="form-label float-start">
+                              Drug Licence
+                            </label>
+                            <input
+                              type="text"
+                              className="form-control"
+                              id="drugLicence"
+                              name="drugLicence"
+                              value={distributor.drugLicence}
+                              onChange={handle}
+                            />
+                          </div>
+                          <div className="mb-3 col-md-6">
+                            <label htmlFor="bankName" className="form-label float-start">
+                              Bank Name
+                            </label>
+                            <input
+                              type="text"
+                              className="form-control"
+                              id="bankName"
+                              name="bankName"
+                              value={distributor.bankName}
+                              onChange={handle}
+                            />
+                          </div>
+                          <div className="mb-3 col-md-6">
+                            <label htmlFor="beneficiaryName" className="form-label float-start">
+                              Beneficiary Name
+                            </label>
+                            <input
+                              type="text"
+                              className="form-control"
+                              id="beneficiaryName"
+                              name="beneficiaryName"
+                              value={distributor.beneficiaryName}
+                              onChange={handle}
+                            />
+                          </div>
+                          <div className="mb-3 col-md-6">
+                            <label htmlFor="accountNumber" className="form-label float-start">
+                              Account Number
+                            </label>
+                            <input
+                              type="text"
+                              className="form-control"
+                              id="accountNumber"
+                              name="accountNumber"
+                              value={distributor.accountNumber}
+                              onChange={handle}
+                            />
+                          </div>
+                          <div className="mb-3 col-md-6">
+                            <label htmlFor="ifscCode" className="form-label float-start">
+                              IFSC Code
+                            </label>
+                            <input
+                              type="text"
+                              className="form-control"
+                              id="ifscCode"
+                              name="ifscCode"
+                              value={distributor.ifscCode}
+                              onChange={handle}
+                            />
+                          </div>
                         </div>
                         <div className="mt-2">
                           <button
                             onClick={(event) => postData(event)}
                             className="btn me-2"
                             variant="text"
-                            style={{backgroundColor:"#6EAFAB",color:"white"}}
+                            style={{ backgroundColor: "#6EAFAB", color: "white" }}
                           >
                             Save
                           </button>
@@ -483,7 +587,7 @@ export default function Adddis() {
                             type="reset"
                             className="btn"
                             variant="text"
-                            style={{backgroundColor:"#DC143C",color:"white"}}
+                            style={{ backgroundColor: "#DC143C", color: "white" }}
                             onClick={handlecancle}
                           >
                             Cancel
