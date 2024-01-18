@@ -37,7 +37,7 @@ export default function Distributorlist() {
       sort: 'asc',
     },
     {
-      label: 'Business Name',
+      label: 'distributor code',
       field: 'bname',
       sort: 'asc',
     },
@@ -59,7 +59,7 @@ export default function Distributorlist() {
 
   const rows = distributorList.map((item, i) => ({
     name: item.firstname+' '+item.lastname,
-    bname: item.distributorCode? item.distributorCode:'N/A',
+    bname: item.distributorcode? item.distributorcode:'N/A',
     address: item.area+ ' '+item.city+' ',
     phone: item.phonenumber,
     details: (
@@ -75,7 +75,6 @@ export default function Distributorlist() {
           state: { id: item._id },
         }}
       >
-        
         View Full Details
       </Link>
       </button>
