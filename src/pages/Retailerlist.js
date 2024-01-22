@@ -61,24 +61,24 @@ export default function Retailerlist() {
 
   const rows = retailerList.map((item, i) => ({
     name: item.ownername,
-    bname: item.businessname? item.businessname:'N/A',
-    address: item.area+' '+item.city+' ',
+    bname: item.businessname ? item.businessname : 'N/A',
+    address: item.area + ' ' + item.city + ' ',
     phone: item.phonenumber,
     details: (
       <button
-      className="btn"
-      variant="text"
-      style={{backgroundColor:"#6EAFAB"}}>
-      <Link
-     style={{color:"white"}}
-      to={{
-        pathname: "/retailerdetails",
-        state: { id: item._id },
-      }}
-    >
-      View Full Details
-    </Link>
-    </button>
+        className="btn"
+        variant="text"
+        style={{ backgroundColor: "#6EAFAB" }}>
+        <Link
+          style={{ color: "white" }}
+          to={{
+            pathname: "/retailerdetailsr",
+            state: { id: item._id },
+          }}
+        >
+          View Full Details
+        </Link>
+      </button>
     ),
   }));
   return (
@@ -141,7 +141,7 @@ export default function Retailerlist() {
                       </table>
                     </div> */}
 
-<div className="table-responsive text-nowrap">
+                    <div className="table-responsive text-nowrap">
                       <MDBDataTable
                         striped
                         bordered

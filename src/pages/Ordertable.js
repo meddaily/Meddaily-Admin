@@ -24,7 +24,7 @@ export default function Ordertable() {
 
   const handleOrders = async () => {
     try {
-      const response = await axios.get("https://api.meddaily.in/all_order");
+      const response = await axios.get(`${config.backendURL}/all_order`);
       if (response.status === 200) {
         setOrderList(response?.data?.data);
         // console.log(response);
@@ -37,7 +37,7 @@ export default function Ordertable() {
   const handleDelivery = async (_id) => {
     try {
       const response = await axios.post(
-        "https://api.meddaily.in/order_status_change",
+          `${config.backendURL}/order_status_change`,
         {
           order_id: _id,
           status: 3,

@@ -71,7 +71,7 @@ export default function Distributorlist() {
         <Link
        style={{color:"white"}}
         to={{
-          pathname: "/distributordetails",
+          pathname: "/distributordetailsr",
           state: { id: item._id },
         }}
       >

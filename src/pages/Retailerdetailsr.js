@@ -30,49 +30,50 @@ export default function Retailerdetailsr() {
   const location = useLocation();
   const { id } = location.state;
   let history = useHistory();
-  async function handleclick() {
-    const axiosConfig = {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
-    try {
-      const response = await axios.post(
-        `https://api.meddaily.in/retailer_approve`,
-        { id },
-        axiosConfig
-      );
-      if (response.status == 200) {
-        toastr.success(response.data.message);
-        setFormData("");
-        history.push("/retailerlist");
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  }
 
-  async function handleCancel() {
-    const axiosConfig = {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
-    try {
-      const response = await axios.post(
-        `https://api.meddaily.in/retailer_rejected`,
-        { retailerId:id },
-        axiosConfig
-      );
-      if (response.status == 200) {
-        toastr.success(response.data.message);
-        setFormData("");
-        history.push("/retailerlist");
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  }
+  // async function handleclick() {
+  //   const axiosConfig = {
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //   };
+  //   try {
+  //     const response = await axios.post(
+  //       `https://api.meddaily.in/retailer_approve`,
+  //       { id },
+  //       axiosConfig
+  //     );
+  //     if (response.status == 200) {
+  //       toastr.success(response.data.message);
+  //       setFormData("");
+  //       history.push("/retailerlist");
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }
+
+  // async function handleCancel() {
+  //   const axiosConfig = {
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //   };
+  //   try {
+  //     const response = await axios.post(
+  //       `https://api.meddaily.in/retailer_rejected`,
+  //       { retailerId:id },
+  //       axiosConfig
+  //     );
+  //     if (response.status == 200) {
+  //       toastr.success(response.data.message);
+  //       setFormData("");
+  //       history.push("/retailerlist");
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }
   useEffect(() => {
     handleRetailerDetails();
   }, []);
@@ -358,15 +359,7 @@ export default function Retailerdetailsr() {
                               readOnly
                             />
                           </div>
-                          <div className="mb-3 col-md-6">
-                            <label
-                              for="timeZones"
-                              className="form-label float-start"
-                            >
-                              Drug Licence img
-                            </label>
-                            <img src={licenseimage} alt="img" />
-                          </div>
+                        
                           <div className="mb-3 col-md-6">
                             <label
                               for="timeZones"
@@ -389,9 +382,27 @@ export default function Retailerdetailsr() {
                               for="timeZones"
                               className="form-label float-start"
                             >
+                              Pan No
+                            </label>
+                            <input
+                              className="form-control"
+                              type="text"
+                              id="gst"
+                              name="gst"
+                              placeholder="12123323423"
+                              defaultValue={panno}
+                              readOnly
+                            />
+                          </div>
+
+                          <div className="mb-3 col-md-6">
+                            <label
+                              for="timeZones"
+                              className="form-label float-start"
+                            >
                               Gst img
                             </label>
-                            <img src={gstimage} alt="img" />
+                            <img src={gstimage} alt="img"  style={{width:"100%",height:"300px"}} />
                             {/* <input
                               className="form-control"
                               type="text"
@@ -406,42 +417,35 @@ export default function Retailerdetailsr() {
                               for="timeZones"
                               className="form-label float-start"
                             >
-                              Pan No
+                              Drug Licence img
                             </label>
-                            <input
-                              className="form-control"
-                              type="text"
-                              id="gst"
-                              name="gst"
-                              placeholder="12123323423"
-                              defaultValue={panno}
-                              readOnly
-                            />
+                            <img src={licenseimage} alt="img"  style={{width:"100%",height:"300px"}}/>
                           </div>
-                          <div className="mb-3 col-md-6">
+                         
+                          {/* <div className="mb-3 col-md-6">
                             <label
                               for="timeZones"
                               className="form-label float-start"
                             >
                               Pan img
                             </label>
-                            {/* <input
+                            <input
                               className="form-control"
                               type="text"
                               id="gst"
                               name="gst"
                               placeholder="view/img.jpg"
                               defaultValue={panimg}
-                            /> */}
+                            /> 
                             <img src={panimg} alt="panimg" />
-                          </div>
+                          </div> */}
                         </div>
                         <div className="mt-2"></div>
                       </form>
 
                       {/* button */}
-                      <div className="col-12">
-                        <button
+                      {/* <div className="col-12"> */}
+                        {/* <button
                           type="button"
                           className="btn btn-primary"
                           style={{
@@ -451,9 +455,9 @@ export default function Retailerdetailsr() {
                           onClick={handleclick}
                         >
                           Approve
-                        </button>
+                        </button> */}
 
-                        <button
+                        {/* <button
                           type="button"
                           className="btn btn-danger"
                           style={{
@@ -464,8 +468,8 @@ export default function Retailerdetailsr() {
                           onClick={handleCancel}
                         >
                           Cancel
-                        </button>
-                      </div>
+                        </button> */}
+                      {/* </div> */}
                     </div>
                   </div>
                 </div>

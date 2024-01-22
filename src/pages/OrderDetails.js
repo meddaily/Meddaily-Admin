@@ -4,6 +4,7 @@ import toastr from "toastr";
 import Sidebar from "./Sidebar";
 import { useParams } from "react-router-dom";
 import Navbar from "./Navbar";
+import config from "../appConfig";
 
 export default function OrderDetails(props) {
   const authToken = localStorage.getItem("authToken");
@@ -16,7 +17,7 @@ export default function OrderDetails(props) {
   async function getOrderDetails(orderid) {
     console.log("is coming",orderid)
     await axios
-      .get(`https://api.meddaily.in/order_details_admin?order_id=${orderid}`, {
+      .get(`${config.backendURL}/order_details_admin?order_id=${orderid}`, {
       // .get(`http://localhost:8000/order_details_admin?order_id=${orderid}`, {
         headers: {
           "Content-Type": "application/json",
@@ -55,6 +56,8 @@ export default function OrderDetails(props) {
     } 
       else if (code === 4) {
       return "Order Placed";
+    }else if (code === 5) {
+      return "Order Return";
     }
   }
 

@@ -325,15 +325,7 @@ export default function Retailerdetails() {
                               readOnly
                             />
                           </div>
-                          <div className="mb-3 col-md-6">
-                            <label
-                              for="timeZones"
-                              className="form-label float-start"
-                            >
-                              Drug Licence img
-                            </label>
-                           <img width={"100%"} src={licenseimage} alt="img" />
-                          </div>
+                         
                           <div className="mb-3 col-md-6">
                             <label
                               for="timeZones"
@@ -458,6 +450,15 @@ export default function Retailerdetails() {
                             </label>
                             <img src={panimg} alt="panimg" />
                           </div> */}
+                           <div className="mb-3 col-md-6">
+                            <label
+                              for="timeZones"
+                              className="form-label float-start"
+                            >
+                              Drug Licence img
+                            </label>
+                           <img style={{width:"100%",height:"300px"}}src={licenseimage} alt="img" />
+                          </div>
                           <div className="mb-3 col-md-6">
                             <label
                               for="timeZones"
@@ -465,7 +466,7 @@ export default function Retailerdetails() {
                             >
                               Gst img
                             </label>
-                            <img width={"100%"} src={gstimage} alt="gstimg" />
+                            <img style={{width:"100%",height:"300px"}}src={gstimage} alt="gstimg" />
                           </div>
                         </div>
                         <div className="mt-2"></div>

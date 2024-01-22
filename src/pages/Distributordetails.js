@@ -472,7 +472,7 @@ export default function Distributordetails() {
                               for="timeZones"
                               className="form-label float-start"
                             >
-                              Image
+                              drug licence image
                             </label>
                             <img width={"100%"} src={image} alt="img" />
                           </div>
@@ -481,7 +481,7 @@ export default function Distributordetails() {
                               for="timeZones"
                               className="form-label float-start"
                             >
-                              Gst img
+                              Gst image
                             </label>
                             <img width={"100%"} src={gst_file} alt="gstimg" />
                           </div>

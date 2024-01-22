@@ -148,7 +148,9 @@ export default function Returntable() {
       distributor_name: item.distributor_name || 'NA',
       retailer_name: item.retailer_name || 'NA',
       price: item.price || 0,
-      order_status: item.order_status || 0,
+      order_status: item.products?.reduce((accumulator, detail) => {
+        return accumulator + detail.return_quantity;
+      }, 0) || 0,
       createdAt: formattedDate || 0,
       // other properties...
       view_more: (
@@ -177,7 +179,6 @@ export default function Returntable() {
       const response = await axios.post(
         "https://api.meddaily.in/order_status_change",
         {
-          
           order_id:itemValue._id,
           status: 3,
         }
@@ -187,7 +188,7 @@ export default function Returntable() {
         toastr.success("Order status updated successfully");
       }
     } catch (error) {
-      console.log("vruti>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", error);
+      // console.log("vruti>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", error);
       toastr.error("Error updating order status");
       console.error(error);
     }
@@ -270,7 +271,7 @@ export default function Returntable() {
           <div>
             <h3>Product Details</h3>
             <p>Order Id: {itemValue?.order_id}</p>
-            <p>Expiry Date: {itemValue?.exp_date}</p>
+            <p>Expiry Date: {itemValue?.products[0]?.exp_date}</p>
             <p>Price: {itemValue?.price}</p>
             <p>Distributor and Retailer Details</p>
             <p>Distributor Name: {itemValue?.distributor_name}</p>
@@ -279,11 +280,13 @@ export default function Returntable() {
             <p>Payment Details</p>
             <p>Payment Status: {itemValue?.payment_status}</p>
             <p>Payment Type: {itemValue?.payment_type == 1 ? "COD" : ''} {itemValue?.payment_type == 2 ? "On Credit" : ''} {itemValue?.payment_type == 0 ? "Prepaid" : ''}</p>
-            <p>Order Status: {itemValue?.order_status == 4 ? "Order Placed" : ""} {itemValue?.order_status == 1 ? "Order Shipped" : ""} {itemValue?.order_status == 3 ? "Order Delivered" : ""}</p>
+            <p>Order Status: {itemValue?.order_status == 4 ? "Order Placed" : ""} {itemValue?.order_status == 5 ? "Order Return" : ""} {itemValue?.order_status == 1 ? "Order Shipped" : ""} {itemValue?.order_status == 3 ? "Order Delivered" : ""}</p>
             <p>Payment Details</p>
             <p>Return Reason: {itemValue?.return_reason}</p>
             <p>Return Message: {itemValue?.return_message}</p>
-            <p>Return Quantity: {itemValue?.return_quantity}</p>
+            <p>Return Quantity: {itemValue?.products?.reduce((accumulator, detail) => {
+              return accumulator + detail.return_quantity;
+            }, 0)}</p>
             <p>Return Status: {itemValue?.return_status == 1 ? "Not Accepted" : ""} {itemValue?.return_status == 2 ? "Accepted" : ""}</p>
             <div>
             <button

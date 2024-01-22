@@ -18,7 +18,7 @@ export default function Distributordetailsr() {
     distributorcode: "",
     distributortype: "",
     pincode: "",
-    accountnumber: "",
+    // accountnumber: "",
   };
   const [formData, setFormData] = useState(defaultFormData);
   const location = useLocation();
@@ -30,50 +30,50 @@ export default function Distributordetailsr() {
   useEffect(() => {
     handleDistDetails();
   }, []);
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    const axiosConfig = {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
+  // const handleSubmit = async (event) => {
+  //   event.preventDefault();
+  //   const axiosConfig = {
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //   };
 
-    try {
-      const res = await axios.post(
-        `https://api.meddaily.in/distributor_approve`,
-        { id },
-        axiosConfig
-      );
-      if (res.status === 200) {
-        toastr.success("Distributor Approved");
-        history.push("./distributorlist");
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  const handleCancel = async (event) => {
-    event.preventDefault();
-    const axiosConfig = {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
+    // try {
+    //   const res = await axios.post(
+    //     `https://api.meddaily.in/distributor_approve`,
+    //     { id },
+    //     axiosConfig
+    //   );
+    //   if (res.status === 200) {
+    //     toastr.success("Distributor Approved");
+    //     history.push("./distributorlist");
+    //   }
+    // } catch (error) {
+    //   console.log(error);
+    // }
+  // };
+  // const handleCancel = async (event) => {
+  //   event.preventDefault();
+  //   const axiosConfig = {
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //   };
 
-    try {
-      const res = await axios.post(
-        `https://api.meddaily.in/distributor_rejected`,
-        { distributorId:id },
-        axiosConfig
-      );
-      if (res.status === 200) {
-        toastr.success("Distributor Rejected");
-        history.push("./distributorlist");
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  //   try {
+  //     const res = await axios.post(
+  //       `https://api.meddaily.in/distributor_rejected`,
+  //       { distributorId:id },
+  //       axiosConfig
+  //     );
+  //     if (res.status === 200) {
+  //       toastr.success("Distributor Rejected");
+  //       history.push("./distributorlist");
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   const handleDistDetails = async (e) => {
     try {
@@ -96,6 +96,7 @@ export default function Distributordetailsr() {
     distributorcode,
     distributortype,
     pincode,
+    state,
     account_number,
     bank_name,
     benificiary_name,
@@ -248,6 +249,20 @@ export default function Distributordetailsr() {
                                 })
                               }
                               readOnly
+                            />
+                          </div>
+                          <div className="mb-3 col-md-6">
+                            <label
+                              className="form-label float-start"
+                              for="country "
+                            >
+                              State
+                            </label>
+                            <input
+                              type="text"
+                              className="form-control"
+                              readOnly
+                              value={state}
                             />
                           </div>
                           <div className="mb-3 col-md-6">
@@ -543,18 +558,18 @@ export default function Distributordetailsr() {
                               for="address"
                               className="form-label float-start"
                             >
-                              GST File
+                              GST Image
                             </label>
-                            <img src={gst_file} alt="img" />
+                            <img src={gst_file} alt="img" style={{width:"100%"}}/>
                           </div>
                           <div className="mb-3 col-md-6">
                             <label
                               for="address"
                               className="form-label float-start"
                             >
-                              Image
+                              drug licence image
                             </label>
-                            <img src={image} alt="img" />
+                            <img src={image} alt="img"  style={{width:"100%"}}/>
                           </div>
                         </div>
                         <div className="mt-2"></div>
@@ -579,7 +594,7 @@ export default function Distributordetailsr() {
                             Review Button
                           </button>
                         </Link> */}
-                        <button
+                        {/* <button
                           type="button"
                           className="btn btn-primary"
                           style={{
@@ -600,8 +615,8 @@ export default function Distributordetailsr() {
                           }}
                           onClick={handleCancel}
                         >
-                          Cancel
-                        </button>
+                          Cancel */}
+                        {/* </button> */}
                       </div>
                     </div>
                   </div>

@@ -104,7 +104,7 @@ export default function Producttable() {
         <Link
         style={{color:"white"}} 
         to={`/productedit/${item._id}`}>
-        Edit
+        Update
         </Link>
       </button>
     ),

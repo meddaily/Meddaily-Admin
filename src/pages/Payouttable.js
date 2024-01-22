@@ -11,7 +11,7 @@ export default function Payouttable() {
   const authToken = localStorage.getItem("authToken");
   const [filter, setFilter] = useState('All');
   const [payoutList, setPayoutList] = useState([]);
-  const [payout, setPayout] = useState('');
+  // const [payout, setPayout] = useState('');
   const [acceptedPayouts, setAcceptedPayouts] = useState([]);
 
   useEffect(() => {
@@ -36,7 +36,7 @@ export default function Payouttable() {
   const handleFilterChange = (newFilter) => {
     setFilter(newFilter);
   };
-
+  
   const Acceptpayout = async (requestId) => {
     try {
       const payload={
@@ -46,7 +46,7 @@ export default function Payouttable() {
       if (response.status === 200) {
         setAcceptedPayouts([...acceptedPayouts, requestId]);
         console.log(response.data);
-       
+        window.location.reload();
       }
     } catch (err) {
       toastr.error(err.response?.data?.message);
@@ -133,7 +133,7 @@ export default function Payouttable() {
                                   <div >
                                     <h5 className="mb-0"></h5>
                                     <div className="btn-group">
-                                    {  item.payment_status !== 2 &&(
+                                    {  item.payment_status !== 2 && item.payment_status === 1 &&(
                                       <button
                                         type="button"
                                         className="btn"

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import toastr from "toastr";
 import { Link, useHistory } from "react-router-dom";
-// import config from "../appConfig";
+import config from "../appConfig";
 
 export default function Login() {
   let history = useHistory();
@@ -35,7 +35,7 @@ export default function Login() {
       },
     };
     await axios
-      .post(`https://api.meddaily.in/distributor_login`, reqBody, axiosConfig)
+      .post(`${config.backendURL}/distributor_login`, reqBody, axiosConfig)
       .then((res) => {
         if (res.data.status === true) {
           const distributorId = res.data.data._id; // Get the _id from the response data object
