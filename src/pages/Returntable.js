@@ -289,14 +289,18 @@ export default function Returntable() {
             }, 0)}</p>
             <p>Return Status: {itemValue?.return_status == 1 ? "Not Accepted" : ""} {itemValue?.return_status == 2 ? "Accepted" : ""}</p>
             <div>
-            <button
-              variant="text"
-              className=" btn"
-              style={{backgroundColor:"#6EAFAB",color:"white",borderRadius:"8px",marginTop: '20px'}}
-              onClick={handleDelivery}
-            >
-              Mark As Delivered
-            </button>
+            {
+             itemValue?.order_status !== 3 &&  (
+                 <button
+                variant="text"
+                className=" btn"
+                style={{backgroundColor:"#6EAFAB",color:"white",borderRadius:"8px",marginTop: '20px'}}
+                onClick={handleDelivery}
+              >
+                Mark As Delivered
+              </button>
+              )
+            }
             </div>
           </div>
         </Modal.Body>
