@@ -85,6 +85,11 @@ export default function Ordertable() {
       sort: "asc",
     },
     {
+      label: "Payment Type",
+      field: "paymenttype",
+      sort: "asc",
+    },
+    {
       label: "Details",
       field: "details",
     },
@@ -100,6 +105,13 @@ export default function Ordertable() {
     userId: item.distributor_name,
     price: item.price,
     status: item.order_status == 4 ? 'Order Placed' : "" || item.order_status == 1 ? 'Order Shipped' : "" || item.order_status == 3 ? 'Order Delivered' : "" || item.order_status == 0 ? 'Order Cancel' : "",
+    paymenttype:item.payment_type === 1
+    ? "Cash on delivery"
+    : item?.payment_type === 2
+      ? "Payment prepaid"
+      : item?.payment_type === 3
+        ? "Credit"
+        : "",
     details: (
       <button
         className="btn btn-success"

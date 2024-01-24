@@ -177,7 +177,7 @@ export default function Returntable() {
     console.log("1111111111111111111111111111111111111111",itemValue._id );
     try {
       const response = await axios.post(
-        "https://api.meddaily.in/order_status_change",
+        `${config.backendURL}/return_order_deliver`,
         {
           order_id:itemValue._id,
           status: 3,
@@ -287,10 +287,10 @@ export default function Returntable() {
             <p>Return Quantity: {itemValue?.products?.reduce((accumulator, detail) => {
               return accumulator + detail.return_quantity;
             }, 0)}</p>
-            <p>Return Status: {itemValue?.return_status == 1 ? "Not Accepted" : ""} {itemValue?.return_status == 2 ? "Accepted" : ""}</p>
+            <p>Return Status: {itemValue?.return_status == 1 ? "Not Accepted" : ""} {itemValue?.return_status == 2 ? "Accepted" : ""} {itemValue?.return_status == 3 ? "Delivered" : ""}</p>
             <div>
             {
-             itemValue?.order_status !== 3 &&  (
+             itemValue?.return_status !== 3 &&  (
                  <button
                 variant="text"
                 className=" btn"
