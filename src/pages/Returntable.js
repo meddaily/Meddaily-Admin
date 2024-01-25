@@ -186,6 +186,7 @@ export default function Returntable() {
       // console.log("NEW", _id);
       if (response.status === 200) {
         toastr.success("Order status updated successfully");
+        handleClose(true)
       }
     } catch (error) {
       // console.log("vruti>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", error);
