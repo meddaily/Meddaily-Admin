@@ -280,7 +280,7 @@ export default function Returntable() {
             <hr />
             <p>Payment Details</p>
             <p>Payment Status: {itemValue?.payment_status}</p>
-            <p>Payment Type: {itemValue?.payment_type == 1 ? "COD" : ''} {itemValue?.payment_type == 2 ? "On Credit" : ''} {itemValue?.payment_type == 0 ? "Prepaid" : ''}</p>
+            <p>Payment Type: {itemValue?.payment_type == 1 ? "COD" : ''} {itemValue?.payment_type == 3 ? "On Credit" : ''} {itemValue?.payment_type == 2 ? "Prepaid" : ''}</p>
             <p>Order Status: {itemValue?.order_status == 4 ? "Order Placed" : ""} {itemValue?.order_status == 5 ? "Order Return" : ""} {itemValue?.order_status == 1 ? "Order Shipped" : ""} {itemValue?.order_status == 3 ? "Order Delivered" : ""}</p>
             <p>Payment Details</p>
             <p>Return Reason: {itemValue?.return_reason}</p>

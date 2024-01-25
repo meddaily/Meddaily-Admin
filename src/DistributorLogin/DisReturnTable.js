@@ -150,7 +150,7 @@ export default function DisReturnTable() {
             <hr />
             <p>Payment Details</p>
             <p>Payment Status: {itemValue?.payment_status}</p>
-            <p>Payment Type: {itemValue?.payment_type}</p>
+            <p>Payment Type: {itemValue.payment_type == 1 ? 'COD' : "" || itemValue.payment_type == 3 ? 'On Credit' : "" || itemValue.payment_type == 2 ? 'Prepaid' : ""}</p>
             <p>Order Status: {itemValue?.order_status}</p>
             <p>Payment Details</p>
             <p>Return Reason: {itemValue?.return_reason}</p>
