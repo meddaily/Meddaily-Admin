@@ -137,7 +137,7 @@ export default function Returntable() {
   const rows = returnList.map((item, i) => {
     const dateObject = new Date(item.createdAt);
     const formattedDate = dateObject.toISOString().split('T')[0];
-  
+    const price =  item.delivery_fee === true ? Number(item.price - 118).toFixed(2) : Number(item.price).toFixed(2)
     return {
       order_id: (
         <>
@@ -147,7 +147,7 @@ export default function Returntable() {
       ),
       distributor_name: item.distributor_name || 'NA',
       retailer_name: item.retailer_name || 'NA',
-      price: item.price || 0,
+      price: price || 0,
       order_status: item.products?.reduce((accumulator, detail) => {
         return accumulator + detail.return_quantity;
       }, 0) || 0,
@@ -273,7 +273,7 @@ export default function Returntable() {
             <h3>Product Details</h3>
             <p>Order Id: {itemValue?.order_id}</p>
             <p>Expiry Date: {itemValue?.products[0]?.exp_date}</p>
-            <p>Price: {itemValue?.price}</p>
+            <p>Price: { itemValue.delivery_fee === true ? Number(itemValue.price - 118).toFixed(2) : Number(itemValue.price).toFixed(2)}</p>
             <p>Distributor and Retailer Details</p>
             <p>Distributor Name: {itemValue?.distributor_name}</p>
             <p>Retailer Name: {itemValue?.retailer_name}</p>
