@@ -53,8 +53,7 @@ export default function OrderDetails(props) {
       return "Shipped";
     } else if (code === 3) {
       return "Delivered";
-    } 
-      else if (code === 4) {
+    } else if (code === 4) {
       return "Order Placed";
     }else if (code === 5) {
       return "Order Return";

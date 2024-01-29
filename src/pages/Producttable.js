@@ -8,21 +8,28 @@ import Producttbody from "./Producttbody";
 // import config from '../appConfig';
 import { MDBDataTable } from 'mdbreact';
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
+import config from "../appConfig";
 
 export default function Producttable() {
   const authToken = localStorage.getItem('authToken');
 
   const [productList, setProductList] = useState([]);
-  const [selectedMedicineType, setSelectedMedicineType] = useState('');
+  const [selectedMedicineType, setSelectedMedicineType] = useState("");
+
+  
 
   useEffect(() => {
-    getAllProducts();
-  }, [authToken, selectedMedicineType]);
+    getAllProducts(selectedMedicineType);
+  }, [authToken,selectedMedicineType]);
 
-  async function getAllProducts() {
-    const apiUrl = `https://api.meddaily.in/getproduct?medicineType=${selectedMedicineType}`;
+  async function getAllProducts(value) {
     try {
-      const response = await axios.get(apiUrl);
+      const response = await axios.get(`${config.backendURL}/getproduct?value=${selectedMedicineType}`,
+    {  
+      headers: {
+        'Content-Type': 'application/json',
+      }}
+      );
       if (response.status === 200) {
         setProductList(response.data.data);
       }
@@ -32,13 +39,10 @@ export default function Producttable() {
     }
   }
 
-  function handleMedicineTypeChange(type) {
-    setSelectedMedicineType(type);
-  }
 
   async function deleteProduct(productId) {
     try {
-      await axios.delete(`https://api.meddaily.in/deleteproduct/${productId}`, {
+      await axios.delete(`${config.backendURL}/deleteproduct/${productId}`, {
         headers: {
           'Content-Type': 'application/json',
         },
@@ -80,7 +84,7 @@ export default function Producttable() {
     },
   ];
 
-  const rows = productList.map((item, i) => ({
+  const rows = productList?.map((item, i) => ({
     productname: item.title,
     mnfname: item.sub_title,
     medicinetype: item.category_id || 'N/A',
@@ -141,7 +145,7 @@ export default function Producttable() {
                       <a
                         className="dropdown-item"
                         href="javascript:void(0);"
-                        onClick={() => handleMedicineTypeChange('Genric')}
+                        onClick={() => setSelectedMedicineType('65850ca95499c7133b82f87b')}
                       >
                         Generic
                       </a>
@@ -150,7 +154,7 @@ export default function Producttable() {
                       <a
                         className="dropdown-item"
                         href="javascript:void(0);"
-                        onClick={() => handleMedicineTypeChange('OTC')}
+                        onClick={() => setSelectedMedicineType('658660e3b64d81c30a622b5d')}
                       >
                         OTC
                       </a>
@@ -159,9 +163,18 @@ export default function Producttable() {
                       <a
                         className="dropdown-item"
                         href="javascript:void(0);"
-                        onClick={() => handleMedicineTypeChange('Branded')}
+                        onClick={() => setSelectedMedicineType('65b3f3e9ffec4dea3867aa80')}
                       >
                         Branded
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        className="dropdown-item"
+                        href="javascript:void(0);"
+                        onClick={() => setSelectedMedicineType('658ba975ff0a25ee7aef2b04')}
+                      >
+                        Surgerical
                       </a>
                     </li>
                   </ul>

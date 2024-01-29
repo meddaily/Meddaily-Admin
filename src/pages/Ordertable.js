@@ -15,6 +15,8 @@ export default function Ordertable() {
   const [isDetailsModalOpen, setDetailsModalOpen] = useState(false);
   const [selectedOrderID, setSelectedOrderID] = useState(null);
   const authToken = localStorage.getItem("authToken");
+  const [fromDate, setFromDate] = useState('');
+  const [toDate, setToDate] = useState('');
 
   const [orderList, setOrderList] = useState([]);
 
@@ -37,7 +39,7 @@ export default function Ordertable() {
   const handleDelivery = async (_id) => {
     try {
       const response = await axios.post(
-          `${config.backendURL}/order_status_change`,
+        `${config.backendURL}/order_status_change`,
         {
           order_id: _id,
           status: 3,
@@ -104,18 +106,18 @@ export default function Ordertable() {
     userType: item.retailer_name,
     userId: item.distributor_name,
     price: item.price,
-    status: item.order_status == 4 ? 'Order Placed' : "" || item.order_status == 1 ? 'Order Shipped' : "" || item.order_status == 3 ? 'Order Delivered' : "" || item.order_status == 0 ? 'Order Cancel' : "",
-    paymenttype:item.payment_type === 1
-    ? "Cash on delivery"
-    : item?.payment_type === 2
-      ? "Payment prepaid"
-      : item?.payment_type === 3
-        ? "Credit"
-        : "",
+    status: item.order_status == 5 ? 'Order Return' : "" || item.order_status == 4 ? 'Order Placed' : "" || item.order_status == 1 ? 'Order Shipped' : "" || item.order_status == 3 ? 'Order Delivered' : "" || item.order_status == 0 ? 'Order Cancel' : "",
+    paymenttype: item.payment_type === 1
+      ? "Cash on delivery"
+      : item?.payment_type === 2
+        ? "Payment prepaid"
+        : item?.payment_type === 3
+          ? "Credit"
+          : "",
     details: (
       <button
         className="btn btn-success"
-        style={{backgroundColor:"#6EAFAB"}}
+        style={{ backgroundColor: "#6EAFAB" }}
         // variant="success"
         onClick={() => {
           handleViewModal(item);
@@ -125,22 +127,22 @@ export default function Ordertable() {
         View Details
       </button>
     ),
-    markDelivered:(
+    markDelivered: (
       <>
-      {item.order_status === 1 && (
-      <button
-        className="btn btn-success"
-        style={{backgroundColor:"#6EAFAB"}}
-        onClick={() => {
-          if (item.order_status === 1) {
-            handleDelivery(item._id);
-          }
-        }}
-      >
-        Mark Delivered
-      </button>
-    )}
-    </>
+        {item.order_status === 1 && (
+          <button
+            className="btn btn-success"
+            style={{ backgroundColor: "#6EAFAB" }}
+            onClick={() => {
+              if (item.order_status === 1) {
+                handleDelivery(item._id);
+              }
+            }}
+          >
+            Mark Delivered
+          </button>
+        )}
+      </>
     )
     // markDelivered: (
     //   // <button
@@ -165,6 +167,31 @@ export default function Ordertable() {
     // ),
   }));
 
+  const handleDownload = async (type, value) => {
+    try {
+      const response = await axios.get(`${config.backendURL}/get_all_report`, {
+        params: { type, value, startDate: fromDate, endDate: toDate },
+        responseType: 'blob',
+      });
+
+      if (response.status === 200) {
+
+        const url = window.URL.createObjectURL(new Blob([response.data]));
+
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', 'Order Data.xlsx');
+        document.body.appendChild(link);
+        link.click();
+
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(url);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <>
       <div className="layout-wrapper layout-content-navbar">
@@ -174,16 +201,19 @@ export default function Ordertable() {
           <div className="layout-page">
             <Navbar />
 
-            <div className="content-wrapper">
+            <div className="container">
               {/* Filter Button  */}
-              <div className="card-header d-flex justify-content-between align-items-center">
+
+              <div className="card-header d-flex justify-content-end align-items-center">
+
                 <h5 className="mb-0"></h5>
+
                 <div className="btn-group">
                   <button
                     type="button"
                     className="btn dropdown-toggle"
                     variant="text"
-                    style={{backgroundColor:"#6EAFAB",color:"white"}}
+                    style={{ backgroundColor: "#6EAFAB", color: "white" }}
                     data-bs-toggle="dropdown"
                     aria-expanded="false"
                   >
@@ -207,12 +237,86 @@ export default function Ordertable() {
                     </li>
                   </ul>
                 </div>
+                <div className="btn-group " style={{ marginLeft: "20px" }}>
+                  <button
+                    type="button"
+                    className="btn dropdown-toggle"
+                    variant="text"
+                    style={{ backgroundColor: "#6EAFAB", color: "white" }}
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    Download Orders
+                  </button>
+                  <ul className="dropdown-menu">
+                    <li onClick={() => handleDownload('delivery_fee', true)}>
+                      <Link className="dropdown-item">
+                        Download order with delivery fee
+                      </Link>
+                    </li>
+                    <li onClick={() => handleDownload('order_status', 4)}>
+                      <Link className="dropdown-item">
+                        Download order with order placed
+                      </Link>
+                    </li>
+                    <li onClick={() => handleDownload('return_status', 3)}>
+                      <Link className="dropdown-item">
+                        Download order with return placed
+                      </Link>
+                    </li>
+                    <li onClick={() => handleDownload('order_status', 3)}>
+                      <Link className="dropdown-item">
+                        Download order with order rejected
+                      </Link>
+                    </li>
+                    <li onClick={() => handleDownload('order_status', 0)}>
+                      <Link className="dropdown-item">
+                        Download order with order cancelled
+                      </Link>
+                    </li>
+                  </ul>
+                </div>
+
               </div>
 
               <div className="container-xxl flex-grow-1 container-p-y">
                 <div className="row">
                   <div className="card">
                     <h5 className="card-header float-start">Order Table</h5>
+                    <div className="card-body">
+                      <div className="row mb-3">
+                        <label
+                          htmlFor="fromDate"
+                          className="col-sm-2 col-form-label text-end"
+                        >
+                          From Date:
+                        </label>
+                        <div className="col-sm-4">
+                          <input
+                            type="date"
+                            id="fromDate"
+                            className="form-control"
+                            onChange={(e) => setFromDate(e.target.value)}
+                            value={fromDate}
+                          />
+                        </div>
+                        <label
+                          htmlFor="toDate"
+                          className="col-sm-2 col-form-label text-end"
+                        >
+                          To Date:
+                        </label>
+                        <div className="col-sm-4">
+                          <input
+                            type="date"
+                            id="toDate"
+                            className="form-control"
+                            onChange={(e) => setToDate(e.target.value)}
+                            value={toDate}
+                          />
+                        </div>
+                      </div>
+                    </div>
                     <div className="table-responsive text-nowrap">
                       <MDBDataTable
                         striped

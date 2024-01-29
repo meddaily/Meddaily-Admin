@@ -13,7 +13,7 @@ const OrderIdFilter = () => {
     try {
       const res = await axios.get(`https://api.meddaily.in/all_order`);
       if (res.status === 200) {
-        const filteredOrders = res.data.message.filter(
+        const filteredOrders = res.data.data.filter(
           (item) => item.order_id === orderId
         );
         setOrders(filteredOrders);
