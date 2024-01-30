@@ -22,11 +22,13 @@ export default function Ordertable() {
 
   useEffect(() => {
     handleOrders();
-  }, [authToken]);
+  }, [authToken,fromDate,toDate]);
 
   const handleOrders = async () => {
     try {
-      const response = await axios.get(`${config.backendURL}/all_order`);
+      console.log("fromDate:", fromDate);
+      console.log("toDate:", toDate);
+      const response = await axios.get(`${config.backendURL}/all_order?startDate=${fromDate}&endDate=${toDate}`);
       if (response.status === 200) {
         setOrderList(response?.data?.data);
         // console.log(response);
@@ -170,7 +172,7 @@ export default function Ordertable() {
   const handleDownload = async (type, value) => {
     try {
       const response = await axios.get(`${config.backendURL}/get_all_report`, {
-        params: { type, value, startDate: fromDate, endDate: toDate },
+        params: { type, value },
         responseType: 'blob',
       });
 
@@ -191,6 +193,33 @@ export default function Ordertable() {
       console.error(error);
     }
   };
+
+  const handleFromDateChange = (event) => {
+    // console.log(">>>>",fromDate,event.target.value);
+    const currentTime = new Date();
+    const hours = currentTime.getUTCHours().toString().padStart(2, '0');
+    const minutes = currentTime.getUTCMinutes().toString().padStart(2, '0');
+    const seconds = currentTime.getUTCSeconds().toString().padStart(2, '0');
+    const milliseconds = currentTime.getUTCMilliseconds().toString().padStart(3, '0');
+    const timeString = `${hours}:${minutes}:${seconds}.${milliseconds}`;
+    const dateTimeString = `${event.target.value}T${timeString}Z`;
+    setFromDate(dateTimeString);
+    // handleOrders()
+  };
+
+  const handleToDateChange = (event) => {
+    // console.log(">>>>",toDate ,event.target.value);
+    const currentTime = new Date();
+    const hours = currentTime.getUTCHours().toString().padStart(2, '0');
+    const minutes = currentTime.getUTCMinutes().toString().padStart(2, '0');
+    const seconds = currentTime.getUTCSeconds().toString().padStart(2, '0');
+    const milliseconds = currentTime.getUTCMilliseconds().toString().padStart(3, '0');
+    const timeString = `${hours}:${minutes}:${seconds}.${milliseconds}`;
+    const dateTimeString = `${event.target.value}T${timeString}Z`;
+    setToDate(dateTimeString);
+    // handleOrders()
+  };
+
 
   return (
     <>
@@ -285,7 +314,7 @@ export default function Ordertable() {
                     <h5 className="card-header float-start">Order Table</h5>
                     <div className="card-body">
                       <div className="row mb-3">
-                        <label
+                      <label
                           htmlFor="fromDate"
                           className="col-sm-2 col-form-label text-end"
                         >
@@ -296,8 +325,8 @@ export default function Ordertable() {
                             type="date"
                             id="fromDate"
                             className="form-control"
-                            onChange={(e) => setFromDate(e.target.value)}
-                            value={fromDate}
+                            onChange={handleFromDateChange}
+                            value={fromDate.split('T')[0]}
                           />
                         </div>
                         <label
@@ -311,8 +340,8 @@ export default function Ordertable() {
                             type="date"
                             id="toDate"
                             className="form-control"
-                            onChange={(e) => setToDate(e.target.value)}
-                            value={toDate}
+                            onChange={handleToDateChange}
+                            value={toDate.split('T')[0]}
                           />
                         </div>
                       </div>
