@@ -49,10 +49,10 @@ export default function Addbul() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     // debugger;
-    if (!bul.csvFile) {
-      console.log("Please select an Excel file.");
-      return;
-    }
+    // if (!bul.csvFile) {
+    //   console.log("Please select an Excel file.");
+    //   return;
+    // }
 
     const formData = new FormData();
     formData.append("file", bul.csvFile);
@@ -63,9 +63,10 @@ export default function Addbul() {
         `${config.backendURL}/bulkupload`,
         formData
       );
-      if (response.status === 200) {
+      if (response.data.status) {
         console.log("RESPONSe", response.data);
-        toastr.success(response?.data?.message);
+        alert(response.data.message)
+        // toastr.success(response?.data?.message);
         setBul({ csvFile: "", category: "" });
         document.getElementById("csvFile").value = "";
         history.push("/producttable");
